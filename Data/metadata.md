@@ -7,29 +7,40 @@
 ---
 
 ## URL
-- **Source**: [Movies and TV Shows databases for Netflix, Prime Video, Disney+, and Hulu on Kaggle](https://www.kaggle.com/datasets/shivamb/netflix-shows)
+- **Source**: Movies and TV Shows databases for [Netflix](https://www.kaggle.com/datasets/shivamb/netflix-shows), [Prime Video](https://www.kaggle.com/datasets/shivamb/amazon-prime-movies-and-tv-shows), [Disney+](https://www.kaggle.com/datasets/shivamb/disney-movies-and-tv-shows), and [Hulu](https://www.kaggle.com/datasets/shivamb/hulu-movies-and-tv-shows) on Kaggle
 - **Date Downloaded**: 04/09/2025
 
 ---
 
 ## Authorship
-- **Dataset Creator**: Shivam Bansal
+- **Dataset Creator**: Shivam Bansal (creator of all datasets)
 
 ---
 
 ## Dataset Title and Version
-- **Exact Name**: Netflix Movies and TV Shows  
-- **Version**: (Not specified, current as of mid-2021)
+- **Exact Names**: Netflix Movies and TV Shows, Amazon Prime Movies and TV Shows, Disney+ Movies and TV Shows, and Hulu Movies and TV Shows 
+- **Version**: (Versions are not specified).
 
 ---
 
 ## Time Period, Geography, and Scope Covered
-- **Time Period Covered**: The dataset covers over 8,000 movies and TV shows available on Netflix, as of mid-2021.
-- **Geography**: Includes country of production data for each title. Top countries represented:
+- **Time Period Covered**: The datasets' coverage is not specified, but is assumed to be current as of mid-2021 based on update date.
+- **Geography**: Includes country of production data for each title.
+  Top countries represented in the Netflix dataset:
   - United States: 32%
   - India: 11%
   - Other countries: 57%
-- **Scope**: Metadata for all Netflix titles as of mid-2021, including:
+  Top countries represented in the Disney+ dataset:
+  - United States: 69%
+  - Other countries: 16%
+ Top countries represented in the Amazon Prime dataset:
+  - Unspecified: 93%
+  - United States: 3%
+  - Other countries: 4%
+ Top countries represented in the Hulu dataset:
+  - United States: 30%
+  - Other countries: 23%
+- **Scope**: Metadata for all titles as of mid-2021, including:
   - Show ID
   - Type (Movie or TV Show)
   - Title
@@ -44,7 +55,7 @@
 ---
 
 ## Location of Dataset Overview Information
-- **URL**: [Dataset overview and description](https://www.kaggle.com/datasets/shivamb/netflix-shows) are available on [Kaggle](https://www.kaggle.com/). 
+- **URL**: [Dataset overviews and descriptions](https://www.kaggle.com/datasets/shivamb/netflix-shows) are available on [Kaggle](https://www.kaggle.com/). 
 
 ---
 
@@ -56,7 +67,7 @@
 
 ## Data Formats
 - **File Format**: CSV   
-- **File Size**: 3.4 MB
+- **File Size**: ~3.4 MB
 
 ---
 
@@ -78,5 +89,8 @@
 ---
 
 ## Suggested Citation
-> Netflix Movies and TV Shows Dataset. Kaggle. CC0: Public Domain License. Retrieved from https://www.kaggle.com/  
+> Netflix Movies and TV Shows Dataset. Kaggle. CC0: Public Domain License. Retrieved from https://www.kaggle.com/
+> Amazon Prime Movies and TV Shows Dataset. Kaggle. CC0: Public Domain License. Retrieved from https://www.kaggle.com/
+> Disney+ Movies and TV Shows Dataset. Kaggle. CC0: Public Domain License. Retrieved from https://www.kaggle.com/
+> Hulu Movies and TV Shows Dataset. Kaggle. CC0: Public Domain License. Retrieved from https://www.kaggle.com/
 > *(Adjust citation format as needed for APA, MLA, Chicago, etc.)*
