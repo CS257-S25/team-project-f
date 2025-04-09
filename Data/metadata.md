@@ -7,7 +7,7 @@
 ---
 
 ## URL
-- **Source**: [Movies and TV Shows databases for Netflix, Prime Video, Disney+, and Hulu on Kaggle](https://www.kaggle.com/)
+- **Source**: [Movies and TV Shows databases for Netflix, Prime Video, Disney+, and Hulu on Kaggle](https://www.kaggle.com/datasets/shivamb/netflix-shows)
 - **Date Downloaded**: 04/09/2025
 
 ---
@@ -44,7 +44,7 @@
 ---
 
 ## Location of Dataset Overview Information
-- **URL**: Dataset overview and description are available on [Kaggle](https://www.kaggle.com/). Search for "Netflix Movies and TV Shows" to locate it.
+- **URL**: [Dataset overview and description](https://www.kaggle.com/datasets/shivamb/netflix-shows) are available on [Kaggle](https://www.kaggle.com/). 
 
 ---
 
@@ -55,8 +55,7 @@
 ---
 
 ## Data Formats
-- **File Format**: CSV  
-- **Filename**: `netflix_titles.csv`  
+- **File Format**: CSV   
 - **File Size**: 3.4 MB
 
 ---
