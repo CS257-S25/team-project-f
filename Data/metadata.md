@@ -19,7 +19,7 @@
 
 ## Dataset Title and Version
 - **Exact Names**: Netflix Movies and TV Shows, Amazon Prime Movies and TV Shows, Disney+ Movies and TV Shows, and Hulu Movies and TV Shows 
-- **Version**: (Versions are not specified)
+- **Version**: (Versions are not specified).
 
 ---
 
