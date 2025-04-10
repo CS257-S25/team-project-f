@@ -26,18 +26,18 @@
 ## Time Period, Geography, and Scope Covered
 - **Time Period Covered**: The datasets' coverage is not specified, but is assumed to be current as of mid-2021 based on update date.
 - **Geography**: Includes country of production data for each title.
-  Top countries represented in the Netflix dataset:
+  - **Top countries represented in the Netflix dataset:**
   - United States: 32%
   - India: 11%
   - Other countries: 57%
-  Top countries represented in the Disney+ dataset:
+  - **Top countries represented in the Disney+ dataset:**
   - United States: 69%
   - Other countries: 16%
- Top countries represented in the Amazon Prime dataset:
+  - **Top countries represented in the Amazon Prime dataset:**
   - Unspecified: 93%
   - United States: 3%
   - Other countries: 4%
- Top countries represented in the Hulu dataset:
+  - **Top countries represented in the Hulu dataset:**
   - United States: 30%
   - Other countries: 23%
 - **Scope**: Metadata for all titles as of mid-2021, including:
