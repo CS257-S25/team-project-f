@@ -67,7 +67,7 @@
 
 ## Data Formats
 - **File Format**: CSV   
-- **File Size**: ~3.4 MB
+- **File Size**: 8.45 MB
 
 ---
 
