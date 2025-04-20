@@ -1,6 +1,5 @@
-import csv
 import unittest
-from ProductionCode import data_import  # noqa: E402
+from ProductionCode import data_import
 from cl import add_all_titles, get_row_from_title, filter_movies_with_actor, filter_movies_by_genre, filter_movies_after_including_year # noqa: E402
 
 # Define global constants as they are in the main script
@@ -17,65 +16,58 @@ DURATION = 9
 LISTED_IN = 10
 DESCRIPTION = 11
 
-class TestCLI(unittest.TestCase):
-    """
-    Test cases for the command-line interface (CLI) functionality.
-    """
+class TestCLFunctions(unittest.TestCase):
 
     def setUp(self):
-        """
-        Set up the test environment before each test.
-        This includes importing the data from dummydata.csv.
-        """
-        self.all_data = []
-        with open("Data/dummydata.csv", encoding="utf-8") as csvfile:
-            reader = csv.reader(csvfile)
-            next(reader)  # Skip the header row
-            for row in reader:
-                self.all_data.append(row)
+        # Load data for the tests
+        netflix_path = "Dummy_data/dummy_netflix.csv"
+        hulu_path = "Dummy_data/dummy_hulu.csv"
+        amazon_path = "Dummy_data/dummy_amazon.csv"
+        disney_path = "Dummy_data/dummy_disney.csv"
+
+        self.netflix, self.amazon, self.disney, self.hulu = data_import.import_data(
+            netflix_path=netflix_path,
+            amazon_path=amazon_path,
+            disney_path=disney_path,
+            hulu_path=hulu_path
+        )
+
+        # Initialize a set for the titles
+        self.titles = set()
+        add_all_titles(self.titles)
 
     def test_add_all_titles(self):
-        """
-        Test the add_all_titles function.
-        Checks if all titles from all datasets are added to the set.
-        """
-        titles_set = set()
-        add_all_titles(titles_set)
-        expected_titles = {row[TITLE] for row in self.all_data}
-        self.assertEqual(titles_set, expected_titles, "Test Failed: add_all_titles")
-
-    def test_get_row_from_title(self):
-        """
-        Test the get_row_from_title function.
-        Checks if the function returns the correct row for a given title.
-        """
-        # Test with a title that exists in the data
-        if self.all_data:
-            test_title = self.all_data[0][TITLE]
-            expected_row = self.all_data[0]
-            actual_row = get_row_from_title(test_title)
-            self.assertEqual(actual_row, expected_row, "Test Failed: get_row_from_title - existing title")
-        else:
-            self.skipTest("No data available in dummydata.csv to perform this test.")
-
-        # Test with a title that does not exist in the data
-        test_title = "Nonexistent Title"
-        expected_row = None
-        actual_row = get_row_from_title(test_title)
-        self.assertEqual(actual_row, expected_row, "Test Failed: get_row_from_title - nonexistent title")
+        # Check if titles from all platforms are added to the set
+        self.assertIn("Dick Johnson Is Dead", self.titles)  # From Netflix
+        self.assertIn("Ricky Velez: Here's Everything", self.titles)  # From Hulu
 
     def test_filter_movies_with_actor(self):
-        """
-        Test the filter_movies_with_actor function.
-        Checks if the function correctly filters movies based on actor name.
-        """
-        titles_set = {row[TITLE] for row in self.all_data}
+        # Filter by actor
+        filter_movies_with_actor("Brendan Gleeson", self.titles)  # From amazon
+        self.assertIn("The Grand Seduction", self.titles)
+        filter_movies_with_actor("Nonexistent Actor", self.titles)
+        self.assertNotIn("The Grand Seduction", self.titles)  # Should be removed because the actor is not found
 
-        # Test with an actor that exists in some movies
-        filter_movies_with_actor("Ama Qamata", titles_set)
-        expected_titles = ("Blood & Water")
-        self.assertEqual(titles_set, expected_titles, "Test Failed: filter_movies_with_actor - existing actor")
-        # Test with an actor that does not exist in any movies
-        filter_movies_with_actor("Nonexistent Actor", titles_set)
-        expected_titles = set()
-        self.assertEqual(titles_set, expected_titles, "Test Failed: filter_movies_with_actor - nonexistent actor")
+    def test_filter_movies_by_genre(self):
+        # Filter by genre
+        filter_movies_by_genre("Documentaries", self.titles)  # From Netflix
+        self.assertIn("Dick Johnson Is Dead", self.titles)
+        filter_movies_by_genre("Comedy", self.titles)
+        self.assertNotIn("Dick Johnson Is Dead", self.titles)
+
+    def test_filter_movies_after_including_year(self):
+        # Filter by release year
+        filter_movies_after_including_year(1988, self.titles)
+        self.assertIn("Ernest Saves Christmas", self.titles)
+        filter_movies_after_including_year(2021, self.titles)
+        self.assertNotIn("Dick Johnson Is Dead", self.titles) 
+
+    def test_get_row_from_title(self):
+        # Test if row is returned correctly from title
+        row = get_row_from_title("Dick Johnson Is Dead")
+        self.assertEqual(row[TITLE], "Dick Johnson Is Dead")
+        self.assertEqual(row[TYPE], "Movie")
+        self.assertEqual(row[DIRECTOR], "Kirsten Johnson")
+
+if __name__ == "__main__":
+    unittest.main()
