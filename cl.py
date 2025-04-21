@@ -98,9 +98,9 @@ def filter_movies_after_including_year(year, titles_set):
 
 def main():
     """ Main function to handle command line arguments and filter titles """
-    [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_setup.import_data()
+    [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_setup.import_data_to_3d_list()
     args = parser.parse_args()
-    print(args.actor, args.genre, args.year)
+    #print(args.actor, args.genre, args.year)
 
     titles = set()
     add_all_titles(titles, netflix_data, amazon_prime_data, disney_plus_data, hulu_data)
