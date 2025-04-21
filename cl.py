@@ -2,7 +2,7 @@
 The eventual location for the command line interface (CLI) for the project.
 This will be the entry point for the project when run from the command line.
 '''
-import argparse 
+import argparse
 from ProductionCode import data_import
 
 SHOW_ID = 0
@@ -20,7 +20,8 @@ DESCRIPTION = 11
 
 parser = argparse.ArgumentParser(
     prog="StreamSearch",
-    description="A command line interface for searching for movies and shows across multiple streaming platforms."
+    description=
+    "A command line interface for searching for movies and shows across multiple streaming platforms."
 )
 parser.add_argument('-a', '--actor', type=str, help='Filter by actor name')
 parser.add_argument('-g', '--genre', type=str, help='Filter by genre')
@@ -29,6 +30,7 @@ parser.add_argument('-y', '--year', type=int, help='Filter by release year')
 title_dict = {}
 
 def add_all_titles(titles_set, netflix_data, amazon_prime_data, disney_plus_data, hulu_data):
+    """ Adds all titles from the streaming data to a set and a dictionary for easy access """
     global title_dict
     for row in netflix_data:
         title_dict[row[TITLE]] = row
@@ -44,9 +46,11 @@ def add_all_titles(titles_set, netflix_data, amazon_prime_data, disney_plus_data
         titles_set.add(row[TITLE])
 
 def get_row_from_title(title):
+    """ Returns the row of data for a given title """
     return title_dict[title]
 
 def filter_movies_with_actor(actor_name, titles_set):
+    """ Filters the titles set to only include titles with the specified actor """
     actor_name = actor_name.lower()
     titles_set_copy = titles_set.copy()
     for title in titles_set_copy:
@@ -55,6 +59,7 @@ def filter_movies_with_actor(actor_name, titles_set):
             titles_set.remove(title)
 
 def filter_movies_by_genre(genre_name, titles_set):
+    """ Filters the titles set to only include titles with the specified genre """
     genre_name = genre_name.lower()
     titles_set_copy = titles_set.copy()
     for title in titles_set_copy:
@@ -63,6 +68,7 @@ def filter_movies_by_genre(genre_name, titles_set):
             titles_set.remove(title)
 
 def filter_movies_after_including_year(year, titles_set):
+    """ Filters the titles set to only include titles released after the specified year """
     year = int(year)
     titles_set_copy = titles_set.copy()
     for title in titles_set_copy:
@@ -71,6 +77,7 @@ def filter_movies_after_including_year(year, titles_set):
             titles_set.remove(title)
 
 def main():
+    """ Main function to handle command line arguments and filter titles """
     [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_import.import_data()
     args = parser.parse_args()
     print(args.actor, args.genre, args.year)
