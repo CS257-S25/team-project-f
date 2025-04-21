@@ -5,8 +5,6 @@ This will be the entry point for the project when run from the command line.
 import argparse 
 from ProductionCode import data_import
 
-[netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_import.import_data()
-
 SHOW_ID = 0
 TYPE = 1
 TITLE = 2
@@ -27,12 +25,11 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-a', '--actor', type=str, help='Filter by actor name')
 parser.add_argument('-g', '--genre', type=str, help='Filter by genre')
 parser.add_argument('-y', '--year', type=int, help='Filter by release year')
+
 title_dict = {}
 
-def add_all_titles(titles_set):
-
+def add_all_titles(titles_set, netflix_data, amazon_prime_data, disney_plus_data, hulu_data):
     global title_dict
-
     for row in netflix_data:
         title_dict[row[TITLE]] = row
         titles_set.add(row[TITLE])
@@ -45,10 +42,9 @@ def add_all_titles(titles_set):
     for row in hulu_data:
         title_dict[row[TITLE]] = row
         titles_set.add(row[TITLE])
-    
+
 def get_row_from_title(title):
     return title_dict[title]
-    
 
 def filter_movies_with_actor(actor_name, titles_set):
     actor_name = actor_name.lower()
@@ -58,7 +54,6 @@ def filter_movies_with_actor(actor_name, titles_set):
         if actor_name not in row[CAST].lower():
             titles_set.remove(title)
 
-
 def filter_movies_by_genre(genre_name, titles_set):
     genre_name = genre_name.lower()
     titles_set_copy = titles_set.copy()
@@ -66,7 +61,6 @@ def filter_movies_by_genre(genre_name, titles_set):
         row = get_row_from_title(title)
         if genre_name not in row[LISTED_IN].lower():
             titles_set.remove(title)
-
 
 def filter_movies_after_including_year(year, titles_set):
     year = int(year)
@@ -76,20 +70,24 @@ def filter_movies_after_including_year(year, titles_set):
         if int(row[RELEASE_YEAR]) < year:
             titles_set.remove(title)
 
-titles = set()
-add_all_titles(titles)
+def main():
+    [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_import.import_data()
+    args = parser.parse_args()
+    print(args.actor, args.genre, args.year)
 
+    titles = set()
+    add_all_titles(titles, netflix_data, amazon_prime_data, disney_plus_data, hulu_data)
 
-args = parser.parse_args()
-print(args.actor, args.genre, args.year)
+    if args.actor:
+        filter_movies_with_actor(args.actor, titles)
+    if args.genre:
+        filter_movies_by_genre(args.genre, titles)
+    if args.year:
+        filter_movies_after_including_year(args.year, titles)
 
-if args.actor:
-    filter_movies_with_actor(args.actor, titles)
-if args.genre:
-    filter_movies_by_genre(args.genre, titles)
-if args.year:
-    filter_movies_after_including_year(args.year, titles)
+    titles_list = sorted(titles)
+    for title in titles_list:
+        print(title)
 
-titles_list = sorted(titles)
-for title in titles_list:
-    print(title)
+if __name__ == "__main__":
+    main()
