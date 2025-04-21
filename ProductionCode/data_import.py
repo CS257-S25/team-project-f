@@ -13,21 +13,25 @@ def import_data(
 
     with open(netflix_path, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
+        next(reader)
         for row in reader:
             netflix_data.append(row)
 
     with open(amazon_path, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
+        next(reader)
         for row in reader:
             amazon_prime_data.append(row)
 
     with open(disney_path, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
+        next(reader)
         for row in reader:
             disney_plus_data.append(row)
 
     with open(hulu_path, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
+        next(reader)
         for row in reader:
             hulu_data.append(row)
 
