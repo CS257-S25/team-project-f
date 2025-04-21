@@ -3,7 +3,7 @@ The eventual location for the command line interface (CLI) for the project.
 This will be the entry point for the project when run from the command line.
 '''
 import argparse
-from ProductionCode import data_import
+from ProductionCode import data_setup
 
 SHOW_ID = 0
 TYPE = 1
@@ -98,7 +98,7 @@ def filter_movies_after_including_year(year, titles_set):
 
 def main():
     """ Main function to handle command line arguments and filter titles """
-    [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_import.import_data()
+    [netflix_data, amazon_prime_data, disney_plus_data, hulu_data] = data_setup.import_data()
     args = parser.parse_args()
     print(args.actor, args.genre, args.year)
 

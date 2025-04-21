@@ -106,7 +106,7 @@ class TestCommandLineArguments(unittest.TestCase):
             [['s3', 'Movie', 'Title C', 'Director C', 'Actor X, Actor Z', 'Canada', 'Mar 20, 2023', '2023', 'G', '105 min', 'Comedy, Family', 'Description C']],
             [['s4', 'Show', 'Title D', 'Director E', 'Actor W, Actor X', 'USA', 'May 05, 2024', '2024', 'TV-Y', '3 Seasons', 'Action, Drama', 'Description E']]
         ]
-        self.patcher = patch('ProductionCode.data_import.import_data', return_value=self.mock_data)
+        self.patcher = patch('ProductionCode.data_setup.import_data_to_3d_list', return_value=self.mock_data)
         self.mock_import = self.patcher.start()
         self.captured_output = StringIO()
         self.original_stdout = sys.stdout
