@@ -18,6 +18,23 @@ DURATION = 9
 LISTED_IN = 10
 DESCRIPTION = 11
 
+# dictionary based on titles. adds differently if the title is already there and needs to have another streaming service added
+#format : key, tuple of values
+#how it should be formatted -
+#key (TITLE)
+#tuple contains in order:
+#show_id(string)
+#type(string)(maybe bool)
+#director(set) - split
+#cast(set) - will need to be split
+#country(set)-split
+#date_added(string)
+#release_year(int)
+#rating(string)
+#duration(string)
+#listed_in(set) - split
+#dscription(string)
+
 parser = argparse.ArgumentParser(
     prog="StreamSearch",
     description=
