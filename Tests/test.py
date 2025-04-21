@@ -1,6 +1,8 @@
 import unittest
+import sys
+from io import StringIO
 from ProductionCode import data_import
-from cl import add_all_titles, get_row_from_title, filter_movies_with_actor, filter_movies_by_genre, filter_movies_after_including_year # noqa: E402
+from cl import add_all_titles, get_row_from_title, filter_movies_with_actor, filter_movies_by_genre, filter_movies_after_including_year, main
 
 # Define global constants as they are in the main script
 SHOW_ID = 0
@@ -34,7 +36,13 @@ class TestCLFunctions(unittest.TestCase):
 
         # Initialize a set for the titles
         self.titles = set()
-        add_all_titles(self.titles)
+        add_all_titles(
+            self.titles,
+            self.netflix,
+            self.amazon,
+            self.disney,
+            self.hulu
+        )
 
     def test_add_all_titles(self):
         # Check if titles from all platforms are added to the set
@@ -68,6 +76,41 @@ class TestCLFunctions(unittest.TestCase):
         self.assertEqual(row[TITLE], "Dick Johnson Is Dead")
         self.assertEqual(row[TYPE], "Movie")
         self.assertEqual(row[DIRECTOR], "Kirsten Johnson")
+
+class TestMainCLIWithStringIO(unittest.TestCase):
+
+    def run_main_with_args(self, args_list):
+        """Helper to run main with given args and capture output."""
+        original_stdout = sys.stdout
+        original_argv = sys.argv
+        sys.stdout = StringIO()
+        sys.argv = ['cl.py'] + args_list
+
+        try:
+            main()
+            output = sys.stdout.getvalue()
+        finally:
+            sys.stdout = original_stdout
+            sys.argv = original_argv
+
+        return output.strip().split('\n')
+
+    def test_actor_filter(self):
+        output = self.run_main_with_args(['--actor', 'Brendan Gleeson'])
+        self.assertIn("The Grand Seduction", output)
+
+    def test_genre_filter(self):
+        output = self.run_main_with_args(['--genre', 'Documentaries'])
+        self.assertIn("Dick Johnson Is Dead", output)
+
+    def test_year_filter_excludes_older_movies(self):
+        output = self.run_main_with_args(['--year', '2021'])
+        self.assertNotIn("Dick Johnson Is Dead", output)
+
+    def test_combined_filters(self):
+        output = self.run_main_with_args(['--actor', 'Brendan Gleeson', '--genre', 'Comedy'])
+        self.assertIn("The Grand Seduction", output)
+
 
 if __name__ == "__main__":
     unittest.main()
