@@ -18,6 +18,9 @@ DURATION = 9
 LISTED_IN = 10
 DESCRIPTION = 11
 
+# Dictionary to hold all the titles and their data
+
+
 # dictionary based on titles. adds differently if the title is already there and needs to have another streaming service added
 #format : key, tuple of values
 #how it should be formatted -
