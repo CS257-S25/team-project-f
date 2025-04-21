@@ -2,13 +2,13 @@ import unittest
 import sys
 from unittest.mock import patch
 from io import StringIO
-from ProductionCode import data_import
+from ProductionCode import data_setup
 import cl
 
 # Define global constants as they are in the main script
-SHOW_ID = 0
-TYPE = 1
-TITLE = 2
+TITLE = 0
+SHOW_ID = 1
+MEDIA_TYPE = 2
 DIRECTOR = 3
 CAST = 4
 COUNTRY = 5
@@ -18,91 +18,84 @@ RATING = 8
 DURATION = 9
 LISTED_IN = 10
 DESCRIPTION = 11
-
+STREAMING_SERVICE = 12
 
 class TestFunctions(unittest.TestCase):
+    def setUp(self):
+        """Load data and initialize the titles set based on the new structure."""
+        netflix_path = "Dummy_data/dummy_netflix.csv"
+        hulu_path = "Dummy_data/dummy_hulu.csv"
+        amazon_path = "Dummy_data/dummy_amazon.csv"
+        disney_path = "Dummy_data/dummy_disney.csv"
 
+        data = data_setup.import_data_to_3d_list(
+            netflix_path=netflix_path,
+            amazon_path=amazon_path,
+            disney_path=disney_path,
+            hulu_path=hulu_path
+        )
+        data_setup.process_data(data)
+        self.media_list_by_title = data_setup.media_list_by_title
+        self.titles = set(self.media_list_by_title.keys())
 
-   def setUp(self):
-       """ Load data for the tests, import data and initialize the titles set """
-       netflix_path = "Dummy_data/dummy_netflix.csv"
-       hulu_path = "Dummy_data/dummy_hulu.csv"
-       amazon_path = "Dummy_data/dummy_amazon.csv"
-       disney_path = "Dummy_data/dummy_disney.csv"
+    def test_add_all_titles(self):
+        """Verify that the correct titles are added."""
+        expected_titles = {
+            "The Grand Seduction",
+            "Take Care Good Night",
+            "Duck the Halls: A Mickey Mouse Christmas Special",
+            "Ernest Saves Christmas",
+            "Ricky Velez: Here's Everything",
+            "Silent Night",
+            "Dick Johnson Is Dead",
+            "Blood & Water"
+        }
+        self.assertEqual(self.titles, expected_titles)
 
+    def test_filter_movies_with_actor(self):
+        """Check if filtering by actor includes only correct titles."""
+        titles_copy = self.titles.copy()
+        cl.filter_movies_with_actor("Brendan Gleeson", titles_copy, self.media_list_by_title)
+        self.assertEqual(titles_copy, {"The Grand Seduction"})
 
-       self.netflix, self.amazon, self.disney, self.hulu = data_import.import_data(
-           netflix_path=netflix_path,
-           amazon_path=amazon_path,
-           disney_path=disney_path,
-           hulu_path=hulu_path
-       )
+        titles_copy = self.titles.copy()
+        cl.filter_movies_with_actor("Nonexistent Actor", titles_copy, self.media_list_by_title)
+        self.assertEqual(titles_copy, set())
 
+    def test_filter_movies_by_genre(self):
+        """Test filtering by genre."""
+        titles_copy = self.titles.copy()
+        cl.filter_movies_by_genre("Documentaries", titles_copy, self.media_list_by_title)
+        self.assertEqual(titles_copy, {"Dick Johnson Is Dead"})
 
-       # Initialize a set for the titles
-       self.titles = set()
-       cl.add_all_titles(
-           self.titles,
-           self.netflix,
-           self.amazon,
-           self.disney,
-           self.hulu
-       )
-  
-   def test_add_all_titles(self):
-       """Verify that the correct titles are added from all streaming platforms."""
-       expected_titles = {
-           "The Grand Seduction",
-           "Take Care Good Night",
-           "Duck the Halls: A Mickey Mouse Christmas Special",
-           "Ernest Saves Christmas",
-           "Ricky Velez: Here's Everything",
-           "Silent Night",
-           "Dick Johnson Is Dead",
-           "Blood & Water"
-       }
-       self.assertEqual(self.titles, expected_titles)
+        titles_copy = self.titles.copy()
+        cl.filter_movies_by_genre("Horror", titles_copy, self.media_list_by_title)
+        self.assertEqual(titles_copy, set())
 
+        titles_copy = self.titles.copy()
+        cl.filter_movies_by_genre("Comedy", titles_copy, self.media_list_by_title)
+        self.assertNotIn("Dick Johnson Is Dead", titles_copy)
 
-   def test_filter_movies_with_actor(self):
-       """Check if filtering by actor includes only correct titles."""
-       cl.filter_movies_with_actor("Brendan Gleeson", self.titles)
-       self.assertEqual(self.titles, {"The Grand Seduction"})
+    def test_filter_movies_after_including_year(self):
+        """Verify filtering by release year."""
+        titles_copy = self.titles.copy()
+        cl.filter_movies_after_including_year(1988, titles_copy, self.media_list_by_title)
+        self.assertIn("Ernest Saves Christmas", titles_copy)
 
+        titles_copy = self.titles.copy()
+        cl.filter_movies_after_including_year(2021, titles_copy, self.media_list_by_title)
+        self.assertNotIn("Dick Johnson Is Dead", titles_copy)
+        self.assertEqual(titles_copy, {
+            "Ricky Velez: Here's Everything",
+            "Blood & Water"
+        })
 
-       cl.filter_movies_with_actor("Nonexistent Actor", self.titles)
-       self.assertEqual(self.titles, set())
-
-
-   def test_filter_movies_by_genre(self):
-       """Test filtering by genre includes matching titles and excludes mismatches."""
-       cl.filter_movies_by_genre("Documentaries", self.titles)
-       self.assertEqual(self.titles, {"Dick Johnson Is Dead"})
-       cl.filter_movies_by_genre("Horror", self.titles)
-       self.assertEqual(self.titles, set())
-       cl.filter_movies_by_genre("Comedy", self.titles)
-       self.assertNotIn("Dick Johnson Is Dead", self.titles)
-
-
-   def test_filter_movies_after_including_year(self):
-       """Verify that filtering by release year includes only movies from that year or later."""
-       cl.filter_movies_after_including_year(1988, self.titles)
-       self.assertIn("Ernest Saves Christmas", self.titles)
-       cl.filter_movies_after_including_year(2021, self.titles)
-       self.assertNotIn("Dick Johnson Is Dead", self.titles)
-       cl.filter_movies_after_including_year(2021, self.titles)
-       self.assertEqual(self.titles, {
-       "Ricky Velez: Here's Everything",
-       "Blood & Water"
-       })
-
-
-   def test_get_row_from_title(self):
-       """Ensure correct row is returned for a given movie title."""
-       row = cl.get_row_from_title("Dick Johnson Is Dead")
-       self.assertEqual(row[TITLE], "Dick Johnson Is Dead")
-       self.assertEqual(row[TYPE], "Movie")
-       self.assertEqual(row[DIRECTOR], "Kirsten Johnson")
+    def test_get_row_from_title(self):
+        """Ensure correct Media object is returned."""
+        media = cl.get_row_from_title("Dick Johnson Is Dead", self.media_list_by_title)
+        self.assertEqual(media.title, "Dick Johnson Is Dead")
+        self.assertEqual(media.media_type, "Movie")
+        self.assertEqual(media.director, {"Kirsten Johnson"})
 
 class TestCommandLineArguments(unittest.TestCase):
 
