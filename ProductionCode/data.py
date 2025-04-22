@@ -1,5 +1,9 @@
-"""The purpose of this module is to import and process datasets from various streaming services.
-It creates a 3D list of media entries and a dictionary indexed by title for easy access."""
+"""
+data.py
+
+The purpose of this module is to import and process datasets from various streaming services.
+It creates a 3D list of media entries and a dictionary indexed by title for easy access.
+"""
 
 import csv
 from collections import OrderedDict
