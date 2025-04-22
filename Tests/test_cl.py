@@ -70,7 +70,9 @@ class TestFilterFunctions(unittest.TestCase):
         })
     def test_print_filtered_titles(self):
         filterset.filter_by_actor("Brendan Gleeson")
-        self.assertEqual(filterset.print_filtered_titles(), 
+        filterset.print_filtered_titles()
+        printed_output = sys.stdout.getvalue()
+        self.assertEqual(printed_output,
             "Title: The Grand Seduction\n" \
             "Show ID: s1\n" \
             "Media Type: Movie\n" \
