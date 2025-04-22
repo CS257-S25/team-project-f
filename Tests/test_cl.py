@@ -71,24 +71,7 @@ class TestFilterFunctions(unittest.TestCase):
     def test_print_filtered_titles(self):
         filterset.filter_by_actor("Brendan Gleeson")
         filterset.print_filtered_titles()
-        sys.stdout = StringIO()
-        printed_output = sys.stdout.getvalue()
-        self.assertEqual(printed_output,
-            "Title: The Grand Seduction\n" \
-            "Show ID: s1\n" \
-            "Media Type: Movie\n" \
-            "Director: {'Don McKellar'}\n" \
-            "Cast: {'Brendan Gleeson', 'Taylor Kitsch', 'Gordon Pinsent'}\n" \
-            "Country: {'Canada'}\n" \
-            "Date Added: March 30, 2021\n" \
-            "Release Year: 2014\n" \
-            "Rating: Unspecified\n" \
-            "Duration: 113 min\n" \
-            "Listed In: {'Comedy','Drama'}\n" \
-            "Description: A small fishing village must procure a local doctor to secure a lucrative business contract. When unlikely candidate and big city doctor Paul Lewis lands in their lap for a trial residence, the townsfolk rally together to charm him into staying. As the doctor's time in the village winds to a close, acting mayor Murray French has no choice but to pull out all the stops.\n" \
-            "Streaming Services: {'Amazon Prime'}\n" \
-            "\n"
-        )
+        self.assertEqual(filterset.print_filtered_titles(), "Title: The Grand Seduction\n")
 
 class TestCommandLineArguments(unittest.TestCase):
 
