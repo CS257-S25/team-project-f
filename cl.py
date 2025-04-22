@@ -9,7 +9,8 @@ from ProductionCode import filter as f
 parser = argparse.ArgumentParser(
     prog="StreamSearch",
     description=
-    "A command line interface for searching for movies and shows across multiple streaming platforms."
+    "A command line interface for searching for movies and shows " \
+    "across multiple streaming platforms."
 )
 parser.add_argument('-a', '--actor', type=str, help='Filter by actor name')
 parser.add_argument('-c', '--category', type=str, help='Filter by category')
@@ -30,7 +31,7 @@ def main():
         filterset.filter_by_category(args.category)
     if args.year:
         filterset.filter_by_year_onward(args.year)
-    
+
     filterset.print_filtered_titles()
 
 if __name__ == "__main__":
