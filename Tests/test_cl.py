@@ -2,33 +2,16 @@ import unittest
 import sys
 from unittest.mock import patch
 from io import StringIO
+
 from collections import OrderedDict
+
 from ProductionCode import data as d
 from ProductionCode import filter as f
 import cl
 
 data = d.Data()
 filterset = f.Filter(data)
-'''
-class TestDataFunctions(unittest.TestCase):
-    def setUp(self):
-        """Load data and initialize the titles set based on the new structure."""
-        netflix_dataset = "Dummy_data/dummy_netflix.csv"
-        hulu_dataset = "Dummy_data/dummy_hulu.csv"
-        amazon_dataset = "Dummy_data/dummy_amazon.csv"
-        disney_dataset = "Dummy_data/dummy_disney.csv"
 
-        data = d.Data()
-        data.media_list = d.import_all_datasets_to_list(
-            netflix_dataset=netflix_dataset,
-            amazon_dataset=amazon_dataset,
-            disney_dataset=disney_dataset,
-            hulu_dataset=hulu_dataset
-        )
-        data.media_dict = d.create_media_dict_by_title(data.media_list)
-
-        media_dict = data.get_media_dict()
-'''
 class TestFilterFunctions(unittest.TestCase):
 
     def setUp(self):
@@ -85,6 +68,25 @@ class TestFilterFunctions(unittest.TestCase):
             "Blood & Water",
             "Ricky Velez: Here's Everything"
         })
+
+    def test_print_filtered_titles(self):
+        filterset.filtered.media.dict = {"The Grand Seduction", filterset.filtered_media_dict["The Grand Seduction"]}
+        self.assertEqual(filterset.print_filtered_titles(), 
+            "Title: The Grand Seduction\n" \
+            "Show ID: s1\n" \
+            "Media Type: Movie\n" \
+            "Director: {'Don McKellar'}\n" \
+            "Cast: {'Brendan Gleeson', 'Taylor Kitsch', 'Gordon Pinsent'}\n" \
+            "Country: {'Canada'}\n" \
+            "Date Added: March 30, 2021\n" \
+            "Release Year: 2014\n" \
+            "Rating: Unspecified\n" \
+            "Duration: 113 min\n" \
+            "Listed In: {'Comedy','Drama'}\n" \
+            "Description: A small fishing village must procure a local doctor to secure a lucrative business contract. When unlikely candidate and big city doctor Paul Lewis lands in their lap for a trial residence, the townsfolk rally together to charm him into staying. As the doctor's time in the village winds to a close, acting mayor Murray French has no choice but to pull out all the stops.\n" \
+            "Streaming Services: {'Amazon Prime'}\n" \
+            "\n"
+        )
 
 class TestCommandLineArguments(unittest.TestCase):
 

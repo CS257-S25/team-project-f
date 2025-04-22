@@ -134,7 +134,7 @@ def _sort_dict_by_key(d):
 def main():
     data = Data()
     #data.print_media_list()
-    #data.print_media_dict()
+    data.print_media_dict()
 
 if __name__ == "__main__":
     main()
