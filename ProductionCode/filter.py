@@ -7,12 +7,10 @@ operates on a dictionary of media objects and supports retrieving and printing t
 """
 
 class Filter:
-
-    """ Class to filter movies based on actor, genre, and year """
-
+    """Class with functions to easily filter movies based on actor, genre, and year """
     def __init__(self, data):
         """
-        Initializes the Filter with media data.
+        Initializes the Filter with data from the datasets and creates a copy to be filtered.
         """
         self.media_dict = data.get_media_dict()
         self.filtered_media_dict = self.media_dict.copy()
@@ -52,7 +50,7 @@ class Filter:
 
     def print_filtered_titles(self):
         """
-        Prints only the titles of the filtered media entries.
+        Prints the titles of the media entries after filtering.
         """
         for media in self.filtered_media_dict.values():
             print(media.title)
