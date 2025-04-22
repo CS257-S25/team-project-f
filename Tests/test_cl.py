@@ -91,10 +91,10 @@ class TestCommandLineArguments(unittest.TestCase):
         global data
         global filterset
         self.mock_data = [
-            [['s1', 'Movie', 'Title A', 'Director A', 'Actor X, Actor Y', 'USA', 'Jan 01, 2023', '2022', 'PG', '90 min', 'Action, Comedy', 'Description A']],
-            [['s2', 'Show', 'Title B', 'Director B', 'Actor Y, Actor Z', 'UK', 'Feb 15, 2023', '2021', 'TV-MA', '2 Seasons', 'Drama, Sci-Fi', 'Description B']],
-            [['s3', 'Movie', 'Title C', 'Director C', 'Actor X, Actor Z', 'Canada', 'Mar 20, 2023', '2023', 'G', '105 min', 'Comedy, Family', 'Description C']],
-            [['s4', 'Show', 'Title D', 'Director E', 'Actor W, Actor X', 'USA', 'May 05, 2024', '2024', 'TV-Y', '3 Seasons', 'Action, Drama', 'Description E']]
+            [['s1', 'Movie', 'Title A', 'Director A', 'Actor X, Actor Y', 'USA', 'Jan 01, 2023', '2022', 'PG', '90 min', 'Action, Comedy', 'Description A', "Service A"]],
+            [['s2', 'Show', 'Title B', 'Director B', 'Actor Y, Actor Z', 'UK', 'Feb 15, 2023', '2021', 'TV-MA', '2 Seasons', 'Drama, Sci-Fi', 'Description B', "Service B"]],
+            [['s3', 'Movie', 'Title C', 'Director C', 'Actor X, Actor Z', 'Canada', 'Mar 20, 2023', '2023', 'G', '105 min', 'Comedy, Family', 'Description C', "Service C"]],
+            [['s4', 'Show', 'Title D', 'Director E', 'Actor W, Actor X', 'USA', 'May 05, 2024', '2024', 'TV-Y', '3 Seasons', 'Action, Drama', 'Description E', "Service D"]],
         ]
         
         self.patcher = patch('ProductionCode.data.import_all_datasets_to_list', return_value=self.mock_data)
