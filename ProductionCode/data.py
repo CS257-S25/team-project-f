@@ -61,9 +61,10 @@ class Data:
 
 class Media:
     """
-    A class to represent a single movie or show entry from the dataset 
+    A class to represent a single movie or show entry from the dataset
     and all of its associated information.
     """
+
     def __init__(self, entry):
         _fill_empty_fields(entry)
         self.title = entry[TITLE]
@@ -88,7 +89,8 @@ def import_all_datasets_to_list(
     hulu_dataset="Data/hulu_titles.csv",
 ):
     """
-    Imports datasets from various streaming services and returns a list containing the data of all 4.
+    Imports datasets from various streaming services and returns a list containing the data of 
+    all 4.
     """
     netflix_data = []
     amazon_prime_data = []
@@ -173,7 +175,7 @@ def main():
     """
     Main function to test the Data class and its methods.
     """
-    #data = Data()
+    # data = Data()
     # data.print_media_list()
 
 

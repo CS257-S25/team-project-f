@@ -2,12 +2,14 @@
 filter.py
 
 This module provides the Filter class for filtering media entries such as movies and TV shows.
-Filters can be applied based on actor names, genres/categories, and release years. The class 
+Filters can be applied based on actor names, genres/categories, and release years. The class
 operates on a dictionary of media objects and supports retrieving and printing the filtered results.
 """
 
+
 class Filter:
-    """Class with functions to easily filter movies based on actor, genre, and year """
+    """Class with functions to easily filter movies based on actor, genre, and year"""
+
     def __init__(self, data):
         """
         Initializes the Filter with data from the datasets and creates a copy to be filtered.
@@ -54,7 +56,7 @@ class Filter:
         """
         for media in self.filtered_media_dict.values():
             print(media.title)
-    
+
     def print_filtered_all(self):
         """
         Prints all available details of each media entry in the filtered dictionary.
