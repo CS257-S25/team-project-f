@@ -130,7 +130,7 @@ class TestCommandLineArguments(unittest.TestCase):
         self.assertEqual(sorted(['Title A', 'Title C', 'Title D']), sorted(output))
 
     def test_filter_by_actor_and_genre(self):
-        output = self.call_main_with_args(['-a', 'Actor X', '-g', 'Action'])
+        output = self.call_main_with_args(['-a', 'Actor X', '-c', 'Action'])
         self.assertEqual(sorted(['Title A', 'Title D']), sorted(output))
 
 if __name__ == '__main__':
