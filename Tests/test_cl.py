@@ -1,7 +1,8 @@
 """
 test_cl.py
 
-This module contains unit tests for the command line interface (CLI) of the media filtering application.
+This module contains unit tests for the command line interface (CLI) of the media 
+filtering application.
 It tests the functionality of the command line arguments and their corresponding filters.
 """
 
