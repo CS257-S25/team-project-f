@@ -24,6 +24,10 @@ class Data:
     """A class to represent the dataset of movies and shows from various streaming services"""
 
     def __init__(self):
+        """
+        Initializes the Data class by importing datasets from various streaming services
+        and creating a list and dictionary of media entries.
+        """
         self.media_list = import_all_datasets_to_list()
         self.media_dict = create_media_dict_by_title(self.media_list)
 
@@ -79,6 +83,9 @@ def import_all_datasets_to_list(
     disney_dataset="Data/disney_plus_titles.csv",
     hulu_dataset="Data/hulu_titles.csv",
 ):
+    """
+    Imports datasets from various streaming services and returns a list containing the data of all 4.
+    """
     netflix_data = []
     amazon_prime_data = []
     disney_plus_data = []
@@ -94,6 +101,10 @@ def import_all_datasets_to_list(
 
 
 def import_dataset_to_list(dataset, data, streaming_service_name):
+    """
+    Imports the each cell from a CSV file into a list of rows
+    and appends the streaming service name to each row.
+    """
     with open(dataset, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
         next(reader)
@@ -103,6 +114,10 @@ def import_dataset_to_list(dataset, data, streaming_service_name):
 
 
 def create_media_dict_by_title(data):
+    """
+    Creates a dictionary of media entries indexed by their titles.
+    Each entry is a Media object containing all the information about the movie or show.
+    """
     media_dict = {}
     for streaming_service in data:
         for entry in streaming_service:
@@ -114,7 +129,10 @@ def create_media_dict_by_title(data):
 
 
 def _add_media_to_dict_by_title(media, media_dict):
-    """Adds a movie or series to the media_by_title dictionary"""
+    """
+    Adds a Media object to the dictionary indexed by its title.
+    If the title already exists, it adds another streaming service to the existing entry.
+    """
     title = media.title
 
     if title not in media_dict:
@@ -125,23 +143,33 @@ def _add_media_to_dict_by_title(media, media_dict):
 
 
 def _fill_empty_fields(entry):
+    """
+    Fills empty fields in the entry with "Unspecified" to avoid issues with missing data.
+    """
     for i in range(len(entry)):
         if entry[i] == "":
             entry[i] = "Unspecified"
 
 
 def _make_set(string):
-    """Helper function to convert a string to a set"""
+    """
+    Converts a comma-separated string into a set of values.
+    """
     return set(string.split(", "))
 
 
 def _sort_dict_by_key(d):
-    """Sorts a dictionary by its keys"""
+    """
+    Sorts a dictionary by its keys and returns an OrderedDict.
+    """
     return OrderedDict(sorted(d.items()))
 
 
 def main():
-    data = Data()
+    """
+    Main function to test the Data class and its methods.
+    """
+    #data = Data()
     # data.print_media_list()
 
 
