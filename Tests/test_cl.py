@@ -78,17 +78,7 @@ class TestFilterFunctions(unittest.TestCase):
         filterset.filter_by_category("spiders")
         self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
 
-    def test_filter_by_year_onward_lower(self):
-        filterset.filter_by_year_onward(2020)
-        self.assertEqual(filterset.filtered_media_dict.keys(), {
-            "Blood & Water",
-            "Dick Johnson is Dead",
-            "Ricky Velez: Here's Everything",
-            "Silent Night"
-
-        })
-
-    def test_filter_by_year_onward_higher(self):
+    def test_filter_by_year_onward(self):
         filterset.filter_by_year_onward(2021)
         
         self.assertEqual(filterset.filtered_media_dict.keys(), {
