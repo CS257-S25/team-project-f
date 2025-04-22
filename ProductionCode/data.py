@@ -1,6 +1,10 @@
+'''The purpose of this module is to import and process datasets from various streaming services.
+It creates a 3D list of media entries and a dictionary indexed by title for easy access.'''
+
 import csv
 from collections import OrderedDict
 
+# Constants for the indices of dataset columns to make indexing easier.
 SHOW_ID = 0
 MEDIA_TYPE = 1
 TITLE = 2
@@ -31,22 +35,6 @@ class Data:
             print(f"STREAMING SERVICE: {service}\n")
             for entry in service:
                 print(f"{entry}\n")
-  
-    def print_media_dict(self):
-        for media in self.media_dict.values():
-            print(f"Title: {media.title}")
-            print(f"Show ID: {media.show_id}")
-            print(f"Media Type: {media.media_type}")
-            print(f"Director: {media.director}")
-            print(f"Cast: {media.cast}")
-            print(f"Country: {media.country}")
-            print(f"Date Added: {media.date_added}")
-            print(f"Release Year: {media.release_year}")
-            print(f"Rating: {media.rating}")
-            print(f"Duration: {media.duration}")
-            print(f"Listed In: {media.listed_in}")
-            print(f"Description: {media.description}")
-            print(f"Streaming Services: {media.streaming_service}\n")
 
 class Media:
     """ A class to represent a single entry in the dataset """
@@ -134,7 +122,7 @@ def _sort_dict_by_key(d):
 def main():
     data = Data()
     #data.print_media_list()
-    data.print_media_dict()
+
 
 if __name__ == "__main__":
     main()
