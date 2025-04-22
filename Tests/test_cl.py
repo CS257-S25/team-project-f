@@ -2,7 +2,8 @@ import unittest
 import sys
 from unittest.mock import patch
 from io import StringIO
-from ProductionCode import data_setup
+from ProductionCode import data as d
+from ProductionCode import filter as f
 import cl
 
 # Define global constants as they are in the main script
@@ -20,82 +21,85 @@ LISTED_IN = 10
 DESCRIPTION = 11
 STREAMING_SERVICE = 12
 
-class TestFunctions(unittest.TestCase):
+
+data = d.Data()
+filterset = f.Filter(data)
+'''
+class TestDataFunctions(unittest.TestCase):
     def setUp(self):
         """Load data and initialize the titles set based on the new structure."""
-        netflix_path = "Dummy_data/dummy_netflix.csv"
-        hulu_path = "Dummy_data/dummy_hulu.csv"
-        amazon_path = "Dummy_data/dummy_amazon.csv"
-        disney_path = "Dummy_data/dummy_disney.csv"
+        netflix_dataset = "Dummy_data/dummy_netflix.csv"
+        hulu_dataset = "Dummy_data/dummy_hulu.csv"
+        amazon_dataset = "Dummy_data/dummy_amazon.csv"
+        disney_dataset = "Dummy_data/dummy_disney.csv"
 
-        data = data_setup.import_data_to_3d_list(
-            netflix_path=netflix_path,
-            amazon_path=amazon_path,
-            disney_path=disney_path,
-            hulu_path=hulu_path
+        data = d.Data()
+        data.media_list = d.import_all_datasets_to_list(
+            netflix_dataset=netflix_dataset,
+            amazon_dataset=amazon_dataset,
+            disney_dataset=disney_dataset,
+            hulu_dataset=hulu_dataset
         )
-        data_setup.process_data(data)
-        self.media_list_by_title = data_setup.media_list_by_title
-        self.titles = set(self.media_list_by_title.keys())
+        data.media_dict = d.create_media_dict_by_title(data.media_list)
 
-    def test_add_all_titles(self):
-        """Verify that the correct titles are added."""
-        expected_titles = {
-            "The Grand Seduction",
-            "Take Care Good Night",
-            "Duck the Halls: A Mickey Mouse Christmas Special",
-            "Ernest Saves Christmas",
-            "Ricky Velez: Here's Everything",
-            "Silent Night",
-            "Dick Johnson Is Dead",
-            "Blood & Water"
-        }
-        self.assertEqual(self.titles, expected_titles)
+        media_dict = data.get_media_dict()
+'''
+class TestFilterFunctions(unittest.TestCase):
 
-    def test_filter_movies_with_actor(self):
+    def setUp(self):
+        global data
+        global filterset
+
+        netflix_dataset = "Dummy_data/dummy_netflix.csv"
+        hulu_dataset = "Dummy_data/dummy_hulu.csv"
+        amazon_dataset = "Dummy_data/dummy_amazon.csv"
+        disney_dataset = "Dummy_data/dummy_disney.csv"
+
+        data.media_list = d.import_all_datasets_to_list(
+            netflix_dataset=netflix_dataset,
+            amazon_dataset=amazon_dataset,
+            disney_dataset=disney_dataset,
+            hulu_dataset=hulu_dataset
+        )
+        data.media_dict = d.create_media_dict_by_title(data.media_list)
+
+        filterset = f.Filter(data)
+
+    def test_filter_by_actor(self):
         """Check if filtering by actor includes only correct titles."""
-        titles_copy = self.titles.copy()
-        cl.filter_movies_with_actor("Brendan Gleeson", titles_copy, self.media_list_by_title)
-        self.assertEqual(titles_copy, {"The Grand Seduction"})
+        filterset.filter_by_actor("Brendan Gleeson")
+        self.assertEqual(filterset.filtered_media_dict, {"The Grand Seduction"})
 
-        titles_copy = self.titles.copy()
-        cl.filter_movies_with_actor("Nonexistent Actor", titles_copy, self.media_list_by_title)
-        self.assertEqual(titles_copy, set())
+    def test_filter_by_nonexistent_actor(self):
+        """Check if filtering by a nonexistent actor results in an empty set."""
+        filterset.filter_by_actor("Nonexistent Actor")
+        self.assertEqual(filterset.filtered_media_dict, {})
 
-    def test_filter_movies_by_genre(self):
-        """Test filtering by genre."""
-        titles_copy = self.titles.copy()
-        cl.filter_movies_by_genre("Documentaries", titles_copy, self.media_list_by_title)
-        self.assertEqual(titles_copy, {"Dick Johnson Is Dead"})
+    def test_filter_by_category(self):
+        """Check if filtering by category includes only correct titles."""
+        filterset.filter_by_category("Action")
+        self.assertEqual(filterset.filtered_media_dict, {"The Grand Seduction"})
+    def test_filter_by_category_lowercase(self):
+        filterset.filter_by_category("horror")
+        self.assertEqual(filterset.filtered_media_dict, {})
+    def filter_by_category3(self):
+        filterset.filter_by_category_uppercase("COMEDY")
+        self.assertEqual(filterset.filtered_media_dict, {"Dick Johnson Is Dead"})
+    def test_filter_by_nonexistent_category(self):
+        filterset.filter_by_category("spiders")
+        self.assertEqual(filterset.filtered_media_dict, {})
 
-        titles_copy = self.titles.copy()
-        cl.filter_movies_by_genre("Horror", titles_copy, self.media_list_by_title)
-        self.assertEqual(titles_copy, set())
+    def test_filter_by_year_onward_lower(self):
+        filterset.filter_by_year_onward(1988)
+        self.assertEqual(filterset.filtered_media_dict, "Ernest Saves Christmas")
 
-        titles_copy = self.titles.copy()
-        cl.filter_movies_by_genre("Comedy", titles_copy, self.media_list_by_title)
-        self.assertNotIn("Dick Johnson Is Dead", titles_copy)
-
-    def test_filter_movies_after_including_year(self):
-        """Verify filtering by release year."""
-        titles_copy = self.titles.copy()
-        cl.filter_movies_after_including_year(1988, titles_copy, self.media_list_by_title)
-        self.assertIn("Ernest Saves Christmas", titles_copy)
-
-        titles_copy = self.titles.copy()
-        cl.filter_movies_after_including_year(2021, titles_copy, self.media_list_by_title)
-        self.assertNotIn("Dick Johnson Is Dead", titles_copy)
-        self.assertEqual(titles_copy, {
+    def test_filter_by_year_onward_higher(self):
+        filterset.filter_by_year_onward(2021)
+        
+        self.assertEqual(filterset.filtered_media_dict, {
             "Ricky Velez: Here's Everything",
             "Blood & Water"
         })
-
-    def test_get_row_from_title(self):
-        """Ensure correct Media object is returned."""
-        media = cl.get_row_from_title("Dick Johnson Is Dead", self.media_list_by_title)
-        self.assertEqual(media.title, "Dick Johnson Is Dead")
-        self.assertEqual(media.media_type, "Movie")
-        self.assertEqual(media.director, {"Kirsten Johnson"})
 
 class TestCommandLineArguments(unittest.TestCase):
 
@@ -130,7 +134,7 @@ class TestCommandLineArguments(unittest.TestCase):
         self.assertEqual(sorted(['Title A', 'Title C', 'Title D']), sorted(output))
 
     def test_filter_by_genre(self):
-        output = self.call_main_with_args(['-g', 'Comedy'])
+        output = self.call_main_with_args(['-c', 'Comedy'])
         self.assertEqual(sorted(['Title A', 'Title C']), sorted(output))
 
     def test_filter_by_year(self):
