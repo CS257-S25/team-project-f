@@ -6,22 +6,6 @@ from ProductionCode import data as d
 from ProductionCode import filter as f
 import cl
 
-# Define global constants as they are in the main script
-TITLE = 0
-SHOW_ID = 1
-MEDIA_TYPE = 2
-DIRECTOR = 3
-CAST = 4
-COUNTRY = 5
-DATE_ADDED = 6
-RELEASE_YEAR = 7
-RATING = 8
-DURATION = 9
-LISTED_IN = 10
-DESCRIPTION = 11
-STREAMING_SERVICE = 12
-
-
 data = d.Data()
 filterset = f.Filter(data)
 '''
@@ -110,7 +94,7 @@ class TestCommandLineArguments(unittest.TestCase):
             [['s3', 'Movie', 'Title C', 'Director C', 'Actor X, Actor Z', 'Canada', 'Mar 20, 2023', '2023', 'G', '105 min', 'Comedy, Family', 'Description C']],
             [['s4', 'Show', 'Title D', 'Director E', 'Actor W, Actor X', 'USA', 'May 05, 2024', '2024', 'TV-Y', '3 Seasons', 'Action, Drama', 'Description E']]
         ]
-        self.patcher = patch('ProductionCode.data_setup.import_data_to_3d_list', return_value=self.mock_data)
+        self.patcher = patch('ProductionCode.data.import_data_to_3d_list', return_value=self.mock_data)
         self.mock_import = self.patcher.start()
         self.captured_output = StringIO()
         self.original_stdout = sys.stdout
