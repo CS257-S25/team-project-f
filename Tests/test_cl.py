@@ -70,8 +70,10 @@ class TestFilterFunctions(unittest.TestCase):
         })
     def test_print_filtered_titles(self):
         filterset.filter_by_actor("Brendan Gleeson")
+        sys.stdout = StringIO()
         filterset.print_filtered_titles()
-        self.assertEqual(filterset.print_filtered_titles(), "Title: The Grand Seduction\n")
+        printed_output = sys.stdout.getvalue()
+        self.assertEqual(printed_output.strip(), "The Grand Seduction")
 
 class TestCommandLineArguments(unittest.TestCase):
 
