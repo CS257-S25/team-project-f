@@ -68,9 +68,8 @@ class TestFilterFunctions(unittest.TestCase):
             "Blood & Water",
             "Ricky Velez: Here's Everything"
         })
-
     def test_print_filtered_titles(self):
-        filterset.filtered.media.dict = {"The Grand Seduction", filterset.filtered_media_dict["The Grand Seduction"]}
+        filterset.filter_by_actor("Brendan Gleeson")
         self.assertEqual(filterset.print_filtered_titles(), 
             "Title: The Grand Seduction\n" \
             "Show ID: s1\n" \
