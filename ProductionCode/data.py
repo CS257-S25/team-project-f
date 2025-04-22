@@ -1,0 +1,140 @@
+import csv
+from collections import OrderedDict
+
+SHOW_ID = 0
+MEDIA_TYPE = 1
+TITLE = 2
+DIRECTOR = 3
+CAST = 4
+COUNTRY = 5
+DATE_ADDED = 6
+RELEASE_YEAR = 7
+RATING = 8
+DURATION = 9
+LISTED_IN = 10
+DESCRIPTION = 11
+STREAMING_SERVICE = 12
+
+class Data:
+    def __init__(self):
+        self.media_list = import_all_datasets_to_list()
+        self.media_dict = create_media_dict_by_title(self.media_list)
+
+    def get_media_list(self):
+        return self.media_list
+
+    def get_media_dict(self):
+        return self.media_dict
+
+    def print_media_list(self):
+        for service in self.media_list:
+            print(f"STREAMING SERVICE: {service}\n")
+            for entry in service:
+                print(f"{entry}\n")
+  
+    def print_media_dict(self):
+        for media in self.media_dict.values():
+            print(f"Title: {media.title}")
+            print(f"Show ID: {media.show_id}")
+            print(f"Media Type: {media.media_type}")
+            print(f"Director: {media.director}")
+            print(f"Cast: {media.cast}")
+            print(f"Country: {media.country}")
+            print(f"Date Added: {media.date_added}")
+            print(f"Release Year: {media.release_year}")
+            print(f"Rating: {media.rating}")
+            print(f"Duration: {media.duration}")
+            print(f"Listed In: {media.listed_in}")
+            print(f"Description: {media.description}")
+            print(f"Streaming Services: {media.streaming_service}\n")
+
+class Media:
+    """ A class to represent a single entry in the dataset """
+    def __init__(self, entry):
+        _fill_empty_fields(entry)
+        self.title=entry[TITLE]
+        self.show_id=entry[SHOW_ID]
+        self.media_type=entry[MEDIA_TYPE]
+        self.director=_make_set(entry[DIRECTOR])
+        self.cast=_make_set(entry[CAST])
+        self.country=_make_set(entry[COUNTRY])
+        self.date_added=entry[DATE_ADDED]
+        self.release_year=entry[RELEASE_YEAR]
+        self.rating=entry[RATING]
+        self.duration=entry[DURATION]
+        self.listed_in=_make_set(entry[LISTED_IN])
+        self.description=entry[DESCRIPTION]
+        self.streaming_service={entry[STREAMING_SERVICE]}
+
+def import_all_datasets_to_list(
+    netflix_dataset="Data/netflix_titles.csv",
+    amazon_dataset="Data/amazon_prime_titles.csv",
+    disney_dataset="Data/disney_plus_titles.csv",
+    hulu_dataset="Data/hulu_titles.csv"
+):
+    netflix_data = []
+    amazon_prime_data = []
+    disney_plus_data = []
+    hulu_data = []
+
+    import_dataset_to_list(netflix_dataset, netflix_data, "Netflix")
+    import_dataset_to_list(amazon_dataset, amazon_prime_data, "Amazon Prime")
+    import_dataset_to_list(disney_dataset, disney_plus_data, "Disney+")
+    import_dataset_to_list(hulu_dataset, hulu_data, "Hulu")
+
+    media_list = [
+        netflix_data,
+        amazon_prime_data,
+        disney_plus_data,
+        hulu_data
+    ]
+    return media_list
+
+def import_dataset_to_list(dataset, data, streaming_service_name):
+    with open(dataset,encoding="utf-8") as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)
+        for row in reader:
+            row.append(streaming_service_name)
+            data.append(row)
+ 
+def create_media_dict_by_title(data):
+    media_dict = {}
+    for streaming_service in data:
+        for entry in streaming_service:
+            # Create a Media object for each row
+            media = Media(entry)
+            _add_media_to_dict_by_title(media, media_dict)
+    media_dict = _sort_dict_by_key(media_dict)
+    return media_dict
+
+def _add_media_to_dict_by_title(media, media_dict):
+    """ Adds a movie or series to the media_by_title dictionary """
+    title = media.title
+
+    if title not in media_dict:
+        media_dict[title] = media
+    else:
+        for service in media_dict[title].streaming_service:
+            media_dict[title].streaming_service.add(service)
+
+def _fill_empty_fields(entry):
+    for i in range(len(entry)):
+        if entry[i] == "":
+            entry[i] = "Unspecified"
+
+def _make_set(string):
+    """ Helper function to convert a string to a set """
+    return set(string.split(", "))
+
+def _sort_dict_by_key(d):
+    """ Sorts a dictionary by its keys """
+    return OrderedDict(sorted(d.items()))
+
+def main():
+    data = Data()
+    #data.print_media_list()
+    #data.print_media_dict()
+
+if __name__ == "__main__":
+    main()
