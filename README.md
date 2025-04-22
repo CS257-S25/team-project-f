@@ -61,22 +61,16 @@ README.md: This file, providing an overview and usage instructions for the appli
 UserStories.md: Contains the user stories and acceptance tests.
 
 ## Data Setup
-The application loads movie/show data from CSV files (e.g., netflix.csv, hulu.csv, etc.). 
-
-The ProductionCode/data_setup.py file handles the import and processing of this data into a usable format. 
-
-The data is structured to allow for efficient filtering by actor, genre, and year. Dummy data is included in the Dummy_data/ directory for testing purposes.
+The application loads movie/show data from CSV files (e.g., netflix.csv, hulu.csv, etc.). The ProductionCode/data_setup.py file handles the import and processing of this data into a usable format. The data is structured to allow for efficient filtering by actor, genre, and year. Dummy data is included in the Dummy_data/ directory for testing purposes.
 
 ## Testing
 The application includes a comprehensive test suite to ensure its functionality and robustness. 
 
 The tests cover various aspects of the application, including:
 
-Command-line argument parsing
-
-Data filtering logic
-
-Correctness of output
+* Command-line argument parsing
+* Data filtering logic
+* Correctness of output
 
 To run the tests, execute the following command in the project's root directory:
 ```bash
