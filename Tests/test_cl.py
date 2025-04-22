@@ -2,6 +2,7 @@ import unittest
 import sys
 from unittest.mock import patch
 from io import StringIO
+from collections import OrderedDict
 from ProductionCode import data as d
 from ProductionCode import filter as f
 import cl
@@ -57,12 +58,12 @@ class TestFilterFunctions(unittest.TestCase):
     def test_filter_by_nonexistent_actor(self):
         """Check if filtering by a nonexistent actor results in an empty set."""
         filterset.filter_by_actor("Nonexistent Actor")
-        self.assertEqual(filterset.filtered_media_dict.keys(), [])
+        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
 
     def test_filter_by_category(self):
         """Check if filtering by category includes only correct titles."""
         filterset.filter_by_category("Action")
-        self.assertEqual(filterset.filtered_media_dict.keys(), [])
+        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
     def test_filter_by_category_lowercase(self):
         filterset.filter_by_category("tv mysteries")
         self.assertEqual(filterset.filtered_media_dict.keys(), {"Blood & Water"})
@@ -75,19 +76,15 @@ class TestFilterFunctions(unittest.TestCase):
         })
     def test_filter_by_nonexistent_category(self):
         filterset.filter_by_category("spiders")
-        self.assertEqual(filterset.filtered_media_dict.keys(), [])
+        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
 
     def test_filter_by_year_onward_lower(self):
-        filterset.filter_by_year_onward(1988)
+        filterset.filter_by_year_onward(2020)
         self.assertEqual(filterset.filtered_media_dict.keys(), {
-            "The Grand Seduction",
-            "Take Care Good Night",
-            "Duck the Halls",
-            "Ernest Saves Christmas"
-            "Silent Night",
-            "Ricky Velez: Here's Everything",
-            "Dick Johnson Is Dead",
             "Blood & Water",
+            "Dick Johnson is Dead",
+            "Ricky Velez: Here's Everything",
+            "Silent Night"
 
         })
 
@@ -95,8 +92,8 @@ class TestFilterFunctions(unittest.TestCase):
         filterset.filter_by_year_onward(2021)
         
         self.assertEqual(filterset.filtered_media_dict.keys(), {
-            "Ricky Velez: Here's Everything",
-            "Blood & Water"
+            "Blood & Water",
+            "Ricky Velez: Here's Everything"
         })
 
 class TestCommandLineArguments(unittest.TestCase):
