@@ -73,18 +73,21 @@ As a fan of \[actor name\], I want to see a list of all the films and shows they
 
 **Acceptance Criteria:**
 
-* User can enter an actor’s name in a search bar.  
-* System returns a list of titles the actor appears in.  
-* Each result includes the title, streaming platform(s), type (movie or show), and year of release.
+* User provides an actor’s name as input.
+* Actor name matching is case-insensitive.
+* System correctly returns a list of titles the actor appears in.
+* System returns an empty dictionary when filtering by a nonexistent actor.
 
 **User Story 2: Platform-Specific Browsing**  
 As a \[streaming service\] user, I want to filter the database to show only content available on that platform, so I can browse what's available to me without sifting through other platforms.
 
 **Acceptance Criteria:**
 
-* User can select one or more streaming platforms via checkboxes or a dropdown menu.  
-* Filter persists when combined with other search terms (e.g., actor, genre).  
-* A “clear filters” button resets the selection.
+* User can enter one or more streaming platforms.
+* Platform name matching is case-insensitive.
+* System correctly returns titles available on the specified platforms.
+* System returns an empty dictionary when the specified platform is nonexistent.
+* Filter persists when combined with other search terms (e.g., actor, genre). 
 
 **User Story 3: Explore Genre-Specific Content by Year**
 
@@ -92,8 +95,12 @@ As a \[genre\] fan, I want to browse all movies of that genre released after 201
 
 **Acceptance Criteria:**
 
-* User can select one or more genres (e.g., Animation).  
-* User can enter a minimum release year.  
-* System filters and displays all titles matching both criteria.  
-* Each title includes the platform(s), description, and duration, ect.  
-* No matching results triggers a “No titles found” message.
+* User can enter a gengre.
+* User can enter a minimum release year.
+* Genre matching is case-insensitive.
+* System correctly returns titles under the specified gengre.
+* System correctly returns titles released after the specified year.
+* System returns an empty dictionary if the genre does not exist.
+* System returns an empty dictionary if the year exceeds the data range.
+* System returns an empty dictionary if no titles match both filters.
+* System correctly returns titles matching both the genre and year filter.
