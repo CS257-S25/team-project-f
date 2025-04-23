@@ -1,23 +1,25 @@
-class Filter:
+"""
+filter.py
 
-    """ Class to filter movies based on actor, genre, and year """
+This module provides the Filter class for filtering media entries such as movies and TV shows.
+Filters can be applied based on actor names, genres/categories, and release years. The class
+operates on a dictionary of media objects and supports retrieving and printing the filtered results.
+"""
+
+
+class Filter:
+    """Class with functions to easily filter movies based on actor, genre, and year"""
+
     def __init__(self, data):
         """
-        Initializes the Filter object with media data.
-
-        Args:
-        
-        data (MediaData): An object that provides the media data via get_media_dict().
+        Initializes the Filter with data from the datasets and creates a copy to be filtered.
         """
         self.media_dict = data.get_media_dict()
         self.filtered_media_dict = self.media_dict.copy()
 
     def filter_by_actor(self, name):
         """
-        Filters media entries to include only those featuring the specified actor.
-
-        Args:
-            name (str): The name of the actor to filter by.
+        Filters the media to only include entries featuring the specified actor.
         """
         for title in self.filtered_media_dict.copy():
             cast = self.filtered_media_dict[title].cast
@@ -26,10 +28,7 @@ class Filter:
 
     def filter_by_category(self, category):
         """
-        Filters media entries to include only those in the specified category or genre.
-
-        Args:
-            category (str): The category or genre to filter by.
+        Filters the media to only include entries that belong to the specified genre/category.
         """
         for title in self.filtered_media_dict.copy():
             categories = self.filtered_media_dict[title].listed_in
@@ -38,10 +37,7 @@ class Filter:
 
     def filter_by_year_onward(self, year):
         """
-        Filters media entries to include only those released in or after the specified year.
-
-        Args:
-            year (int or str): The minimum release year (inclusive).
+        Filters the media to only include entries released in or after the specified year.
         """
         for title in self.filtered_media_dict.copy():
             release_year = self.filtered_media_dict[title].release_year
@@ -50,23 +46,20 @@ class Filter:
 
     def get_filtered_media_dict(self):
         """
-        Returns the filtered dictionary of media entries.
-
-        Returns:
-            dict: The filtered media dictionary.
+        Returns the current filtered media dictionary.
         """
         return self.filtered_media_dict
-    
+
     def print_filtered_titles(self):
         """
-        Prints the titles of all filtered media entries.
+        Prints the titles of the media entries after filtering.
         """
         for media in self.filtered_media_dict.values():
             print(media.title)
-        
+
     def print_filtered_all(self):
         """
-        Prints detailed information of all filtered media entries.
+        Prints all available details of each media entry in the filtered dictionary.
         """
         for media in self.filtered_media_dict.values():
             print(f"Title: {media.title}")
