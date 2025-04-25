@@ -8,22 +8,6 @@ It creates a 3D list of media entries and a dictionary indexed by title for easy
 import csv
 from collections import OrderedDict
 
-# Constants for the indices of dataset columns to make indexing easier.
-SHOW_ID = 0
-MEDIA_TYPE = 1
-TITLE = 2
-DIRECTOR = 3
-CAST = 4
-COUNTRY = 5
-DATE_ADDED = 6
-RELEASE_YEAR = 7
-RATING = 8
-DURATION = 9
-LISTED_IN = 10
-DESCRIPTION = 11
-STREAMING_SERVICE = 12
-
-
 class Data:
     """A class to represent the dataset of movies and shows from various streaming services"""
 
@@ -64,6 +48,21 @@ class Media:
     A class to represent a single movie or show entry from the dataset
     and all of its associated information.
     """
+
+    # Constants for the indices of dataset columns to make indexing easier.
+    SHOW_ID = 0
+    MEDIA_TYPE = 1
+    TITLE = 2
+    DIRECTOR = 3
+    CAST = 4
+    COUNTRY = 5
+    DATE_ADDED = 6
+    RELEASE_YEAR = 7
+    RATING = 8
+    DURATION = 9
+    LISTED_IN = 10
+    DESCRIPTION = 11
+    STREAMING_SERVICE = 12
 
     def __init__(self, entry):
         _fill_empty_fields(entry)
