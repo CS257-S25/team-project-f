@@ -8,9 +8,10 @@ operates on a dictionary of media objects and supports retrieving and printing t
 import re
 from ProductionCode import data
 
+# Add the processed dataset from data.py to the filter.py module.
 dataset = data.Data()
 
-# Constants for the indices of dataset columns to make indexing easier.
+# Constants for the indices of media object attributes to make indexing easier.
 SHOW_ID = 0
 MEDIA_TYPE = 1
 TITLE = 2
@@ -65,6 +66,7 @@ class Filter:
         """
         self.media_dict = dataset.get_media_dict()
         self.filtered_media_dict = self.media_dict.copy()
+
 
     def filter_by_actor(self, name):
         """

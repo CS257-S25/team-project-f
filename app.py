@@ -87,7 +87,6 @@ def format_media_results(results, label):
         lines.append(f"- {media.title} ({media.release_year})")
     return "\n".join(lines)
 
-
-
 if __name__ == "__main__":
     app.run()
+    

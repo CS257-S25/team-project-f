@@ -74,19 +74,19 @@ class Media:
     def __init__(self, entry):
         fill_empty_fields(entry)
         self.attributes = []
-        self.attributes[TITLE] = entry[TITLE]
-        self.attributes[SHOW_ID] = entry[SHOW_ID]
-        self.attributes[MEDIA_TYPE] = entry[MEDIA_TYPE]
-        self.attributes[DIRECTOR] = _make_set(entry[DIRECTOR])
-        self.attributes[CAST] = _make_set(entry[CAST])
-        self.attributes[COUNTRY] = _make_set(entry[COUNTRY])
-        self.attributes[DATE_ADDED] = entry[DATE_ADDED]
-        self.attributes[RELEASE_YEAR] = entry[RELEASE_YEAR]
-        self.attributes[RATING] = entry[RATING]
-        self.attributes[DURATION] = entry[DURATION]
-        self.attributes[LISTED_IN] = _make_set(entry[LISTED_IN])
-        self.attributes[DESCRIPTION] = entry[DESCRIPTION]
-        self.attributes[STREAMING_SERVICE] = entry[STREAMING_SERVICE]
+        self.attributes.append(entry[SHOW_ID])
+        self.attributes.append(entry[MEDIA_TYPE])
+        self.attributes.append(entry[TITLE])
+        self.attributes.append(_make_set(entry[DIRECTOR]))
+        self.attributes.append(_make_set(entry[CAST]))
+        self.attributes.append(_make_set(entry[COUNTRY]))
+        self.attributes.append(entry[DATE_ADDED])
+        self.attributes.append(entry[RELEASE_YEAR])
+        self.attributes.append(entry[RATING])
+        self.attributes.append(entry[DURATION])
+        self.attributes.append(_make_set(entry[LISTED_IN]))
+        self.attributes.append(entry[DESCRIPTION])
+        self.attributes.append(entry[STREAMING_SERVICE])
 
 
 def import_all_datasets_to_list(
