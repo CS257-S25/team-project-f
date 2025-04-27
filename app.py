@@ -72,26 +72,6 @@ def python_bug(e):
     return "Error 500 - A python bug has occurred.</br></br>" \
     "Please check your input and try again."   
 
-
-@app.route('/actor/<actor_name>')
-def filter_by_actor(actor_name):
-   """
-   Filters media entries by actor name and formats the results
-   """
-   results = get_filtered_by_actor(actor_name)
-   return format_media_results(results, f"actor: {actor_name}")
-
-
-@app.route('/genre/<genre_name>')
-def filter_by_genre(genre_name):
-   """
-   Filters media entries by genre and formats the results.
-   """
-   results = get_filtered_by_genre(genre_name)
-   return format_media_results(results, f"genre: {genre_name}")
-
-
-
 def format_media_results(results, label):
    """
    Formats a dictionary of media entries as text string.
