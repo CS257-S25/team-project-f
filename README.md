@@ -79,4 +79,4 @@ To run the tests, execute the following command in the project's root directory:
 python -m unittest Tests/test_cl.py
 ```
 
-
+## Running the Flask App
