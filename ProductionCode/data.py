@@ -33,6 +33,7 @@ class Data:
         """
         self.media_list = import_all_datasets_to_list()
         self.media_dict = create_media_dict_by_title(self.media_list)
+        self.category_set = create_category_set(self.media_list)
 
     def get_media_list(self):
         """
@@ -47,6 +48,12 @@ class Data:
         {<title>: <Media object>}
         """
         return self.media_dict
+    
+    def get_category_set(self):
+        """
+        Returns a set containing all of the categories named within the data.
+        """
+        return self.category_set
 
     def print_media_list(self):
         """
@@ -146,6 +153,18 @@ def _add_media_to_dict_by_title(media, media_dict):
     else:
         for service in media_dict[title].streaming_service:
             media_dict[title].streaming_service.add(service)
+
+def create_category_set(data):
+    """
+    Creates a set containing all the unique catergories named within all 4 datasets.
+    """
+    categories = set()
+    for streaming_service in data:
+        for entry in streaming_service:
+            listed_categories = _make_set(entry[LISTED_IN])
+            for category in listed_categories:
+                categories.add(category)
+    return categories
 
 
 def _fill_empty_fields(entry):
