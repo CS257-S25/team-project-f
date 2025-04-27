@@ -152,9 +152,9 @@ def _fill_empty_fields(entry):
     """
     Fills empty fields in the entry with "Unspecified" to avoid issues with missing data.
     """
-    for i in range(len(entry)):
-        if entry[i] == "":
-            entry[i] = "Unspecified"
+    for i, subentry in enumerate(entry):
+        if subentry == "":
+            subentry = "Unspecified"
 
 
 def _make_set(string):
