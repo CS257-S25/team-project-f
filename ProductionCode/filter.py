@@ -44,6 +44,15 @@ class Filter:
             if int(year) > int(release_year):
                 del self.filtered_media_dict[title]
 
+    def filter_by_year_until(self, year):
+        """
+        Filters the media to only include entries released in or before the specified year.
+        """
+        for title in self.filtered_media_dict.copy():
+            release_year = self.filtered_media_dict[title].release_year
+            if int(year) < int(release_year):
+                del self.filtered_media_dict[title]        
+
     def get_filtered_media_dict(self):
         """
         Returns the current filtered media dictionary.

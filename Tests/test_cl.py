@@ -83,10 +83,17 @@ class TestFilterFunctions(unittest.TestCase):
     def test_filter_by_year_onward(self):
         """Check if filtering by a release year onwards includes only correct titles."""
         filterset.filter_by_year_onward(2021)
-
         self.assertEqual(
             filterset.filtered_media_dict.keys(),
             {"Blood & Water", "Ricky Velez: Here's Everything"},
+        )
+    
+    def test_filter_by_year_until(self):
+        """Check if filtering until a release year includes only correct titles."""
+        filterset.filter_by_year_until(1999)
+        self.assertEqual(
+            filterset.filtered_media_dict.keys(),
+            {"The Grand Seduction", "Ernest Saves Christmas"},
         )
 
     def test_print_filtered_titles(self):
