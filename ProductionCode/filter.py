@@ -101,14 +101,14 @@ class Filter:
         Prints the titles of the media entries after filtering.
         """
         for media in self.filtered_media_dict.values():
-            print(media.attrivutes[TITLE])
+            print(media.get_title())
     def get_filtered_titles_string(self):
         """
         Returns a string containing the titles of the media entries after filtering.
         """
         titles = ""
         for media in self.filtered_media_dict.values():
-            titles += f"{media.get_title()</br>"
+            titles += f"{media.get_title()}</br>"
         return titles
 
     def media_to_string(self, media):
