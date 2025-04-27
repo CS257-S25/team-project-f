@@ -146,7 +146,7 @@ def _add_media_to_dict_by_title(media, media_dict):
     Adds a Media object to the dictionary indexed by its title.
     If the title already exists, it adds another streaming service to the existing entry.
     """
-    title = media.title
+    title = media.attributes[TITLE]
 
     if title not in media_dict:
         media_dict[title] = media
