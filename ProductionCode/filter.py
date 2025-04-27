@@ -10,6 +10,21 @@ from ProductionCode import data
 
 dataset = data.Data()
 
+# Constants for the indices of dataset columns to make indexing easier.
+SHOW_ID = 0
+MEDIA_TYPE = 1
+TITLE = 2
+DIRECTOR = 3
+CAST = 4
+COUNTRY = 5
+DATE_ADDED = 6
+RELEASE_YEAR = 7
+RATING = 8
+DURATION = 9
+LISTED_IN = 10
+DESCRIPTION = 11
+STREAMING_SERVICE = 12
+
 def filter_dataset(name, category, year):
     """
     Filters the dataset based on all the parameters provided by a user 
@@ -107,23 +122,24 @@ class Filter:
         for media in self.filtered_media_dict.values():
             titles += f"{media.title}</br>"
         return titles
+
     def media_to_string(self, media):
         """
         Gets representation of individual media objects as a string.
         """
-        return (f"Title: {media.title}\n"
-                f"Show ID: {media.show_id}\n"
-                f"Media Type: {media.media_type}\n"
-                f"Director: {media.director}\n"
-                f"Cast: {media.cast}\n"
-                f"Country: {media.country}\n"
-                f"Date Added: {media.date_added}\n"
-                f"Release Year: {media.release_year}\n"
-                f"Rating: {media.rating}\n"
-                f"Duration: {media.duration}\n"
-                f"Listed In: {media.listed_in}\n"
-                f"Description: {media.description}\n"
-                f"Streaming Services: {media.streaming_service}")
+        return (f"Title: {media.attributes[TITLE]}\n"
+                f"Show ID: {media.attributes[SHOW_ID]}\n"
+                f"Media Type: {media.attributes[MEDIA_TYPE]}\n"
+                f"Director: {media.attributes[DIRECTOR]}\n"
+                f"Cast: {media.attributes[CAST]}\n"
+                f"Country: {media.attributes[COUNTRY]}\n"
+                f"Date Added: {media.attributes[DATE_ADDED]}\n"
+                f"Release Year: {media.attributes[RELEASE_YEAR]}\n"
+                f"Rating: {media.attributes[RATING]}\n"
+                f"Duration: {media.attributes[DURATION]}\n"
+                f"Listed In: {media.attributes[LISTED_IN]}\n"
+                f"Description: {media.attributes[DESCRIPTION]}\n"
+                f"Streaming Services: {media.attributes[STREAMING_SERVICE]}")
     def print_filtered_all(self):
         """
         Prints all available details of each media entry in the filtered dictionary.

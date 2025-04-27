@@ -71,22 +71,22 @@ class Media:
     and all of its associated information.
     """
 
-
     def __init__(self, entry):
-        _fill_empty_fields(entry)
-        self.title = entry[TITLE]
-        self.show_id = entry[SHOW_ID]
-        self.media_type = entry[MEDIA_TYPE]
-        self.director = _make_set(entry[DIRECTOR])
-        self.cast = _make_set(entry[CAST])
-        self.country = _make_set(entry[COUNTRY])
-        self.date_added = entry[DATE_ADDED]
-        self.release_year = entry[RELEASE_YEAR]
-        self.rating = entry[RATING]
-        self.duration = entry[DURATION]
-        self.listed_in = _make_set(entry[LISTED_IN])
-        self.description = entry[DESCRIPTION]
-        self.streaming_service = {entry[STREAMING_SERVICE]}
+        fill_empty_fields(entry)
+        self.attributes = []
+        self.attributes[TITLE] = entry[TITLE]
+        self.attributes[SHOW_ID] = entry[SHOW_ID]
+        self.attributes[MEDIA_TYPE] = entry[MEDIA_TYPE]
+        self.attributes[DIRECTOR] = _make_set(entry[DIRECTOR])
+        self.attributes[CAST] = _make_set(entry[CAST])
+        self.attributes[COUNTRY] = _make_set(entry[COUNTRY])
+        self.attributes[DATE_ADDED] = entry[DATE_ADDED]
+        self.attributes[RELEASE_YEAR] = entry[RELEASE_YEAR]
+        self.attributes[RATING] = entry[RATING]
+        self.attributes[DURATION] = entry[DURATION]
+        self.attributes[LISTED_IN] = _make_set(entry[LISTED_IN])
+        self.attributes[DESCRIPTION] = entry[DESCRIPTION]
+        self.attributes[STREAMING_SERVICE] = entry[STREAMING_SERVICE]
 
 
 def import_all_datasets_to_list(
@@ -137,7 +137,7 @@ def create_media_dict_by_title(data):
             # Create a Media object for each row
             media = Media(entry)
             _add_media_to_dict_by_title(media, media_dict)
-    media_dict = _sort_dict_by_key(media_dict)
+    media_dict = sort_dict_by_key(media_dict)
     return media_dict
 
 
@@ -167,7 +167,7 @@ def create_category_set(data):
     return categories
 
 
-def _fill_empty_fields(entry):
+def fill_empty_fields(entry):
     """
     Fills empty fields in the entry with "Unspecified" to avoid issues with missing data.
     """
@@ -183,7 +183,7 @@ def _make_set(string):
     return set(string.split(", "))
 
 
-def _sort_dict_by_key(d):
+def sort_dict_by_key(d):
     """
     Sorts a dictionary by its keys and returns an OrderedDict.
     """
