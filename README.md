@@ -37,16 +37,60 @@ Example: To find titles released from 2000 onwards:
 python cl.py -y 2000
 
 ```
+
+# StreamSearch Flask App
+
+## Overview
+
+The **StreamSearch Flask App** is a simple web application that allows users to explore our dataset of movies and shows from popular streaming platforms.
+
+## Features
+
+* **Filter by Actor:** Find movies/shows featuring a specific actor.
+* **Filter by Genre:** Find movies/shows belonging to a specific genre/category.
+* **Filter by Actor, Genre, and released year:** Find movies/shows featuring a specific actor, belonning to a specific genre,  and released after a specific year.
+* **Friendly Error Handling:** Displays a helpful message for incorrect URLs or queries.
+
+## Routes
+
+The application provides three main routes for filtering content:
+
+### Homepage
+Displays the main page of the app.  
+**URL:** `http://127.0.0.1:5000/`
+
+### Filter by Actor
+Filters media entries based on the actor's name.  
+**URL:** `http://127.0.0.1:5000/actor/<actor_name>`
+
+Example: To find titles featuring "Brendan Gleeson":
+
+```perl
+http://127.0.0.1:5000/actor/Brendan%20Gleeson
+```
+
+### Filter by Genre
+Filters media entries based on specific genre.  
+**URL:** `http://127.0.0.1:5000/genre/<genre_name>`
+
+Example: To find titles under Drama genre:
+
+```perl
+http://127.0.0.1:5000/genre/Drama
+```
+
 ## File Structure
 
 ```bash
 team-project-f/
 ├── cl.py
+├── app.py
 ├── ProductionCode/
 │   └── data.py
 │   └── filter.py
 ├── Tests/
 │   └── test_cl.py
+│   └── test_app.py
 ├── README.md
 └── UserStories.md
 ```

@@ -1,6 +1,7 @@
 from flask import Flask, request
 from ProductionCode import filter as filters
 from ProductionCode.data import Data
+from ProductionCode.filter import Filter
 
 
 app = Flask(__name__)
