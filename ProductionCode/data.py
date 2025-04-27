@@ -48,7 +48,7 @@ class Data:
         {<title>: <Media object>}
         """
         return self.media_dict
-    
+
     def get_category_set(self):
         """
         Returns a set containing all of the categories named within the data.
@@ -87,6 +87,45 @@ class Media:
         self.attributes.append(_make_set(entry[LISTED_IN]))
         self.attributes.append(entry[DESCRIPTION])
         self.attributes.append(_make_set(entry[STREAMING_SERVICE]))
+
+    def get_show_id(self):
+        return self.attributes[SHOW_ID]
+    
+    def get_media_type(self):
+        return self.attributes[MEDIA_TYPE]
+
+    def get_title(self):
+        return self.attributes[TITLE]
+
+    def get_director(self):
+        return self.attributes[DIRECTOR]
+    
+    def get_cast(self):
+        return self.attributes[CAST]
+    
+    def get_country(self):
+        return self.attributes[COUNTRY]
+    
+    def get_date_added(self):
+        return self.attributes[DATE_ADDED]
+    
+    def get_release_year(self):
+        return self.attributes[RELEASE_YEAR]
+    
+    def get_rating(self):
+        return self.attributes[RATING]
+    
+    def get_duration(self):
+        return self.attributes[DURATION]
+    
+    def get_category(self):
+        return self.attributes[LISTED_IN]
+    
+    def get_description(self):
+        return self.attributes[DESCRIPTION]
+    
+    def get_streaming_service(self):
+        return self.attributes[STREAMING_SERVICE]
 
 
 def import_all_datasets_to_list(
@@ -171,7 +210,7 @@ def fill_empty_fields(entry):
     """
     Fills empty fields in the entry with "Unspecified" to avoid issues with missing data.
     """
-    for i, field in enumerate(entry):
+    for field in entry:
         if field == "":
             field = "Unspecified"
 

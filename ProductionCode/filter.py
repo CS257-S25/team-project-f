@@ -11,20 +11,6 @@ from ProductionCode import data
 # Add the processed dataset from data.py to the filter.py module.
 dataset = data.Data()
 
-# Constants for the indices of media object attributes to make indexing easier.
-SHOW_ID = 0
-MEDIA_TYPE = 1
-TITLE = 2
-DIRECTOR = 3
-CAST = 4
-COUNTRY = 5
-DATE_ADDED = 6
-RELEASE_YEAR = 7
-RATING = 8
-DURATION = 9
-LISTED_IN = 10
-DESCRIPTION = 11
-STREAMING_SERVICE = 12
 
 def filter_dataset(name, category, year):
     """
@@ -73,7 +59,7 @@ class Filter:
         Filters the media to only include entries featuring the specified actor.
         """
         for title in self.filtered_media_dict.copy():
-            cast = self.filtered_media_dict[title].attributes[CAST]
+            cast = self.filtered_media_dict[title].get_cast()
             if name.lower() not in (actor.lower() for actor in cast):
                 del self.filtered_media_dict[title]
 
@@ -82,7 +68,7 @@ class Filter:
         Filters the media to only include entries that belong to the specified genre/category.
         """
         for title in self.filtered_media_dict.copy():
-            categories = self.filtered_media_dict[title].attributes[LISTED_IN]
+            categories = self.filtered_media_dict[title].get_category()
             if category.lower() not in (cat.lower() for cat in categories):
                 del self.filtered_media_dict[title]
 
@@ -91,7 +77,7 @@ class Filter:
         Filters the media to only include entries released in or after the specified year.
         """
         for title in self.filtered_media_dict.copy():
-            release_year = self.filtered_media_dict[title].attributes[RELEASE_YEAR]
+            release_year = self.filtered_media_dict[title].get_release_year()
             if int(year) > int(release_year):
                 del self.filtered_media_dict[title]
 
@@ -100,7 +86,7 @@ class Filter:
         Filters the media to only include entries released in or before the specified year.
         """
         for title in self.filtered_media_dict.copy():
-            release_year = self.filtered_media_dict[title].attributes[RELEASE_YEAR]
+            release_year = self.filtered_media_dict[title].get_release_year()
             if int(year) < int(release_year):
                 del self.filtered_media_dict[title]
 
@@ -122,26 +108,26 @@ class Filter:
         """
         titles = ""
         for media in self.filtered_media_dict.values():
-            titles += f"{media.attributes[TITLE]}</br>"
+            titles += f"{media.get_title()</br>"
         return titles
 
     def media_to_string(self, media):
         """
         Gets representation of individual media objects as a string.
         """
-        return (f"Title: {media.attributes[TITLE]}\n"
-                f"Show ID: {media.attributes[SHOW_ID]}\n"
-                f"Media Type: {media.attributes[MEDIA_TYPE]}\n"
-                f"Director: {media.attributes[DIRECTOR]}\n"
-                f"Cast: {media.attributes[CAST]}\n"
-                f"Country: {media.attributes[COUNTRY]}\n"
-                f"Date Added: {media.attributes[DATE_ADDED]}\n"
-                f"Release Year: {media.attributes[RELEASE_YEAR]}\n"
-                f"Rating: {media.attributes[RATING]}\n"
-                f"Duration: {media.attributes[DURATION]}\n"
-                f"Listed In: {media.attributes[LISTED_IN]}\n"
-                f"Description: {media.attributes[DESCRIPTION]}\n"
-                f"Streaming Services: {media.attributes[STREAMING_SERVICE]}")
+        return (f"Title: {media.get_title()}\n"
+                f"Show ID: {media.get_show_id()}\n"
+                f"Media Type: {media.get_media_type()}\n"
+                f"Director: {media.get_director()}\n"
+                f"Cast: {media.get_cast()}\n"
+                f"Country: {media.get_country()}\n"
+                f"Date Added: {media.get_date_added()}\n"
+                f"Release Year: {media.get_release_year()}\n"
+                f"Rating: {media.get_rating()}\n"
+                f"Duration: {media.get_duration()}\n"
+                f"Listed In: {media.get_category()}\n"
+                f"Description: {media.get_description()}\n"
+                f"Streaming Services: {media.get_streaming_service()}")
     def print_filtered_all(self):
         """
         Prints all available details of each media entry in the filtered dictionary.
