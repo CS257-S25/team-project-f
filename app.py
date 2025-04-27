@@ -92,25 +92,6 @@ def filter_by_genre(genre_name):
 
 
 
-
-def get_filtered_by_actor(actor_name):
-   """
-   Uses the Filter class to filter media entries by actor name.
-   """
-   f = Filter(data)
-   f.filter_by_actor(actor_name)
-   return f.get_filtered_media_dict()
-
-
-def get_filtered_by_genre(genre_name):
-   """
-   Uses the Filter class to filter media entries by genre.
-   """
-   f = Filter(data)
-   f.filter_by_category(genre_name)
-   return f.get_filtered_media_dict()
-
-
 def format_media_results(results, label):
    """
    Formats a dictionary of media entries as text string.
