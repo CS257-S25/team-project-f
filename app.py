@@ -1,8 +1,10 @@
-from flask import Flask, request
+"""
+Flask app for website.
+"""
+
+from flask import Flask
 from ProductionCode import filter as filters
 from ProductionCode.data import Data
-from ProductionCode.filter import Filter
-
 
 app = Flask(__name__)
 data = Data()
@@ -73,19 +75,19 @@ def python_bug(e):
     "Please check your input and try again."   
 
 def format_media_results(results, label):
-   """
-   Formats a dictionary of media entries as text string.
-   """
-   if not results:
-       return f"No entries found for {label}"
+    """
+    Formats a dictionary of media entries as text string.
+    """
+    if not results:
+        return f"No entries found for {label}"
 
 
-   lines = [f"Results for {label}"]
-   for media in results.values():
-       lines.append(f"- {media.title} ({media.release_year})")
-   return "\n".join(lines)
+    lines = [f"Results for {label}"]
+    for media in results.values():
+        lines.append(f"- {media.title} ({media.release_year})")
+    return "\n".join(lines)
 
 
 
 if __name__ == "__main__":
-   app.run()
+    app.run()
