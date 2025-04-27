@@ -86,7 +86,7 @@ class Media:
         self.attributes.append(entry[DURATION])
         self.attributes.append(_make_set(entry[LISTED_IN]))
         self.attributes.append(entry[DESCRIPTION])
-        self.attributes.append(entry[STREAMING_SERVICE])
+        self.attributes.append(_make_set(entry[STREAMING_SERVICE]))
 
 
 def import_all_datasets_to_list(
@@ -151,8 +151,8 @@ def _add_media_to_dict_by_title(media, media_dict):
     if title not in media_dict:
         media_dict[title] = media
     else:
-        for service in media_dict[title].streaming_service:
-            media_dict[title].streaming_service.add(service)
+        for service in media_dict[title].attributes[STREAMING_SERVICE]:
+            media_dict[title].attributes[STREAMING_SERVICE].add(service)
 
 def create_category_set(data):
     """

@@ -73,7 +73,7 @@ class Filter:
         Filters the media to only include entries featuring the specified actor.
         """
         for title in self.filtered_media_dict.copy():
-            cast = self.filtered_media_dict[title].cast
+            cast = self.filtered_media_dict[title].attributes[CAST]
             if name.lower() not in (actor.lower() for actor in cast):
                 del self.filtered_media_dict[title]
 
@@ -82,7 +82,7 @@ class Filter:
         Filters the media to only include entries that belong to the specified genre/category.
         """
         for title in self.filtered_media_dict.copy():
-            categories = self.filtered_media_dict[title].listed_in
+            categories = self.filtered_media_dict[title].attributes[LISTED_IN]
             if category.lower() not in (cat.lower() for cat in categories):
                 del self.filtered_media_dict[title]
 
@@ -91,7 +91,7 @@ class Filter:
         Filters the media to only include entries released in or after the specified year.
         """
         for title in self.filtered_media_dict.copy():
-            release_year = self.filtered_media_dict[title].release_year
+            release_year = self.filtered_media_dict[title].attributes[RELEASE_YEAR]
             if int(year) > int(release_year):
                 del self.filtered_media_dict[title]
 
@@ -100,7 +100,7 @@ class Filter:
         Filters the media to only include entries released in or before the specified year.
         """
         for title in self.filtered_media_dict.copy():
-            release_year = self.filtered_media_dict[title].release_year
+            release_year = self.filtered_media_dict[title].attributes[RELEASE_YEAR]
             if int(year) < int(release_year):
                 del self.filtered_media_dict[title]
 
@@ -115,14 +115,14 @@ class Filter:
         Prints the titles of the media entries after filtering.
         """
         for media in self.filtered_media_dict.values():
-            print(media.title)
+            print(media.attrivutes[TITLE])
     def get_filtered_titles_string(self):
         """
         Returns a string containing the titles of the media entries after filtering.
         """
         titles = ""
         for media in self.filtered_media_dict.values():
-            titles += f"{media.title}</br>"
+            titles += f"{media.attributes[TITLE]}</br>"
         return titles
 
     def media_to_string(self, media):
