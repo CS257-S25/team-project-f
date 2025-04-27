@@ -47,8 +47,9 @@ The **StreamSearch Flask App** is a simple web application that allows users to 
 ## Features
 
 * **Filter by Actor:** Find movies/shows featuring a specific actor.
-* **Filter by Genre:** Find movies/shows belonging to a specific genre/category.
-* **Filter by Actor, Genre, and released year:** Find movies/shows featuring a specific actor, belonning to a specific genre,  and released after a specific year.
+* **Filter by Category:** Find movies/shows belonging to a specific genre/category.
+* **Filter by Year:** Find movies/shows released on or after a specific year.
+* **List Categories:** View a list of all available categories to filter by.
 * **Friendly Error Handling:** Displays a helpful message for incorrect URLs or queries.
 
 ## Routes
@@ -56,27 +57,29 @@ The **StreamSearch Flask App** is a simple web application that allows users to 
 The application provides three main routes for filtering content:
 
 ### Homepage
-Displays the main page of the app.  
-**URL:** `http://127.0.0.1:5000/`
+Displays detailed instructions on how to use the app.  
 
-### Filter by Actor
-Filters media entries based on the actor's name.  
-**URL:** `http://127.0.0.1:5000/actor/<actor_name>`
+### List Categories
+View a list of all available categories to filter by.  
+**URL:** `URL/categories`
 
-Example: To find titles featuring "Brendan Gleeson":
+### Filter by Actor, Category, and Year
+Filters media entries based on actor, category, and year.  
+**URL:** `URL/<actor>/<category>/<year>`
 
-```perl
-http://127.0.0.1:5000/actor/Brendan%20Gleeson
+**Example:** To find titles featuring "Brendan Gleeson" in the "Comedy" genre released after 2010:
+
+```text
+http://127.0.0.1:5000/Brendan%20Gleeson/Comedy/2010
 ```
 
-### Filter by Genre
-Filters media entries based on specific genre.  
-**URL:** `http://127.0.0.1:5000/genre/<genre_name>`
+### Filter by Any Combination of Actor, Category, and Year
+To search by any combination of the actor, category, or year, simply use - to omit a filter.
 
-Example: To find titles under Drama genre:
+**Example:** To find all titles featuring "Brendan Gleeson":
 
-```perl
-http://127.0.0.1:5000/genre/Drama
+```text
+http://127.0.0.1:5000/Brendan%20Gleeson/-/-
 ```
 
 ## File Structure
@@ -111,16 +114,11 @@ The application loads streaming service movie/show data from CSV files (e.g., ne
 
 ## Testing
 The application includes a comprehensive test suite to ensure its functionality and robustness. 
-
-The tests cover various aspects of the application, including:
-
-* Command-line argument parsing
-* Data filtering logic
-* Correctness of output
-
-To run the tests, execute the following command in the project's root directory:
+To run the test for command-line argument, execute the following command in the project's root directory:
 ```bash
 python -m unittest Tests/test_cl.py
 ```
-
-## Running the Flask App
+To run the test for the Flask app, execute the following command in the project's root directory:
+```bash
+python -m unittest Tests/test_app.py
+```
