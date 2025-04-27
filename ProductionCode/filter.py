@@ -71,7 +71,7 @@ class Filter:
         Prints all available details of each media entry in the filtered dictionary.
         """
         for media in self.filtered_media_dict.values():
-            print(media_to_string(media) + "\n\n")
+            print(self.media_to_string(media) + "\n\n")
 
     def media_to_string(media):
         """
