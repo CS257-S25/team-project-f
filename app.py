@@ -89,4 +89,3 @@ def format_media_results(results, label):
 
 if __name__ == "__main__":
     app.run()
-    
