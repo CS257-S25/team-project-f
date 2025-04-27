@@ -85,7 +85,7 @@ class Filter:
         for title in self.filtered_media_dict.copy():
             release_year = self.filtered_media_dict[title].release_year
             if int(year) < int(release_year):
-                del self.filtered_media_dict[title]        
+                del self.filtered_media_dict[title]
 
     def get_filtered_media_dict(self):
         """
@@ -123,10 +123,10 @@ class Filter:
                 f"Duration: {media.duration}\n"
                 f"Listed In: {media.listed_in}\n"
                 f"Description: {media.description}\n"
-                f"Streaming Services: {media.streaming_service}")   
+                f"Streaming Services: {media.streaming_service}")
     def print_filtered_all(self):
         """
         Prints all available details of each media entry in the filtered dictionary.
         """
         for media in self.filtered_media_dict.values():
-           print(self.media_to_string(media) + "\n\n")
+            print(self.media_to_string(media) + "\n\n")
