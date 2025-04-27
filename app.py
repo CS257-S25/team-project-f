@@ -72,8 +72,6 @@ def python_bug(e):
     "Please check your input and try again."   
 
 
-
-
 @app.route('/actor/<actor_name>')
 def filter_by_actor(actor_name):
    """
@@ -124,7 +122,6 @@ def format_media_results(results, label):
    for media in results.values():
        lines.append(f"- {media.title} ({media.release_year})")
    return "\n".join(lines)
-
 
 
 
