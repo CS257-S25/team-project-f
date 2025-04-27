@@ -89,42 +89,43 @@ class Media:
         self.attributes.append(_make_set(entry[STREAMING_SERVICE]))
 
     def get_show_id(self):
+        """Returns the media's show id."""
         return self.attributes[SHOW_ID]
-    
     def get_media_type(self):
+        """Returns the media's type."""
         return self.attributes[MEDIA_TYPE]
-
     def get_title(self):
+        """Returns the media's title."""
         return self.attributes[TITLE]
-
     def get_director(self):
+        """Returns the media's director."""
         return self.attributes[DIRECTOR]
-    
     def get_cast(self):
+        """Returns the media's cast."""
         return self.attributes[CAST]
-    
     def get_country(self):
+        """Returns the media's country."""
         return self.attributes[COUNTRY]
-    
     def get_date_added(self):
+        """Returns the media's date added."""
         return self.attributes[DATE_ADDED]
-    
     def get_release_year(self):
+        """Returns the media's release year."""
         return self.attributes[RELEASE_YEAR]
-    
     def get_rating(self):
+        """Returns the media's rating."""
         return self.attributes[RATING]
-    
     def get_duration(self):
+        """Returns the media's duration."""
         return self.attributes[DURATION]
-    
     def get_category(self):
+        """Returns the media's category."""
         return self.attributes[LISTED_IN]
-    
     def get_description(self):
+        """Returns the media's description."""
         return self.attributes[DESCRIPTION]
-    
     def get_streaming_service(self):
+        """Returns the media's streaming service."""
         return self.attributes[STREAMING_SERVICE]
 
 
@@ -185,13 +186,13 @@ def _add_media_to_dict_by_title(media, media_dict):
     Adds a Media object to the dictionary indexed by its title.
     If the title already exists, it adds another streaming service to the existing entry.
     """
-    title = media.attributes[TITLE]
+    title = media.get_title()
 
     if title not in media_dict:
         media_dict[title] = media
     else:
-        for service in media_dict[title].attributes[STREAMING_SERVICE]:
-            media_dict[title].attributes[STREAMING_SERVICE].add(service)
+        for service in media_dict[title].get_streaming_service():
+            media_dict[title].get_streaming_service().add(service)
 
 def create_category_set(data):
     """
