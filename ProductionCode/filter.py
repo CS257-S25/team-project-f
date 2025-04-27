@@ -62,16 +62,10 @@ class Filter:
         Prints all available details of each media entry in the filtered dictionary.
         """
         for media in self.filtered_media_dict.values():
-            print(f"Title: {media.title}")
-            print(f"Show ID: {media.show_id}")
-            print(f"Media Type: {media.media_type}")
-            print(f"Director: {media.director}")
-            print(f"Cast: {media.cast}")
-            print(f"Country: {media.country}")
-            print(f"Date Added: {media.date_added}")
-            print(f"Release Year: {media.release_year}")
-            print(f"Rating: {media.rating}")
-            print(f"Duration: {media.duration}")
-            print(f"Listed In: {media.listed_in}")
-            print(f"Description: {media.description}")
-            print(f"Streaming Services: {media.streaming_service}\n")
+            print(media_to_string(media) + "\n\n")
+
+    def media_to_string(media):
+        """
+        Gets representation of individual media objects as a string.
+        """
+        return f"Title: {media.title}\nShow ID: {media.show_id}\nMedia Type: {media.media_type}\nDirector: {media.director}\nCountry: {media.country}\nDate Added: {media.date_added}\nRelease Year: {media.release_year}\nRating: {media.rating}\nDuration: {media.duration}\nListed In: {media.listed_in}\nDescription: {media.description}\nStreaming Services: {media.streaming_service}"

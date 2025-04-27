@@ -172,6 +172,23 @@ class TestCommandLineArguments(unittest.TestCase):
                     "Service D",
                 ]
             ],
+            [
+                [
+                    "s5",
+                    "Movie",
+                    "Title G",
+                    "",
+                    "",
+                    "",
+                    "September 11, 2001",
+                    "2020",
+                    "",
+                    "",
+                    "Thriller",
+                    "Description G",
+                    "Service A",
+                ]
+            ],
         ]
 
         self.patcher = patch(
