@@ -61,16 +61,16 @@ Displays detailed instructions on how to use the app.
 
 ### List Categories
 View a list of all available categories to filter by.  
-**URL:** `URL/categories`
+**URL:** `[URL]/categories`
 
 ### Filter by Actor, Category, and Year
 Filters media entries based on actor, category, and year.  
-**URL:** `URL/<actor>/<category>/<year>`
+**URL:** `[URL]/<actor>/<category>/<year>`
 
 **Example:** To find titles featuring "Brendan Gleeson" in the "Comedy" genre released after 2010:
 
 ```text
-http://127.0.0.1:5000/Brendan%20Gleeson/Comedy/2010
+[URL]/Brendan%20Gleeson/Comedy/2010
 ```
 
 ### Filter by Any Combination of Actor, Category, and Year
@@ -79,7 +79,7 @@ To search by any combination of the actor, category, or year, simply use - to om
 **Example:** To find all titles featuring "Brendan Gleeson":
 
 ```text
-http://127.0.0.1:5000/Brendan%20Gleeson/-/-
+[URL]/Brendan%20Gleeson/-/-
 ```
 
 ## File Structure
