@@ -89,25 +89,46 @@ team-project-f/
 ├── cl.py
 ├── app.py
 ├── ProductionCode/
-│   └── data.py
-│   └── filter.py
+│   ├── data.py
+│   ├── filtering.py
+│   └── formatting.py
 ├── Tests/
-│   └── test_cl.py
+│   ├── test_cl.py
 │   └── test_app.py
+├── Data/
+│   ├── amazon_prime_titles.csv
+│   ├── disney_plus_titles.csv
+│   ├── hulu_titles.csv
+│   ├── netflix_titles.csv
+│   └── metadata.md
 ├── README.md
+├── Contract.md
+├── Proposal.md
 └── UserStories.md
 ```
-cl.py: The main application script that parses command-line arguments and interacts with the ProductionCode.
+cl.py: The command-line application script that parses command-line arguments and interacts with the ProductionCode.
+
+app.py: The script responsible for running the website application.
 
 ProductionCode/data.py: Contains the logic for loading and processing the movie/show data.
 
-ProductionCode/filter.py: Contains the logic for filtering the movie/show data based on user input.
+ProductionCode/filtering.py: Contains the logic for filtering the movie/show data based on user input.
+
+ProductionCode/formatting.py: Contains logic for miscellaneous reformatting needed in various locations.
 
 Tests/test_cl.py: Contains the automated test suite for the cl.py application.
 
+Tests/test_app.py: Contains the automated test suite for the app.py application.
+
+Data/metadata.md: Contains information on each dataset used. Refer there for more information on each .csv file in Data.
+
 README.md: This file, providing an overview and usage instructions for the application.
 
-UserStories.md: Contains the user stories and acceptance tests.
+Proposal.md: Contains a proposal for what this project will be about.
+
+Contract.md: Contains the contract to ensure stability and deliverability in the group as we work together.
+
+UserStories.md: Contains the necessary user stories and acceptance tests.
 
 ## Data Setup
 The application loads streaming service movie/show data from CSV files (e.g., netflix.csv, hulu.csv, etc.). The ProductionCode/data.py file handles the importing and processing of this data into a usable format. The data is structured to allow for efficient filtering by actor, genre, and year via the filter.py file. Dummy data is included in the Dummy_data/ directory for testing purposes.
