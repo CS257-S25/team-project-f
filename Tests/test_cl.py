@@ -29,7 +29,7 @@ class TestFilterFunctions(unittest.TestCase):
         hulu_dataset = "Dummy_data/dummy_hulu.csv"
         amazon_dataset = "Dummy_data/dummy_amazon.csv"
         disney_dataset = "Dummy_data/dummy_disney.csv"
-    
+
         f.dataset.media_list = d.import_all_datasets_to_list(
             netflix_dataset=netflix_dataset,
             amazon_dataset=amazon_dataset,
@@ -83,7 +83,7 @@ class TestFilterFunctions(unittest.TestCase):
             filterset.filtered_media_dict.keys(),
             {"Blood & Water", "Ricky Velez: Here's Everything"},
         )
-    
+
     def test_filter_by_year_until(self):
         """Check if filtering until a release year includes only correct titles."""
         filterset.filter_by_year_until(1999)
@@ -104,8 +104,6 @@ class TestFilterFunctions(unittest.TestCase):
 class TestCommandLineArguments(unittest.TestCase):
     """Test class for the command line interface of the media filtering application."""
     def setUp(self):
-        global data
-        global filterset
         self.mock_data = [
             [
                 [
