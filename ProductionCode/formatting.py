@@ -13,6 +13,7 @@ def make_list_web_displayable(a_list):
     """
     return '</br>'.join(a_list)
 
+
 #Url Input
 def url_input_not_null(search_term):
     """
@@ -28,6 +29,7 @@ def reformat_url_input(search_string):
     """
     search_string = re.sub(r"%20|-|_", " ", search_string)
     return search_string.lower()
+
 
 #Data Handling
 def make_set(string):
