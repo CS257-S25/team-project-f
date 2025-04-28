@@ -6,7 +6,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ## Overview
 
-The StreamSearch CLI is a command-line application that allows users to explore a dataset of movies and shows from Netflix, Amazon Prime, Disney+, and Hulu. Users can filter the data by actor, category, or release year to find titles of interest. The application is designed to be a simple and efficient way to query movie/show information directly from the command line.
+The StreamSearch CLI is a command-line application that allows users to explore a dataset of movies and shows from Netflix, Amazon Prime, Disney+, and Hulu. Users can filter the data by actor, category, or release year to find titles of interest.
 
 ## Features
 
@@ -54,16 +54,16 @@ The **StreamSearch Flask App** is a simple web application that allows users to 
 
 ## Routes
 
-The application provides three main routes for filtering content:
+The application provides two main routes for filtering content:
 
 ### Homepage
 Displays detailed instructions on how to use the app.  
 
-### List Categories
+### List Categories (Route 1)
 View a list of all available categories to filter by.  
 **URL:** `[URL]/categories`
 
-### Filter by Actor, Category, and Year
+### Filter by Actor, Category, and Year (Route 2)
 Filters media entries based on actor, category, and year.  
 **URL:** `[URL]/<actor>/<category>/<year>`
 
@@ -131,7 +131,7 @@ Contract.md: Contains the contract to ensure stability and deliverability in the
 UserStories.md: Contains the necessary user stories and acceptance tests.
 
 ## Data Setup
-The application loads streaming service movie/show data from CSV files (e.g., netflix.csv, hulu.csv, etc.). The ProductionCode/data.py file handles the importing and processing of this data into a usable format. The data is structured to allow for efficient filtering by actor, genre, and year via the filter.py file. Dummy data is included in the Dummy_data/ directory for testing purposes.
+The application loads streaming service movie/show data from CSV files (e.g., netflix.csv, hulu.csv, etc.). The ProductionCode/data.py file handles the importing and processing of this data into a usable format. The data is structured to allow for efficient filtering by actor, genre, and year via the filtering.py file. Dummy data is included in the Dummy_data/ directory for testing purposes.
 
 ## Testing
 The application includes a comprehensive test suite to ensure its functionality and robustness. 
