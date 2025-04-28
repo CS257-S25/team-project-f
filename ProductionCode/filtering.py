@@ -134,4 +134,3 @@ class Filter:
         Get a filtered data object from the filtered_media_dict.
         """
         return FilteredData(self.filtered_media_dict)
-
