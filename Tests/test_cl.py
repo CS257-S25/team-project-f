@@ -14,11 +14,11 @@ from io import StringIO
 from collections import OrderedDict
 
 from ProductionCode import data as d
-from ProductionCode import filtering as f
+from ProductionCode.filtering import Filter
 import cl
 
 data = d.Data()
-filtering = f(data)
+filtering = Filter(data)
 
 
 class TestFilterFunctions(unittest.TestCase):
