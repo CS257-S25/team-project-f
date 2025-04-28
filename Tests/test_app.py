@@ -72,15 +72,14 @@ class TestFilterFunctions(unittest.TestCase):
             )
 
     def test_category_filter(self):
-        """Check if filtering by category includes only correct titles."""
-        results = (
-            "A Muppets Christmas: Letters To Santa</br>"
-            "Duck the Halls: A Mickey Mouse Christmas Special</br>"
-            "Ice Age: A Mammoth Christmas</br>"
-            "Secrets of the Zoo: Tampa</br>"
-            "The Halloween Candy Magic Pet</br>"
-        )
-        self.assertIn(results, app.search_with_filters("-", "family", "-"))
+        """Check if filtering by category includes correct titles."""
+        app.search_with_filters("-", "family", "-")
+        results = ["A Muppets Christmas: Letters To Santa",
+                   "Duck the Halls: A Mickey Mouse Christmas Special",
+                   "Ice Age: A Mammoth Christmas",
+                   "Secrets of the Zoo: Tampa",
+                   "The Halloween Candy Magic Pet"]
+        self.assertIn(results, app.filters.get_filtered_media_dict())
 
     def test_year_filter(self):
         """Check if filtering by year includes only correct titles."""
