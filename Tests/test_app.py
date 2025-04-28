@@ -34,7 +34,7 @@ class TestCategoriesPage(unittest.TestCase):
 
     def test_categories(self):
         """Check if the categories function returns the correct content."""
-        expected_list = app.filtering.dataset.get_category_set()
+        expected_list = app.dataset.get_category_set()
         expected_return = f"Valid categories are as follows:</br></br>{expected_list}"
         self.assertIn(app.list_categories(), expected_return)
 
@@ -73,7 +73,7 @@ class TestFilterFunctions(unittest.TestCase):
     def test_category_filter(self):
         """Check if filtering by category includes correct titles."""
         app.search_with_filters("-", "family", "-")
-        
+
         expected_include = [
             "A Muppets Christmas: Letters To Santa",
             "Duck the Halls: A Mickey Mouse Christmas Special",
@@ -81,9 +81,9 @@ class TestFilterFunctions(unittest.TestCase):
             "Secrets of the Zoo: Tampa",
             "The Halloween Candy Magic Pet"
         ]
-        
-        actual_titles = [media.get_title() for media in app.filtering.filtered_media_dict.values()]
-        
+
+        actual_titles = [media.get_title() for media in app.filtered_data.get_data()]
+
         for title in expected_include:
             self.assertIn(title, actual_titles)
 
