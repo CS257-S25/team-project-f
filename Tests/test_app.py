@@ -8,7 +8,6 @@ It tests the functionality of the different routes and the filtering functions.
 import unittest
 import app
 
-
 class TestHomepage(unittest.TestCase):
     """Test the homepage route to ensure it contains the correct content."""
 
