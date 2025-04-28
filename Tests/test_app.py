@@ -82,7 +82,7 @@ class TestFilterFunctions(unittest.TestCase):
             "The Halloween Candy Magic Pet"
         ]
 
-        actual_titles = [media.get_title() for media in app.filtered_data.get_data()]
+        actual_titles = [media.get_title() for media in app.filtering.filtered_media_dict.values()]
 
         for title in expected_include:
             self.assertIn(title, actual_titles)

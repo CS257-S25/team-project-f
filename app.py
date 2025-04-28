@@ -4,13 +4,11 @@ Flask app for website.
 
 from flask import Flask
 from ProductionCode.filtering import Filter
-from ProductionCode.filtering import FilteredData
 from ProductionCode.data import Data
 
 app = Flask(__name__)
 dataset = Data()
 filtering = Filter(dataset)
-filtered_data = FilteredData({})
 
 @app.route('/')
 def homepage():
