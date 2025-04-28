@@ -78,7 +78,7 @@ class Filter:
                 user_input = formatting.reformat_url_input(user_input)
                 filter_types[filter_type](user_input)
         return FilteredData(self.filtered_media_dict)
-    
+ 
     def filter_for_cl(self, name, category, year):
         """
         Filters the dataset based on all the arguments provided by a user 
@@ -128,8 +128,8 @@ class Filter:
             release_year = self.filtered_media_dict[title].get_release_year()
             if int(year) < int(release_year):
                 del self.filtered_media_dict[title]
-    
+
     def get_filtered_data(self):
         return FilteredData(self.filtered_media_dict)
 
-        
+   
