@@ -75,17 +75,5 @@ def python_bug(e):
     return "Error 500 - A python bug has occurred.</br></br>" \
     "Please check your input and try again."   
 
-def format_media_results(results, label):
-    """
-    Formats a dictionary of media entries as text string.
-    """
-    if not results:
-        return f"No entries found for {label}"
-
-    lines = [f"Results for {label}"]
-    for media in results.values():
-        lines.append(f"- {media.title} ({media.release_year})")
-    return "\n".join(lines)
-
 if __name__ == "__main__":
     app.run()
