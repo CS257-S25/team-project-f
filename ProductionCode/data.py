@@ -5,6 +5,7 @@ The purpose of this module is to import and process datasets from various stream
 It creates a 3D list of media entries and a dictionary indexed by title for easy access.
 """
 
+from ProductionCode import format
 import csv
 from collections import OrderedDict
 
@@ -77,16 +78,16 @@ class Media:
         self.attributes.append(entry[SHOW_ID])
         self.attributes.append(entry[MEDIA_TYPE])
         self.attributes.append(entry[TITLE])
-        self.attributes.append(_make_set(entry[DIRECTOR]))
-        self.attributes.append(_make_set(entry[CAST]))
-        self.attributes.append(_make_set(entry[COUNTRY]))
+        self.attributes.append(format.make_set(entry[DIRECTOR]))
+        self.attributes.append(format.make_set(entry[CAST]))
+        self.attributes.append(format.make_set(entry[COUNTRY]))
         self.attributes.append(entry[DATE_ADDED])
         self.attributes.append(entry[RELEASE_YEAR])
         self.attributes.append(entry[RATING])
         self.attributes.append(entry[DURATION])
-        self.attributes.append(_make_set(entry[LISTED_IN]))
+        self.attributes.append(format.make_set(entry[LISTED_IN]))
         self.attributes.append(entry[DESCRIPTION])
-        self.attributes.append(_make_set(entry[STREAMING_SERVICE]))
+        self.attributes.append(format.make_set(entry[STREAMING_SERVICE]))
 
     def get_show_id(self):
         """Returns the media's show id."""
@@ -127,6 +128,23 @@ class Media:
     def get_streaming_service(self):
         """Returns the media's streaming service."""
         return self.attributes[STREAMING_SERVICE]
+    def str(self):
+        """
+        Gets representation of individual media objects as a string.
+        """
+        return (f"Title: {self.get_title()}\n"
+            f"Show ID: {self.get_show_id()}\n"
+            f"Media Type: {self.get_media_type()}\n"
+            f"Director: {self.get_director()}\n"
+            f"Cast: {self.get_cast()}\n"
+            f"Country: {self.get_country()}\n"
+            f"Date Added: {self.get_date_added()}\n"
+            f"Release Year: {self.get_release_year()}\n"
+            f"Rating: {self.get_rating()}\n"
+            f"Duration: {self.get_duration()}\n"
+            f"Listed In: {self.get_category()}\n"
+            f"Description: {self.get_description()}\n"
+            f"Streaming Services: {self.get_streaming_service()}")
 
 
 def import_all_datasets_to_list(
@@ -177,7 +195,7 @@ def create_media_dict_by_title(data):
             # Create a Media object for each row
             media = Media(entry)
             _add_media_to_dict_by_title(media, media_dict)
-    media_dict = sort_dict_by_key(media_dict)
+    media_dict = format.sort_dict_by_key(media_dict)
     return media_dict
 
 
@@ -201,11 +219,10 @@ def create_category_set(data):
     categories = set()
     for streaming_service in data:
         for entry in streaming_service:
-            listed_categories = _make_set(entry[LISTED_IN])
+            listed_categories = format.make_set(entry[LISTED_IN])
             for category in listed_categories:
                 categories.add(category)
     return categories
-
 
 def fill_empty_fields(entry):
     """
@@ -215,28 +232,12 @@ def fill_empty_fields(entry):
         if field == "":
             field = "Unspecified"
 
-
-def _make_set(string):
-    """
-    Converts a comma-separated string into a set of values.
-    """
-    return set(string.split(", "))
-
-
-def sort_dict_by_key(d):
-    """
-    Sorts a dictionary by its keys and returns an OrderedDict.
-    """
-    return OrderedDict(sorted(d.items()))
-
-
 def main():
     """
     Main function to test the Data class and its methods.
     """
     # data = Data()
     # data.print_media_list()
-
 
 if __name__ == "__main__":
     main()

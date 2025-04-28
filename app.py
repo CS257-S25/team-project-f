@@ -3,12 +3,13 @@ Flask app for website.
 """
 
 from flask import Flask
-from ProductionCode import filter as filters
+from ProductionCode.filtering import Filter
+from ProductionCode.filtering import Filtered_Data
 from ProductionCode.data import Data
 
 app = Flask(__name__)
 data = Data()
-
+filter = Filter(data)
 
 @app.route('/')
 def homepage():
@@ -36,7 +37,8 @@ def search_with_filters(actor, category, year):
     all the movies or TV shows which meet the filter criteria specified in the web address.
     Further information in these criteria is specified in homepage()'s return value.
     """
-    return filters.filter_dataset(actor, category, year)
+    filtered_data = filter.filter_for_web(actor, category, year)
+    return filtered_data.get_web_displayable_titles()
 
 @app.route('/categories')
 def list_categories():
