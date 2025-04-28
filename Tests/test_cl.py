@@ -102,8 +102,6 @@ class TestFilterFunctions(unittest.TestCase):
 
 
 class TestCommandLineArguments(unittest.TestCase):
-    global data
-    global filtering
     """Test class for the command line interface of the media filtering application."""
     def setUp(self):
         self.mock_data = [
