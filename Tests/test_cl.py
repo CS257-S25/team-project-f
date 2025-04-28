@@ -18,7 +18,7 @@ from ProductionCode import filtering as f
 import cl
 
 data = d.Data()
-filterset = f.Filter(data)
+filtering = f(data)
 
 
 class TestFilterFunctions(unittest.TestCase):
@@ -41,29 +41,29 @@ class TestFilterFunctions(unittest.TestCase):
 
     def test_filter_by_actor(self):
         """Check if filtering by actor includes only correct titles."""
-        filterset.filter_by_actor("Brendan Gleeson")
-        self.assertEqual(filterset.filtered_media_dict.keys(), {"The Grand Seduction"})
+        filtering.filter_by_actor("Brendan Gleeson")
+        self.assertEqual(filtering.filtered_media_dict.keys(), {"The Grand Seduction"})
 
     def test_filter_by_nonexistent_actor(self):
         """Check if filtering by a nonexistent actor results in an empty dictionary."""
-        filterset.filter_by_actor("Nonexistent Actor")
-        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
+        filtering.filter_by_actor("Nonexistent Actor")
+        self.assertEqual(filtering.filtered_media_dict.keys(), OrderedDict().keys())
 
     def test_filter_by_category(self):
         """Check if filtering by category includes only correct titles."""
-        filterset.filter_by_category("Action")
-        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
+        filtering.filter_by_category("Action")
+        self.assertEqual(filtering.filtered_media_dict.keys(), OrderedDict().keys())
 
     def test_filter_by_category_lowercase(self):
         """Check if filtering by category in lowercase includes only correct titles."""
-        filterset.filter_by_category("tv mysteries")
-        self.assertEqual(filterset.filtered_media_dict.keys(), {"Blood & Water"})
+        filtering.filter_by_category("tv mysteries")
+        self.assertEqual(filtering.filtered_media_dict.keys(), {"Blood & Water"})
 
-    def filter_by_category3(self):
+    def test_filter_by_category3(self):
         """Check if filtering by category in uppercase includes only correct titles."""
-        filterset.filter_by_category_uppercase("DRAMA")
+        filtering.filter_by_category_uppercase("DRAMA")
         self.assertEqual(
-            filterset.filtered_media_dict.keys(),
+            filtering.filtered_media_dict.keys(),
             {
                 "The Grand Seduction",
                 "Take Care Good Night",
@@ -73,35 +73,37 @@ class TestFilterFunctions(unittest.TestCase):
 
     def test_filter_by_nonexistent_category(self):
         """Check if filtering by a nonexistent category results in an empty dictionary."""
-        filterset.filter_by_category("spiders")
-        self.assertEqual(filterset.filtered_media_dict.keys(), OrderedDict().keys())
+        filtering.filter_by_category("spiders")
+        self.assertEqual(filtering.filtered_media_dict.keys(), OrderedDict().keys())
 
     def test_filter_by_year_onward(self):
         """Check if filtering by a release year onwards includes only correct titles."""
-        filterset.filter_by_year_onward(2021)
+        filtering.filter_by_year_onward(2021)
         self.assertEqual(
-            filterset.filtered_media_dict.keys(),
+            filtering.filtered_media_dict.keys(),
             {"Blood & Water", "Ricky Velez: Here's Everything"},
         )
 
     def test_filter_by_year_until(self):
         """Check if filtering until a release year includes only correct titles."""
-        filterset.filter_by_year_until(1999)
+        filtering.filter_by_year_until(1999)
         self.assertEqual(
-            filterset.filtered_media_dict.keys(),
+            filtering.filtered_media_dict.keys(),
             {"The Grand Seduction", "Ernest Saves Christmas"},
         )
 
     def test_print_filtered_titles(self):
         """Check if the printed titles after filtering are correct."""
-        filterset.filter_by_actor("Brendan Gleeson")
+        filtering.filter_by_actor("Brendan Gleeson")
         sys.stdout = StringIO()
-        filterset.print_filtered_titles()
+        filtering.print_filtered_titles()
         printed_output = sys.stdout.getvalue()
         self.assertEqual(printed_output.strip(), "The Grand Seduction")
 
 
 class TestCommandLineArguments(unittest.TestCase):
+    global data
+    global filtering
     """Test class for the command line interface of the media filtering application."""
     def setUp(self):
         self.mock_data = [
@@ -216,7 +218,7 @@ class TestCommandLineArguments(unittest.TestCase):
         """Test the main function with no command line arguments."""
         output = self.call_main_with_args([])
         self.assertEqual(
-            sorted(["Title A", "Title B", "Title C", "Title D"]), sorted(output)
+            sorted(["Title A", "Title B", "Title C", "Title D", "Title G"]), sorted(output)
         )
 
     def test_filter_by_actor(self):
