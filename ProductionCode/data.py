@@ -4,10 +4,8 @@ data.py
 The purpose of this module is to import and process datasets from various streaming services.
 It creates a 3D list of media entries and a dictionary indexed by title for easy access.
 """
-
-from ProductionCode import formatting
 import csv
-from collections import OrderedDict
+from ProductionCode import formatting
 
 # Constants for the indices of dataset columns to make indexing easier.
 SHOW_ID = 0

@@ -6,15 +6,12 @@ import re
 from collections import OrderedDict
 
 #Web Display
-def make_list_web_displayable(list):
+def make_list_web_displayable(a_list):
     """
     Returns a string containing each item in a list seperated by the 
     </br> tag for displaying on a website.
     """
-    string = ""
-    for entry in list:
-        string += f"{entry}</br>"
-    return string
+    return '</br>'.join(a_list)
 
 #Url Input
 def url_input_not_null(search_term):

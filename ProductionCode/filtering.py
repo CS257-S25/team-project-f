@@ -8,7 +8,7 @@ operates on a dictionary of media objects and supports retrieving and printing t
 
 from ProductionCode import formatting
 
-class Filtered_Data:
+class FilteredData:
     """
     Represents filted data (as created by the Filter class) as an object
     with various methods of accessing the data.
@@ -77,7 +77,7 @@ class Filter:
             if formatting.url_input_not_null(user_input):
                 user_input = formatting.reformat_url_input(user_input)
                 filter_types[filter_type](user_input)
-        return Filtered_Data(self.filtered_media_dict)
+        return FilteredData(self.filtered_media_dict)
 
     def filter_by_actor(self, name):
         """
