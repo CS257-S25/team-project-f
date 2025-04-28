@@ -45,7 +45,7 @@ def list_categories():
     Determines the text displayed on the page with the route /categories.
     Provides a list of all available category filters.
     """
-    return f"Valid categories are as follows:</br></br>{filters.dataset.get_category_set()}"
+    return f"Valid categories are as follows:</br></br>{dataset.get_category_set()}"
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -81,7 +81,6 @@ def format_media_results(results, label):
     """
     if not results:
         return f"No entries found for {label}"
-
 
     lines = [f"Results for {label}"]
     for media in results.values():
