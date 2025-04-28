@@ -13,6 +13,15 @@ def make_list_web_displayable(a_list):
     """
     return '</br>'.join(a_list)
 
+#def make_newline_list_web_displayable(a_list):
+#    """
+#    Replaces the newlines in a list and returns a string containing each item
+#    in a list seperated by the </br> tag for displaying on a website.
+#    """
+#    for string in a_list:
+#        string.replace("\n","</br>")
+#    return make_list_web_displayable(a_list)
+
 
 #Url Input
 def url_input_not_null(search_term):

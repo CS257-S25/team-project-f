@@ -39,12 +39,19 @@ class FilteredData:
         verbose_list = []
         for media in self.data.values():
             verbose_list.append(media.str() + "\n\n")
+        return verbose_list
     def get_web_displayable_titles(self):
         """
-        Returns a string containing the titles of filtered media reformmated to be web
+        Returns a string containing the titles of filtered media reformatted to be web
         displayable.
         """
         return formatting.make_list_web_displayable(self.get_titles_list())
+  #  def get_web_displayable_verbose(self):
+  #      """
+  #      Returns a string containing the titles of filtered media reformatted to be
+  #      web displayable.
+  #      """
+  #      return formatting.make_newline_list_web_displayable(self.get_verbose_list())
 
 class Filter:
     """
