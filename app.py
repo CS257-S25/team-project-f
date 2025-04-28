@@ -7,8 +7,8 @@ from ProductionCode.filtering import Filter
 from ProductionCode.data import Data
 
 app = Flask(__name__)
-data = Data()
-filtering = Filter(data)
+dataset = Data()
+filtering = Filter(dataset)
 
 @app.route('/')
 def homepage():

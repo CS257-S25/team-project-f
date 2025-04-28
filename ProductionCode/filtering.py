@@ -66,8 +66,8 @@ class Filter:
 
     def filter_for_web(self, name, category, year):
         """
-        Filters the dataset based on all the parameters provided by a user 
-        and returns the results as a string.
+        Filters the dataset based on all the url parameters provided by a user 
+        and returns a filtered data object.
         """
         self.refresh()
         filter_types = [self.filter_by_actor, self.filter_by_category,
@@ -76,6 +76,20 @@ class Filter:
         for filter_type, user_input in enumerate(user_inputs):
             if formatting.url_input_not_null(user_input):
                 user_input = formatting.reformat_url_input(user_input)
+                filter_types[filter_type](user_input)
+        return FilteredData(self.filtered_media_dict)
+    
+    def filter_for_cl(self, name, category, year):
+        """
+        Filters the dataset based on all the arguments provided by a user 
+        and returns the results as a filtered data object.
+        """
+        self.refresh()
+        filter_types = [self.filter_by_actor, self.filter_by_category,
+                        self.filter_by_year_onward]
+        user_inputs = [name, category, year]
+        for filter_type, user_input in enumerate(user_inputs):
+            if user_input:
                 filter_types[filter_type](user_input)
         return FilteredData(self.filtered_media_dict)
 
@@ -114,3 +128,8 @@ class Filter:
             release_year = self.filtered_media_dict[title].get_release_year()
             if int(year) < int(release_year):
                 del self.filtered_media_dict[title]
+    
+    def get_filtered_data(self):
+        return FilteredData(self.filtered_media_dict)
+
+        

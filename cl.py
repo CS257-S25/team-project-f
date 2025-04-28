@@ -6,7 +6,8 @@ This module provides a command line interface for the StreamSearch application.
 It allows users to filter movies and shows based on actor names, categories, and release years.
 '''
 import argparse
-from ProductionCode import filter as f
+from ProductionCode import filtering as f
+from ProductionCode.data import Data
 
 parser = argparse.ArgumentParser(
     prog="StreamSearch",
@@ -20,20 +21,11 @@ parser.add_argument('-y', '--year', type=int, help='Filter by release year')
 
 def main():
     """ Main function to handle command line arguments and filter titles """
-
-    filterset = f.Filter()
-
+    dataset = Data()
+    filtering = f.Filter(dataset)
     args = parser.parse_args()
-    #print(args.actor, args.category, args.year)
-
-    if args.actor:
-        filterset.filter_by_actor(args.actor)
-    if args.category:
-        filterset.filter_by_category(args.category)
-    if args.year:
-        filterset.filter_by_year_onward(args.year)
-
-    filterset.print_filtered_titles()
+    filtered_data = filtering.filter_for_cl(args.actor, args.category, args.year)
+    print(filtered_data.get_titles_list())
 
 if __name__ == "__main__":
     main()
