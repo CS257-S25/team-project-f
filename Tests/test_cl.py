@@ -31,13 +31,13 @@ class TestFilterFunctions(unittest.TestCase):
         amazon_dataset = "Dummy_data/dummy_amazon.csv"
         disney_dataset = "Dummy_data/dummy_disney.csv"
 
-        f.dataset.media_list = d.import_all_datasets_to_list(
+        filtering.dataset.media_list = d.import_all_datasets_to_list(
             netflix_dataset=netflix_dataset,
             amazon_dataset=amazon_dataset,
             disney_dataset=disney_dataset,
             hulu_dataset=hulu_dataset,
         )
-        f.dataset.media_dict = d.create_media_dict_by_title(f.dataset.media_list)
+        filtering.dataset.media_dict = d.create_media_dict_by_title(f.dataset.media_list)
         self.filterset = f.Filter()
 
     def test_filter_by_actor(self):
