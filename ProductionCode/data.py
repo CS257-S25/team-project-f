@@ -5,7 +5,7 @@ The purpose of this module is to import and process datasets from various stream
 It creates a 3D list of media entries and a dictionary indexed by title for easy access.
 """
 
-from ProductionCode import format
+from ProductionCode import formatting
 import csv
 from collections import OrderedDict
 
@@ -78,16 +78,16 @@ class Media:
         self.attributes.append(entry[SHOW_ID])
         self.attributes.append(entry[MEDIA_TYPE])
         self.attributes.append(entry[TITLE])
-        self.attributes.append(format.make_set(entry[DIRECTOR]))
-        self.attributes.append(format.make_set(entry[CAST]))
-        self.attributes.append(format.make_set(entry[COUNTRY]))
+        self.attributes.append(formatting.make_set(entry[DIRECTOR]))
+        self.attributes.append(formatting.make_set(entry[CAST]))
+        self.attributes.append(formatting.make_set(entry[COUNTRY]))
         self.attributes.append(entry[DATE_ADDED])
         self.attributes.append(entry[RELEASE_YEAR])
         self.attributes.append(entry[RATING])
         self.attributes.append(entry[DURATION])
-        self.attributes.append(format.make_set(entry[LISTED_IN]))
+        self.attributes.append(formatting.make_set(entry[LISTED_IN]))
         self.attributes.append(entry[DESCRIPTION])
-        self.attributes.append(format.make_set(entry[STREAMING_SERVICE]))
+        self.attributes.append(formatting.make_set(entry[STREAMING_SERVICE]))
 
     def get_show_id(self):
         """Returns the media's show id."""
@@ -195,7 +195,7 @@ def create_media_dict_by_title(data):
             # Create a Media object for each row
             media = Media(entry)
             _add_media_to_dict_by_title(media, media_dict)
-    media_dict = format.sort_dict_by_key(media_dict)
+    media_dict = formatting.sort_dict_by_key(media_dict)
     return media_dict
 
 
@@ -219,7 +219,7 @@ def create_category_set(data):
     categories = set()
     for streaming_service in data:
         for entry in streaming_service:
-            listed_categories = format.make_set(entry[LISTED_IN])
+            listed_categories = formatting.make_set(entry[LISTED_IN])
             for category in listed_categories:
                 categories.add(category)
     return categories
@@ -236,8 +236,6 @@ def main():
     """
     Main function to test the Data class and its methods.
     """
-    # data = Data()
-    # data.print_media_list()
 
 if __name__ == "__main__":
     main()

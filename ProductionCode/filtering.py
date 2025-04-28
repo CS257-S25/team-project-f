@@ -6,9 +6,7 @@ Filters can be applied based on actor names, genres/categories, and release year
 operates on a dictionary of media objects and supports retrieving and printing the filtered results.
 """
 
-from ProductionCode import format
-from ProductionCode import data
-# Add the processed dataset from data.py to the filter.py module.
+from ProductionCode import formatting
 
 class Filtered_Data:
     """
@@ -46,7 +44,7 @@ class Filtered_Data:
         Returns a string containing the titles of filtered media reformmated to be web
         displayable.
         """
-        return format.make_list_web_displayable(self.get_titles_list())
+        return formatting.make_list_web_displayable(self.get_titles_list())
 
 class Filter:
     """
@@ -76,8 +74,8 @@ class Filter:
                         self.filter_by_year_onward]
         user_inputs = [name, category, year]
         for filter_type, user_input in enumerate(user_inputs):
-            if format.url_input_not_null(user_input):
-                user_input = format.reformat_url_input(user_input)
+            if formatting.url_input_not_null(user_input):
+                user_input = formatting.reformat_url_input(user_input)
                 filter_types[filter_type](user_input)
         return Filtered_Data(self.filtered_media_dict)
 
