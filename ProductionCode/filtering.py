@@ -23,7 +23,7 @@ class FilteredData:
         """
         Return the filtered data dictionary.
         """
-        return self.data()
+        return self.data
     def get_titles_list(self):
         """
         Returns a list of the filtered media titles.
