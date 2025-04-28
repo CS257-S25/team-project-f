@@ -130,6 +130,7 @@ class Filter:
                 del self.filtered_media_dict[title]
 
     def get_filtered_data(self):
+        """
+        Get a filtered data object from the filtered_media_dict.
+        """
         return FilteredData(self.filtered_media_dict)
-
-  
