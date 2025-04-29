@@ -37,7 +37,7 @@ class TestFilterFunctions(unittest.TestCase):
 
     def setUp(self):
         filtering.refresh()
-        
+    
     def test_filter_by_actor(self):
         """Check if filtering by actor includes only correct titles."""
         filtering.filter_by_actor("Brendan Gleeson")
