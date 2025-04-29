@@ -8,14 +8,17 @@ It tests the functionality of the different routes and the filtering functions.
 import unittest
 from app import app
 
-class TestHomepage(unittest.TestCase):
-    """Test for homepage route."""
+class BaseTestCase(unittest.TestCase):
+    """Base test case to set up the Flask test client."""
     def setUp(self):
         """Create a test client for the Flask app."""
         self.client = app.test_client()
 
+class TestHomepage(BaseTestCase):
+    """Test for homepage route."""
+
     def test_homepage(self):
-        """Test the homepage route returns correct message."""
+        """Test the homepage route."""
         response = self.client.get('/')
         expected_homepage = "StreamSearch</br></br>To use this website, " \
                             "please insert the following into the address: " \
@@ -34,11 +37,8 @@ class TestHomepage(unittest.TestCase):
                             "insert /categories into the address."
         self.assertEqual(response.data.decode(), expected_homepage)
 
-class TestCategoryFilter(unittest.TestCase):
+class TestCategoryFilter(BaseTestCase):
     """Test for listing categories route."""
-    def setUp(self):
-        """Create a test client for the Flask app."""
-        self.client = app.test_client()
 
     def test_list_categories(self):
         """Test that the categories route returns the correct categories list."""
@@ -46,11 +46,8 @@ class TestCategoryFilter(unittest.TestCase):
         expected_categories = "TV Dramas"
         self.assertIn(expected_categories, response.data.decode())
 
-class TestErrorHandling(unittest.TestCase):
+class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
-    def setUp(self):
-        """Create a test client for the Flask app."""
-        self.client = app.test_client()
 
     def test_404_error(self):
         """Test the 404 error handler."""
@@ -64,12 +61,8 @@ class TestErrorHandling(unittest.TestCase):
         expected_error = 'Error 500 - A python bug has occurred.'
         self.assertIn(expected_error, response.data.decode())
 
-
-class TestFilterFunctions(unittest.TestCase):
+class TestFilterFunctions(BaseTestCase):
     """Test for filter functions."""
-    def setUp(self):
-        """Create a test client for the Flask app."""
-        self.client = app.test_client()
 
     def test_actor_filter(self):
         """Test actor filter."""
