@@ -1,7 +1,7 @@
 """
-test_cl.py
+test_app.py
 
-This module contains unit tests for the StreamSearch web application made for ID2.
+This module contains unit tests for the StreamSearch web application.
 It tests the functionality of the different routes and the filtering functions.
 """
 
@@ -64,7 +64,7 @@ class TestFilterFunctions(unittest.TestCase):
         )
 
     def test_actor_filter(self):
-        """Check if filtering by actor includes only correct titles."""
+        """Check if filtering by actor includes correct titles."""
         self.assertIn(
             "The Beatles: Get Back",
             app.search_with_filters("john_lennon", "-", "-")
@@ -89,7 +89,7 @@ class TestFilterFunctions(unittest.TestCase):
 
 
     def test_year_filter(self):
-        """Check if filtering by year includes only correct titles."""
+        """Check if filtering by year includes correct titles."""
         expected_include = (
             "Becoming Cousteau"
             "Blood & Water"
@@ -102,7 +102,7 @@ class TestFilterFunctions(unittest.TestCase):
             self.assertIn(title, app.search_with_filters("-", "-", "2020"))
 
     def test_two_filters(self):
-        """Check if filtering by actor and category includes only correct titles."""
+        """Check if filtering by actor and category includes correct titles."""
         results = "The Grand Seduction"
         self.assertIn(
             results, app.search_with_filters("brendan-gleeson", "comedy", "-")
