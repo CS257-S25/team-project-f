@@ -1,5 +1,12 @@
+"""
+test_app.py
+
+This module contains unit tests for the StreamSearch web application.
+It tests the functionality of the different routes and the filtering functions.
+"""
+
 import unittest
-from app import app  # Import the Flask app
+from app import app
 
 class TestHomepage(unittest.TestCase):
     
@@ -44,6 +51,13 @@ class TestErrorHandling(unittest.TestCase):
         response = self.client.get('/nonexistent_route')
         expected_error = "Error 404 - Incorrect format."
         self.assertIn(expected_error, response.data.decode())
+    
+    def test_500_error(self):
+        """Test the 500 error handler."""
+        response = self.client.get('/cause_500')
+        expected_error = 'Error 500 - A python bug has occurred.'
+        self.assertIn(expected_error, response.data.decode())
+
 
 class TestFilterFunctions(unittest.TestCase):
 

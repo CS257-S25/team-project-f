@@ -75,5 +75,12 @@ def python_bug(e):
     return "Error 500 - A python bug has occurred.</br></br>" \
     "Please check your input and try again."   
 
+@app.route('/cause_500')
+def cause_500():
+    """
+    Force a 500 error
+    """
+    raise Exception("Test exception to trigger 500 error")
+
 if __name__ == "__main__":
     app.run()
