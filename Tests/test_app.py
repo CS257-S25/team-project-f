@@ -9,7 +9,7 @@ import unittest
 from app import app
 
 class TestHomepage(unittest.TestCase):
-    
+    """Test for homepage route."""
     def setUp(self):
         """Create a test client for the Flask app."""
         self.client = app.test_client()
@@ -17,8 +17,11 @@ class TestHomepage(unittest.TestCase):
     def test_homepage(self):
         """Test the homepage route."""
         response = self.client.get('/')
-        expected_homepage = "StreamSearch</br></br>To use this website, please insert the following into the address: /actor/category/year</br>" \
-                            "actor: The name of an actor to search for in a movie/show's cast.</br>" \
+        expected_homepage = "StreamSearch</br></br>To use this website, " \
+                            "please insert the following into the address: " \
+                            "/actor/category/year</br>" \
+                            "actor: The name of an actor to search for " \
+                            "in a movie/show's cast.</br>" \
                             "category: The category of movie/show to search for.</br>" \
                             "year: The results will only include moves released on or after this year.</br></br>" \
                             "IMPORTANT: All filters are optional. To omit a filter, replace it with " \
@@ -29,7 +32,7 @@ class TestHomepage(unittest.TestCase):
         self.assertEqual(response.data.decode(), expected_homepage)
 
 class TestCategoryFilter(unittest.TestCase):
-
+    """Test for listing categories route."""
     def setUp(self):
         """Create a test client for the Flask app."""
         self.client = app.test_client()
@@ -41,7 +44,7 @@ class TestCategoryFilter(unittest.TestCase):
         self.assertIn(expected_categories, response.data.decode())
 
 class TestErrorHandling(unittest.TestCase):
-
+    """Test for error handling routes."""
     def setUp(self):
         """Create a test client for the Flask app."""
         self.client = app.test_client()
@@ -51,7 +54,7 @@ class TestErrorHandling(unittest.TestCase):
         response = self.client.get('/nonexistent_route')
         expected_error = "Error 404 - Incorrect format."
         self.assertIn(expected_error, response.data.decode())
-    
+
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
@@ -60,7 +63,7 @@ class TestErrorHandling(unittest.TestCase):
 
 
 class TestFilterFunctions(unittest.TestCase):
-
+    """Test for filter functions."""
     def setUp(self):
         """Create a test client for the Flask app."""
         self.client = app.test_client()
