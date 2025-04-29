@@ -23,12 +23,15 @@ class TestHomepage(unittest.TestCase):
                             "actor: The name of an actor to search for " \
                             "in a movie/show's cast.</br>" \
                             "category: The category of movie/show to search for.</br>" \
-                            "year: The results will only include moves released on or after this year.</br></br>" \
-                            "IMPORTANT: All filters are optional. To omit a filter, replace it with " \
+                            "year: The results will only include moves " \
+                            "released on or after this year.</br></br>" \
+                            "IMPORTANT: All filters are optional. "\
+                            "To omit a filter, replace it with " \
                             "\"-\", \"_\", or \"x\".</br>" \
                             "To represent spaces, either type the space normally, " \
                             "or use \"-\", \"_\", or \"%20\".</br></br>" \
-                            "To view a list of categories available, insert /categories into the address."
+                            "To view a list of categories available, " \
+                            "insert /categories into the address."
         self.assertEqual(response.data.decode(), expected_homepage)
 
 class TestCategoryFilter(unittest.TestCase):
