@@ -15,7 +15,7 @@ class TestHomepage(unittest.TestCase):
         self.client = app.test_client()
 
     def test_homepage(self):
-        """Test the homepage route."""
+        """Test the homepage route returns correct message."""
         response = self.client.get('/')
         expected_homepage = "StreamSearch</br></br>To use this website, " \
                             "please insert the following into the address: " \
