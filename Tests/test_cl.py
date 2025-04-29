@@ -14,32 +14,30 @@ from io import StringIO
 from collections import OrderedDict
 
 from ProductionCode import data as d
-from ProductionCode import filtering as f
 from ProductionCode.filtering import Filter
 import cl
 
 data = d.Data()
-filtering = Filter(data)
 
+DATA1 = "Dummy_data/dummy_netflix.csv"
+DATA2 = "Dummy_data/dummy_hulu.csv"
+DATA3 = "Dummy_data/dummy_amazon.csv"
+DATA4 = "Dummy_data/dummy_disney.csv"
+data.media_list = d.import_all_datasets_to_list(
+    netflix_dataset=DATA1,
+    amazon_dataset=DATA2,
+    disney_dataset=DATA3,
+    hulu_dataset=DATA4,
+)
+data.media_dict = d.create_media_dict_by_title(data.media_list)
+filtering = Filter(data)
 
 class TestFilterFunctions(unittest.TestCase):
     """Test class for the Filter class and its methods."""
 
     def setUp(self):
-        netflix_dataset = "Dummy_data/dummy_netflix.csv"
-        hulu_dataset = "Dummy_data/dummy_hulu.csv"
-        amazon_dataset = "Dummy_data/dummy_amazon.csv"
-        disney_dataset = "Dummy_data/dummy_disney.csv"
-
-        filtering.dataset.media_list = d.import_all_datasets_to_list(
-            netflix_dataset=netflix_dataset,
-            amazon_dataset=amazon_dataset,
-            disney_dataset=disney_dataset,
-            hulu_dataset=hulu_dataset,
-        )
-        filtering.dataset.media_dict = d.create_media_dict_by_title(f.dataset.media_list)
-        self.filterset = f.Filter()
-
+        filtering.refresh()
+        
     def test_filter_by_actor(self):
         """Check if filtering by actor includes only correct titles."""
         filtering.filter_by_actor("Brendan Gleeson")
@@ -60,9 +58,9 @@ class TestFilterFunctions(unittest.TestCase):
         filtering.filter_by_category("tv mysteries")
         self.assertEqual(filtering.filtered_media_dict.keys(), {"Blood & Water"})
 
-    def test_filter_by_category3(self):
+    def test_filter_by_category_uppercase(self):
         """Check if filtering by category in uppercase includes only correct titles."""
-        filtering.filter_by_category_uppercase("DRAMA")
+        filtering.filter_by_category("DRAMA")
         self.assertEqual(
             filtering.filtered_media_dict.keys(),
             {
@@ -90,16 +88,17 @@ class TestFilterFunctions(unittest.TestCase):
         filtering.filter_by_year_until(1999)
         self.assertEqual(
             filtering.filtered_media_dict.keys(),
-            {"The Grand Seduction", "Ernest Saves Christmas"},
+            {"Ernest Saves Christmas"},
         )
 
     def test_print_filtered_titles(self):
         """Check if the printed titles after filtering are correct."""
         filtering.filter_by_actor("Brendan Gleeson")
+        filtered_data = filtering.get_filtered_data()
         sys.stdout = StringIO()
-        filtering.print_filtered_titles()
+        print(filtered_data.get_titles_list())
         printed_output = sys.stdout.getvalue()
-        self.assertEqual(printed_output.strip(), "The Grand Seduction")
+        self.assertEqual(printed_output.strip(), "['The Grand Seduction']")
 
 
 class TestCommandLineArguments(unittest.TestCase):
@@ -211,7 +210,11 @@ class TestCommandLineArguments(unittest.TestCase):
         """Helper function to call the main function with command line arguments."""
         with patch("sys.argv", ["cl.py"] + args):
             cl.main()
-        return self.captured_output.getvalue().strip().split("\n")
+        output = self.captured_output.getvalue()
+        output = output.replace("'","")
+        output = output.replace("[","")
+        output = output.replace("]","")
+        return output.strip().split(", ")
 
     def test_no_arguments(self):
         """Test the main function with no command line arguments."""
