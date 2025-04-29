@@ -52,9 +52,15 @@ The **StreamSearch Flask App** is a simple web application that allows users to 
 * **List Categories:** View a list of all available categories to filter by.
 * **Friendly Error Handling:** Displays a helpful message for incorrect URLs or queries.
 
-## Routes
+## Usage
 
-The application provides two main routes for filtering content:
+Start the app by running the following command:
+
+```bash
+python app.py
+```
+
+Access the app by opening your browser and navigating to the URL provided. The application provides two main routes for filtering content.
 
 ### Homepage
 Displays detailed instructions on how to use the app.  
