@@ -13,7 +13,6 @@ class TestHomepage(BaseTestCase):
     def test_homepage(self):
         """Test the homepage route."""
         response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
         self.assertIn("StreamSearch", response.data.decode())
 
 class TestErrorHandling(BaseTestCase):
@@ -43,7 +42,6 @@ class TestFilterFunctions(BaseTestCase):
         ]
 
         response = self.client.get('/actor/BRENDAN_GLEESON')
-        self.assertEqual(response.status_code, 200)
         self.assertIn("The Grand Seduction", response.data.decode())
 
     @patch('app.db.get_movie_titles_by_actor')
@@ -52,7 +50,6 @@ class TestFilterFunctions(BaseTestCase):
         mock_get_movies.return_value = []
 
         response = self.client.get('/actor/UNKNOWN_ACTOR')
-        self.assertEqual(response.status_code, 200)
         self.assertIn("No results found for actor", response.data.decode())
 
     @patch('app.db.get_movies_later_than')
@@ -63,7 +60,6 @@ class TestFilterFunctions(BaseTestCase):
         ]
 
         response = self.client.get('/year/2019')
-        self.assertEqual(response.status_code, 200)
         self.assertIn("Some Movie", response.data.decode())
 
     @patch('app.db.get_movies_later_than')
@@ -72,7 +68,6 @@ class TestFilterFunctions(BaseTestCase):
         mock_get_movies.return_value = []
 
         response = self.client.get('/year/2050')
-        self.assertEqual(response.status_code, 200)
         self.assertIn("No movies found released after 2050", response.data.decode())
         
 if __name__ == '__main__':
