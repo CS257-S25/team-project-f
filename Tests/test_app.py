@@ -4,9 +4,7 @@ from unittest.mock import patch
 
 class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
-    @patch('app.DataSource')
-    def setUp(self, MockDataSource):
-        self.mock_db = MockDataSource.return_value
+    def setUp(self):
         self.client = app.test_client()
 
 class TestHomepage(BaseTestCase):
