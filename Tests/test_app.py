@@ -28,7 +28,7 @@ class TestErrorHandling(BaseTestCase):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
         self.assertEqual(response.status_code, 404)
-        self.assertIn("Error 404 - Incorrect format.", response.data.decode())
+        self.assertIn("Error 404 - Wrong Format", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
