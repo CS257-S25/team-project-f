@@ -2,7 +2,7 @@
 Flask app for website.
 """
 
-from flask import Flask, abort
+from flask import Flask
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
@@ -42,9 +42,6 @@ def search_by_actor(name):
     except LookupError as e:
         print("Lookup error in /actor route:", e)
         return f"Could not find actor: {name}"
-    except Exception as e:
-        print("Unexpected error in /actor route:", e)
-        abort(500)
 
 @app.route('/year/<int:year>', strict_slashes=False)
 def search_by_year(year):
@@ -59,9 +56,6 @@ def search_by_year(year):
     except LookupError as e:
         print("Lookup error in /year route:", e)
         return f"Could not find titles after year: {year}"
-    except Exception as e:
-        print("Unexpected error in /year route:", e)
-        abort(500)
 
 @app.route('/category/<category>', strict_slashes=False)
 def search_by_category(category):
@@ -76,9 +70,6 @@ def search_by_category(category):
     except LookupError as e:
         print("Lookup error in /category route:", e)
         return f"Could not find movies in category: {category}"
-    except Exception as e:
-        print("Unexpected error in /category route:", e)
-        abort(500)
 
 @app.errorhandler(404)
 def page_not_found(e):
