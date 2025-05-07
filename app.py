@@ -6,7 +6,7 @@ from flask import Flask, abort
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
-db = None  # placeholder for real or mock db
+db = DataSource()
 
 @app.route('/')
 def homepage():
@@ -122,5 +122,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    db = DataSource()
     app.run()
