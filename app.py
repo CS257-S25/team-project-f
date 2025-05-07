@@ -3,7 +3,6 @@ Flask app for website.
 """
 
 from flask import Flask
-from ProductionCode.filtering import Filter
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)

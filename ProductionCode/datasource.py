@@ -18,9 +18,9 @@ class DataSource:
         """
         try:
             connection = psycopg2.connect(
-                database=config.database,
-                user=config.user,
-                password=config.password,
+                database=config.DATABASE,
+                user=config.USER,
+                password=config.PASSWORD,
                 host="localhost"
             )
         except psycopg2.DatabaseError as e:
