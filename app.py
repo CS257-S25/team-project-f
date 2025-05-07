@@ -77,14 +77,14 @@ def page_not_found(e):
     """
     print(e)
     return (
-        "<h1>Wrong Format</h1></br></br>"
+        "<h1>Error 404 - Wrong Format</h1></br></br>"
         "StreamSearch helps you find movies and TV shows based on actor names, "
         "categories, and release years.</br></br>"
         "<b>How to Use StreamSearch:</b></br>"
         "- <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>"
         "- <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>"
-        "- <b>Year</b>: Filter results to show movies or shows released on or after a specified year.</br></br>"
-        
+        "- <b>Year</b>: Filter results to show movies or shows "
+        "released on or after a specified year.</br></br>"
         "<b>Example URLs:</b></br>"
         "- /actor/Emma Stone</br>"
         "- /category/Comedy</br>"
