@@ -4,11 +4,10 @@ Flask app for website.
 
 from flask import Flask
 from ProductionCode.filtering import Filter
-from ProductionCode.data import Data
+from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
-dataset = Data()
-filtering = Filter(dataset)
+db = DataSource()
 
 @app.route('/')
 def homepage():
@@ -28,24 +27,35 @@ def homepage():
     "To view a list of categories available, insert /categories into the address."   
 
 
-@app.route('/<actor>/<category>/<year>', strict_slashes=False)
-def search_with_filters(actor, category, year):
+@app.route('/actor/<name>', strict_slashes=False)
+def search_by_actor(name):
     """
-    Determines the text displayed on a page with the route /<actor>/<category>/<year>.
-    Calls the filter_dataset function, which will return a string containing
-    all the movies or TV shows which meet the filter criteria specified in the web address.
-    Further information in these criteria is specified in homepage()'s return value.
+    Route that returns movie titles and descriptions featuring the specified actor.
     """
-    filtered_data = filtering.filter_for_web(actor, category, year)
-    return filtered_data.get_web_displayable_titles()
+    try:
+        results = db.get_movie_titles_by_actor(name)
+        if not results:
+            return f"No results found for actor: {name}"
+        return "</br></br>".join(f"<b>{title}</b>: {desc}" for title, desc in results)
+    except Exception as e:
+        print("Error in /actor route:", e)
+        return "An error occurred while searching by actor."
 
-@app.route('/categories')
-def list_categories():
+
+@app.route('/year/<int:year>', strict_slashes=False)
+def search_by_year(year):
     """
-    Determines the text displayed on the page with the route /categories.
-    Provides a list of all available category filters.
+    Route that returns all movies released after the specified year.
     """
-    return f"Valid categories are as follows:</br></br>{dataset.get_category_set()}"
+    try:
+        results = db.get_movies_later_than(year)
+        if not results:
+            return f"No movies found released after {year}."
+        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
+        # Adjust column indexing based on your table: title = row[0], description = row[1], release_year = row[3]
+    except Exception as e:
+        print("Error in /year route:", e)
+        return "An error occurred while searching by year."
 
 @app.errorhandler(404)
 def page_not_found(e):
