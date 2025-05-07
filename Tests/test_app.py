@@ -57,6 +57,13 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/actor/UNKNOWN_ACTOR')
         self.assertIn("No results found for actor", response.data.decode())
+    
+    @patch('app.db.get_movie_titles_by_actor')
+    def test_actor_filter_lookup_error(self, mock_get_movies):
+        """Test actor filter route when a LookupError is raised."""
+        mock_get_movies.side_effect = LookupError("DB error")
+        response = self.client.get('/actor/ERROR_ACTOR')
+        self.assertIn("Could not find actor: ERROR_ACTOR", response.data.decode())
 
     @patch('app.db.get_movies_later_than')
     def test_year_filter_valid_result(self, mock_get_movies):
@@ -76,6 +83,14 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/year/2050')
         self.assertIn("No movies found released after 2050", response.data.decode())
 
+    @patch('app.db.get_movies_later_than')
+    def test_year_filter_lookup_error(self, mock_get_movies):
+        """Test year filter route when a LookupError is raised."""
+        mock_get_movies.side_effect = LookupError("DB error")
+        response = self.client.get('/year/2010')
+        self.assertIn("Could not find titles after year: 2010", response.data.decode())
+
+
     @patch('app.db.get_movies_by_category')
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
@@ -93,6 +108,13 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/category/UnknownCategory')
         self.assertIn("No movies found in category: UnknownCategory", response.data.decode())
+    
+    @patch('app.db.get_movies_by_category')
+    def test_category_filter_lookup_error(self, mock_get_movies):
+        """Test category filter route when a LookupError is raised."""
+        mock_get_movies.side_effect = LookupError("DB error")
+        response = self.client.get('/category/Drama')
+        self.assertIn("Could not find movies in category: Drama", response.data.decode())
 
 if __name__ == '__main__':
     unittest.main()
