@@ -1,4 +1,4 @@
 # psqlConfig.py
 database = 'teamf'
-user = 'caoy2'
+user = 'teamf'
 password = 'blue997mango'

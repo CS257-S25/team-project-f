@@ -6,8 +6,6 @@ CREATE TABLE stream_data (
     media_cast text,
     country text,
     release_year int,
-    rating text,
-    duration text,
     category text,
     media_description text,
     platform text
