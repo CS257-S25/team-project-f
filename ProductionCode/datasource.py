@@ -64,3 +64,23 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return None
+        
+    def get_movies_by_category(self, category):
+        """
+        Fetches full info of movies by the specified category.
+        Args:
+            category (str): The category to filter movies by.
+        Returns:
+            list of tuples: Movies in the specified category.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            query = "SELECT * FROM stream_data WHERE category ILIKE %s ORDER BY release_year DESC"
+            cursor.execute(query, (f"%{category}%",))
+            return cursor.fetchall()
+        except psycopg2.DatabaseError as e:
+            print("Query failed:", e)
+            return None
