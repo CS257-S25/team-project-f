@@ -2,7 +2,7 @@
 Flask app for website.
 """
 
-from flask import Flask
+from flask import Flask, abort
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
@@ -36,9 +36,12 @@ def search_by_actor(name):
         if not results:
             return f"No results found for actor: {name}"
         return "</br></br>".join(f"<b>{title}</b>: {desc}" for title, desc in results)
+    except LookupError as e:
+        print("Lookup error in /actor route:", e)
+        return f"Could not find actor: {name}"
     except Exception as e:
-        print("Error in /actor route:", e)
-        return "An error occurred while searching by actor."
+        print("Unexpected error in /actor route:", e)
+        abort(500)
 
 
 @app.route('/year/<int:year>', strict_slashes=False)
@@ -51,10 +54,12 @@ def search_by_year(year):
         if not results:
             return f"No movies found released after {year}."
         return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
-        # Adjust column indexing based on your table: title = row[0], description = row[1], release_year = row[3]
+    except LookupError as e:
+        print("Lookup error in /year route:", e)
+        return f"Could not find titles after year: {year}"
     except Exception as e:
-        print("Error in /year route:", e)
-        return "An error occurred while searching by year."
+        print("Unexpected error in /year route:", e)
+        abort(500)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -63,16 +68,19 @@ def page_not_found(e):
     Provides an error message and detailed instructions regarding proper use.
     """
     print(e)
-    return "Error 404 - Incorrect format.</br></br>" \
-    "To use this website, please insert the following into the address: /actor/category/year</br>" \
-    "actor: The name of an actor to search for in a movie/show's cast.</br>" \
-    "category: The category of movie/show to search for.</br>" \
-    "year: The results will only include moves released on or after this year.</br></br>" \
-    "IMPORTANT: All filters are optional. To omit a filter, replace it with " \
-    "\"-\", \"_\", or \"x\".</br>" \
-    "To represent spaces, either type the space normally, " \
-    "or use \"-\", \"_\", or \"%20\".</br></br>" \
-    "To view a list of categories available, insert /categories into the address."    
+    return (
+        "Error 404 - Incorrect format.</br></br>"
+        "To use this website, please insert the following into the address: /actor/category/year</br>"
+        "actor: The name of an actor to search for in a movie/show's cast.</br>"
+        "category: The category of movie/show to search for.</br>"
+        "year: The results will only include moves released on or after this year.</br></br>"
+        "IMPORTANT: All filters are optional. To omit a filter, replace it with "
+        "\"-\", \"_\", or \"x\".</br>"
+        "To represent spaces, either type the space normally, "
+        "or use \"-\", \"_\", or \"%20\".</br></br>"
+        "To view a list of categories available, insert /categories into the address.",
+        404
+    )   
 
 @app.errorhandler(500)
 def python_bug(e):
@@ -81,8 +89,11 @@ def python_bug(e):
     Provides an error message.
     """
     print(e)
-    return "Error 500 - A python bug has occurred.</br></br>" \
-    "Please check your input and try again."   
+    return (
+        "Error 500 - A python bug has occurred.</br></br>"
+        "Please check your input and try again.",
+        500
+    )   
 
 @app.route('/cause_500')
 def cause_500():

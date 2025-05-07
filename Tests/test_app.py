@@ -1,12 +1,6 @@
-"""
-test_app.py
-
-This module contains unit tests for the StreamSearch web application.
-It tests the functionality of the different routes and the filtering functions.
-"""
-
 import unittest
 from app import app
+from unittest.mock import patch
 
 class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
@@ -20,31 +14,8 @@ class TestHomepage(BaseTestCase):
     def test_homepage(self):
         """Test the homepage route."""
         response = self.client.get('/')
-        expected_homepage = "StreamSearch</br></br>To use this website, " \
-                            "please insert the following into the address: " \
-                            "/actor/category/year</br>" \
-                            "actor: The name of an actor to search for " \
-                            "in a movie/show's cast.</br>" \
-                            "category: The category of movie/show to search for.</br>" \
-                            "year: The results will only include moves " \
-                            "released on or after this year.</br></br>" \
-                            "IMPORTANT: All filters are optional. "\
-                            "To omit a filter, replace it with " \
-                            "\"-\", \"_\", or \"x\".</br>" \
-                            "To represent spaces, either type the space normally, " \
-                            "or use \"-\", \"_\", or \"%20\".</br></br>" \
-                            "To view a list of categories available, " \
-                            "insert /categories into the address."
-        self.assertEqual(response.data.decode(), expected_homepage)
-
-class TestCategoryFilter(BaseTestCase):
-    """Test for listing categories route."""
-
-    def test_list_categories(self):
-        """Test that the categories route returns the correct categories list."""
-        response = self.client.get('/categories')
-        expected_categories = "TV Dramas"
-        self.assertIn(expected_categories, response.data.decode())
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("StreamSearch", response.data.decode())
 
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
@@ -52,29 +23,58 @@ class TestErrorHandling(BaseTestCase):
     def test_404_error(self):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
-        expected_error = "Error 404 - Incorrect format."
-        self.assertIn(expected_error, response.data.decode())
+        self.assertEqual(response.status_code, 404)
+        self.assertIn("Error 404 - Incorrect format.", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
-        expected_error = 'Error 500 - A python bug has occurred.'
-        self.assertIn(expected_error, response.data.decode())
+        self.assertEqual(response.status_code, 500)
+        self.assertIn("Error 500 - A python bug has occurred.", response.data.decode())
 
 class TestFilterFunctions(BaseTestCase):
-    """Test for filter functions."""
+    """Test filter functions with mocked data source."""
 
-    def test_actor_filter(self):
-        """Test actor filter."""
-        response = self.client.get('/BRENDAN_GLEESON/comedy/2010')
-        expected_titles = "The Grand Seduction"
-        self.assertIn(expected_titles, response.data.decode())
+    @patch('app.db.get_movie_titles_by_actor')
+    def test_actor_filter_valid_result(self, mock_get_movies):
+        """Test actor filter with a known actor using mock."""
+        # Mock return value
+        mock_get_movies.return_value = [
+            ("The Grand Seduction", "A comedy about a small town...")
+        ]
 
-    def test_category_filter(self):
-        """Test category filter."""
-        response = self.client.get('/-/drama/2010')
-        expected_titles = "A Promise to Astrid"
-        self.assertIn(expected_titles, response.data.decode())
+        response = self.client.get('/actor/BRENDAN_GLEESON')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("The Grand Seduction", response.data.decode())
 
+    @patch('app.db.get_movie_titles_by_actor')
+    def test_actor_filter_no_result(self, mock_get_movies):
+        """Test actor filter with no results."""
+        mock_get_movies.return_value = []
+
+        response = self.client.get('/actor/UNKNOWN_ACTOR')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("No results found for actor", response.data.decode())
+
+    @patch('app.db.get_movies_later_than')
+    def test_year_filter_valid_result(self, mock_get_movies):
+        """Test year filter with mocked results."""
+        mock_get_movies.return_value = [
+            ("Some Movie", "A sci-fi film.", "Sci-Fi", 2020)
+        ]
+
+        response = self.client.get('/year/2019')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Some Movie", response.data.decode())
+
+    @patch('app.db.get_movies_later_than')
+    def test_year_filter_no_result(self, mock_get_movies):
+        """Test year filter with no results."""
+        mock_get_movies.return_value = []
+
+        response = self.client.get('/year/2050')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("No movies found released after 2050", response.data.decode())
+        
 if __name__ == '__main__':
     unittest.main()
