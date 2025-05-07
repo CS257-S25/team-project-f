@@ -1,3 +1,5 @@
+"""Module for accessing and querying movie data from a PostgreSQL database."""
+
 import psycopg2
 import ProductionCode.psql_config as config
 
@@ -22,7 +24,7 @@ class DataSource:
                     host="localhost"
                 )
             except psycopg2.DatabaseError as e:
-                raise ConnectionError(f"Connection error: {e}")
+                raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
 
     def get_movies_later_than(self, release_year):
@@ -64,7 +66,7 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return None
-        
+      
     def get_movies_by_category(self, category):
         """
         Fetches full info of movies by the specified category.
