@@ -77,17 +77,18 @@ def page_not_found(e):
     """
     print(e)
     return (
-        "Error 404 - Incorrect format.</br></br>"
-        "To use this website, please insert the following "
-        "into the address: /actor/category/year</br>"
-        "actor: The name of an actor to search for in a movie/show's cast.</br>"
-        "category: The category of movie/show to search for.</br>"
-        "year: The results will only include moves released on or after this year.</br></br>"
-        "IMPORTANT: All filters are optional. To omit a filter, replace it with "
-        "\"-\", \"_\", or \"x\".</br>"
-        "To represent spaces, either type the space normally, "
-        "or use \"-\", \"_\", or \"%20\".</br></br>"
-        "To view a list of categories available, insert /categories into the address.",
+        "<h1>Wrong Format</h1></br></br>"
+        "StreamSearch helps you find movies and TV shows based on actor names, "
+        "categories, and release years.</br></br>"
+        "<b>How to Use StreamSearch:</b></br>"
+        "- <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>"
+        "- <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>"
+        "- <b>Year</b>: Filter results to show movies or shows released on or after a specified year.</br></br>"
+        
+        "<b>Example URLs:</b></br>"
+        "- /actor/Emma Stone</br>"
+        "- /category/Comedy</br>"
+        "- /year/2010</br></br>",
         404)
 
 @app.errorhandler(500)

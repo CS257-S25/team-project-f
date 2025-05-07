@@ -57,7 +57,7 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/actor/UNKNOWN_ACTOR')
         self.assertIn("No results found for actor", response.data.decode())
-    
+
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_lookup_error(self, mock_get_movies):
         """Test actor filter route when a LookupError is raised."""
@@ -108,7 +108,7 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/category/UnknownCategory')
         self.assertIn("No movies found in category: UnknownCategory", response.data.decode())
-    
+
     @patch('app.db.get_movies_by_category')
     def test_category_filter_lookup_error(self, mock_get_movies):
         """Test category filter route when a LookupError is raised."""
