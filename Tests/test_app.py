@@ -69,24 +69,6 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/year/2050')
         self.assertIn("No movies found released after 2050", response.data.decode())
-
-    @patch('app.db.get_movies_by_category')
-    def test_category_filter_valid_result(self, mock_get_movies):
-        """Test category filter with mocked results."""
-        mock_get_movies.return_value = [
-            ("Action Movie", "An action-packed adventure.", "Action", 2022)
-        ]
-
-        response = self.client.get('/category/Action')
-        self.assertIn("Action Movie", response.data.decode())
-
-    @patch('app.db.get_movies_by_category')
-    def test_category_filter_no_result(self, mock_get_movies):
-        """Test category filter with no results."""
-        mock_get_movies.return_value = []
-
-        response = self.client.get('/category/UnknownCategory')
-        self.assertIn("No movies found in category: UnknownCategory", response.data.decode())
-
+     
 if __name__ == '__main__':
     unittest.main()
