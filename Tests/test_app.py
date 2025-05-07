@@ -1,6 +1,12 @@
+"""
+test_app.py
+
+This module contains unit tests for the flask app of the media 
+filtering application.
+"""
 import unittest
-from app import app
 from unittest.mock import patch
+from app import app
 
 class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
@@ -87,6 +93,6 @@ class TestFilterFunctions(BaseTestCase):
 
         response = self.client.get('/category/UnknownCategory')
         self.assertIn("No movies found in category: UnknownCategory", response.data.decode())
-     
+
 if __name__ == '__main__':
     unittest.main()

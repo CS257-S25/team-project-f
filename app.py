@@ -25,9 +25,7 @@ def homepage():
     <b>Example URLs:</b></br>
     - /actor/Emma Stone</br>
     - /category/Comedy</br>
-    - /year/2010</br></br>
-    """ 
-
+    - /year/2010</br></br>""" 
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
@@ -80,7 +78,8 @@ def page_not_found(e):
     print(e)
     return (
         "Error 404 - Incorrect format.</br></br>"
-        "To use this website, please insert the following into the address: /actor/category/year</br>"
+        "To use this website, please insert the following "
+        "into the address: /actor/category/year</br>"
         "actor: The name of an actor to search for in a movie/show's cast.</br>"
         "category: The category of movie/show to search for.</br>"
         "year: The results will only include moves released on or after this year.</br></br>"
@@ -89,8 +88,7 @@ def page_not_found(e):
         "To represent spaces, either type the space normally, "
         "or use \"-\", \"_\", or \"%20\".</br></br>"
         "To view a list of categories available, insert /categories into the address.",
-        404
-    )   
+        404)   
 
 @app.errorhandler(500)
 def python_bug(e):
@@ -102,8 +100,7 @@ def python_bug(e):
     return (
         "Error 500 - A python bug has occurred.</br></br>"
         "Please check your input and try again.",
-        500
-    )   
+        500)   
 
 @app.route('/cause_500')
 def cause_500():
