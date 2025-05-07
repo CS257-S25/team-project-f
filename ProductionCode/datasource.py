@@ -1,5 +1,5 @@
 import psycopg2
-import ProductionCode.psqlConfig as config
+import ProductionCode.psql_config as config
 
 class DataSource:
     """Handles database connection and queries for movie data."""
