@@ -66,7 +66,7 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return None
-      
+
     def get_movies_by_category(self, category):
         """
         Fetches full info of movies by the specified category.
