@@ -15,7 +15,7 @@ def homepage():
     Displays detailed instructions regarding the usage of the application.
     """
     return """
-    <h1>Welcome to StreamSearch</h1></br></br>
+    <h1>Welcome to StreamSearch!</h1></br></br>
     StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</br></br>
     <b>How to Use StreamSearch:</b></br>
     - <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>
