@@ -40,17 +40,17 @@ class TestSearchFunctionality(BaseTestCase):
     """Test search functionality of all types."""
     def test_actor_search(self):
         """Test actor search functionality."""
-        response = self.client.get('/search/actor/Emma%20Stone')
+        response = self.client.get('/actor/Emma%20Stone')
         self.assertIn(b"The Croods", response.data)
 
     def test_category_search(self):
         """Test actor search functionality."""
-        response = self.client.get('/search/category/Comedy')
+        response = self.client.get('/category/Comedy')
         self.assertIn(b"Lieutenant Jangles", response.data)
 
     def test_year_search(self):
         """Test actor search functionality."""
-        response = self.client.get('/search/year/2010')
+        response = self.client.get('/year/2010')
         self.assertIn(b"Cruising the Cut", response.data)
 
 
