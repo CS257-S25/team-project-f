@@ -14,18 +14,22 @@ def homepage():
     Determines the text on the homepage of the website. 
     Displays detailed instructions regarding the usage of the application.
     """
-    return """
-    <h1>Welcome to StreamSearch!</h1></br></br>
-    StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</br></br>
-    <b>How to Use StreamSearch:</b></br>
-    - <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>
-    - <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>
-    - <b>Year</b>: Filter results to show movies or shows released on or after a specified year.</br></br>
-    
-    <b>Example URLs:</b></br>
-    - /actor/Emma Stone</br>
-    - /category/Comedy</br>
-    - /year/2010</br></br>"""
+    return (
+        """
+        <h1>Welcome to StreamSearch</h1></br></br>
+        StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</br></br>
+        <b>How to Use StreamSearch:</b></br>
+        * <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>
+        * <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>
+        * <b>Year</b>: Filter results to show movies or shows released on or after a specified year.</br></br>
+        
+        <b>Try these examples:</b></br>
+        [URL]/actor/Emma Stone</br>
+        [URL]/category/Comedy</br>
+        [URL]/year/2010</br></br>
+        """
+    )
+
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
@@ -78,17 +82,18 @@ def page_not_found(e):
     print(e)
     return (
         "<h1>Error 404 - Wrong Format</h1></br></br>"
-        "StreamSearch helps you find movies and TV shows based on actor names, "
-        "categories, and release years.</br></br>"
-        "<b>How to Use StreamSearch:</b></br>"
-        "- <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>"
-        "- <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>"
-        "- <b>Year</b>: Filter results to show movies or shows "
-        "released on or after a specified year.</br></br>"
-        "<b>Example URLs:</b></br>"
-        "- /actor/Emma Stone</br>"
-        "- /category/Comedy</br>"
-        "- /year/2010</br></br>",
+        "<p>Oops! The page you requested does not exist.</p>"
+        "<p>Make sure your URL follows one of these formats:</p>"
+
+        "[URL]/actor/Actor Name</br>"
+        "[URL]/category/Category Name</br>"
+        "[URL]/year/Year</br></br>"
+        
+        "<b>Here are some example URLs:</br></br>"
+        "[URL]/actor/Emma Stone</br>"
+        "[URL]/category/Comedy</br>"
+        "[URL]/year/2010</br></br>"
+        "<p><a href=\"/\">Click to return to the homepage</a></p>", 
         404)
 
 @app.errorhandler(500)
@@ -111,4 +116,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)
