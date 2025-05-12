@@ -65,28 +65,38 @@ Access the app by opening your browser and navigating to the URL provided. The a
 ### Homepage
 Displays detailed instructions on how to use the app.  
 
-### List Categories (Route 1)
-View a list of all available categories to filter by.  
-**URL:** `[URL]/categories`
+### Filter by Actor (Route 1)
+Filters media entries based on actor.
+**URL:** `[URL]/actor/<actor name>`
 
-### Filter by Actor, Category, and Year (Route 2)
-Filters media entries based on actor, category, and year.  
-**URL:** `[URL]/<actor>/<category>/<year>`
-
-**Example:** To find titles featuring "Brendan Gleeson" in the "Comedy" genre released after 2010:
+**Example:** To find titles that Emma Stone acts in:
 
 ```text
-[URL]/Brendan%20Gleeson/Comedy/2010
+[URL]/actor/Emma%Stone
 ```
 
-### Filter by Any Combination of Actor, Category, and Year
-To search by any combination of the actor, category, or year, simply use - to omit a filter.
 
-**Example:** To find all titles featuring "Brendan Gleeson":
+### Filter by Category (Route 2)
+Filters media entries based on category.
+**URL:** `[URL]/category/<category name>`
+
+**Example:** To find titles in the Comedy category:
 
 ```text
-[URL]/Brendan%20Gleeson/-/-
+[URL]/category/Comedy
 ```
+
+
+### Filter by Year (Route 3)
+Filters media entries based on year.
+**URL:** `[URL]/year/<year>`
+
+**Example:** To find titles released after 2010:
+
+```text
+[URL]/year/2010
+```
+
 
 ## File Structure
 
