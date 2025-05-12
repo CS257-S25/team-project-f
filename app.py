@@ -90,7 +90,6 @@ def page_not_found(e):
     "[URL]/actor/Actor Name</br>"
     "[URL]/category/Category Name</br>"
     "[URL]/year/Year</br></br>"
-    
     "<b>Here are some example URLs:</br></br>"
     "[URL]/actor/Emma Stone</br>"
     "[URL]/category/Comedy</br>"
