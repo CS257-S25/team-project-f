@@ -30,7 +30,14 @@ def homepage():
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
     """
-    Route that returns movie titles and descriptions featuring the specified actor.
+    Returns movie titles and descriptions featuring the specified actor.
+
+    Args:
+        name (str): The name of the actor to search for.
+
+    Returns:
+        str: A string listing matching movie titles and descriptions,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movie_titles_by_actor(name)
@@ -44,7 +51,14 @@ def search_by_actor(name):
 @app.route('/year/<int:year>', strict_slashes=False)
 def search_by_year(year):
     """
-    Route that returns all movies released after the specified year.
+    Returns all movies released after the specified year.
+
+    Args:
+        year (int): The minimum release year for filtering movies.
+
+    Returns:
+        str: A string listing matching movies,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movies_later_than(year)
@@ -58,7 +72,14 @@ def search_by_year(year):
 @app.route('/category/<category>', strict_slashes=False)
 def search_by_category(category):
     """
-    Route that returns movie titles and descriptions in the specified category.
+    Returns movie titles and descriptions in the specified category.
+
+    Args:
+        category (str): The genre or category of movies to search.
+
+    Returns:
+        str: A string listing matching movies,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movies_by_category(category)
@@ -72,8 +93,13 @@ def search_by_category(category):
 @app.errorhandler(404)
 def page_not_found(e):
     """
-    Determines the text displayed on an unspecified route.
-    Provides an error message and detailed instructions regarding proper use.
+    Handles 404 errors for undefined routes.
+
+    Args:
+        e (HTTPException): The error object for the 404 error.
+
+    Returns:
+        tuple: An error message and HTTP status code 404.
     """
     print(e)
     return (
@@ -94,8 +120,13 @@ def page_not_found(e):
 @app.errorhandler(500)
 def python_bug(e):
     """
-    Determines the text displayed if the program encounters a python bug.
-    Provides an error message.
+    Handles 500 errors caused by unhandled exceptions in the application.
+
+    Args:
+        e (Exception): The error object for the 500 error.
+
+    Returns:
+        tuple: An error message and HTTP status code 500.
     """
     print(e)
     return (
