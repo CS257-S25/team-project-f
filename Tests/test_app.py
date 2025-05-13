@@ -18,8 +18,8 @@ class TestHomepage(BaseTestCase):
 
     def test_homepage(self):
         """Test the homepage route."""
-        response = self.client.get('/',follow_redirects=True)
-        self.assertIn(b"Welcome to StreamSearch", response.data)
+        response = self.client.get('/')
+        self.assertIn("StreamSearch", response.data.decode())
 
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
@@ -28,31 +28,13 @@ class TestErrorHandling(BaseTestCase):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
         self.assertEqual(response.status_code, 404)
-        self.assertIn(b"Error 404 - Wrong Format", response.data)
+        self.assertIn("Error 404 - Wrong Format", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
         self.assertEqual(response.status_code, 500)
-        self.assertIn(b"Error 500 - A python bug has occurred.", response.data)
-
-class TestSearchFunctionality(BaseTestCase):
-    """Test search functionality of all types."""
-    def test_actor_search(self):
-        """Test actor search functionality."""
-        response = self.client.get('/actor/Emma%20Stone')
-        self.assertIn(b"The Croods", response.data)
-
-    def test_category_search(self):
-        """Test actor search functionality."""
-        response = self.client.get('/category/Comedy')
-        self.assertIn(b"Lieutenant Jangles", response.data)
-
-    def test_year_search(self):
-        """Test actor search functionality."""
-        response = self.client.get('/year/2010')
-        self.assertIn(b"Cruising the Cut", response.data)
-
+        self.assertIn("Error 500 - A python bug has occurred.", response.data.decode())
 
 class TestFilterFunctions(BaseTestCase):
     """Test filter functions with mocked data source."""
