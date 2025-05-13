@@ -6,25 +6,21 @@ filtering application.
 """
 import unittest
 from unittest.mock import *
+import datasource
 from app import app
 
-class BaseTestCase(unittest.TestCase):
+@patch('ProductionCode.datasource.psycopg2.connect')
+class TestApp(unittest.TestCase):
     """Base test case to set up the Flask test client."""
     def setUp(self):
         self.client = app.test_client()
         self.mock_conn = MagicMock()
         self.mock_cursor = self.mock_conn.cursor.return_value
 
-class TestHomepage(BaseTestCase):
-    """Test for homepage route."""
-
     def test_homepage(self):
         """Test the homepage route."""
         response = self.client.get('/',follow_redirects=True)
         self.assertIn(b"Welcome to StreamSearch", response.data)
-
-class TestErrorHandling(BaseTestCase):
-    """Test for error handling routes."""
 
     def test_404_error(self):
         """Test the 404 error handler."""
@@ -38,35 +34,26 @@ class TestErrorHandling(BaseTestCase):
         self.assertEqual(response.status_code, 500)
         self.assertIn(b"Error 500 - A python bug has occurred.", response.data)
 
-class TestSearchFunctionality(BaseTestCase):
-    """Test search functionality of all types."""
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_actor_search(self, mock_connect):
         """Test actor search functionality."""
         mock_connect.return_value = self.mock_conn
-        self.mock_cursor.fetchone.return_value = ("The Croods")
+        self.mock_cursor.fetchone.return_value = "The Croods"
         response = self.client.get('/actor/Emma%20Stone')
         self.assertIn(b"The Croods", response.data)
 
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_category_search(self,mock_connect):
         """Test actor search functionality."""
         mock_connect.return_value = self.mock_conn
-        self.mock_cursor.fetchone.return_value = ("Lieutenant Jangles")
+        self.mock_cursor.fetchone.return_value = "Lieutenant Jangles"
         response = self.client.get('/category/Comedy')
         self.assertIn(b"Lieutenant Jangles", response.data)
 
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_year_search(self, mock_connect):
         """Test actor search functionality."""
         mock_connect.return_value = self.mock_conn
-        self.mock_cursor.fetchone.return_value = ("Cruising the Cut")
+        self.mock_cursor.fetchone.return_value = "Cruising the Cut"
         response = self.client.get('/year/2010')
         self.assertIn(b"Cruising the Cut", response.data)
-
-
-class TestFilterFunctions(BaseTestCase):
-    """Test filter functions with mocked data source."""
 
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
