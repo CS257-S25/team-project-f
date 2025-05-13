@@ -36,7 +36,14 @@ def homepage():
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
     """
-    Route that returns movie titles and descriptions featuring the specified actor.
+    Returns movie titles and descriptions featuring the specified actor.
+
+    Args:
+        name (str): The name of the actor to search for.
+
+    Returns:
+        str: A string listing matching movie titles and descriptions,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movie_titles_by_actor(name)
@@ -50,7 +57,14 @@ def search_by_actor(name):
 @app.route('/year/<int:year>', strict_slashes=False)
 def search_by_year(year):
     """
-    Route that returns all movies released after the specified year.
+    Returns all movies released after the specified year.
+
+    Args:
+        year (int): The minimum release year for filtering movies.
+
+    Returns:
+        str: A string listing matching movies after the specified year,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movies_later_than(year)
@@ -64,7 +78,14 @@ def search_by_year(year):
 @app.route('/category/<category>', strict_slashes=False)
 def search_by_category(category):
     """
-    Route that returns movie titles and descriptions in the specified category.
+    Returns movie titles and descriptions in the specified category.
+
+    Args:
+        category (str): The genre or category of movies to search.
+
+    Returns:
+        str: A string listing matching movies in the specified category,
+             or a message indicating no results were found.
     """
     try:
         results = db.get_movies_by_category(category)
