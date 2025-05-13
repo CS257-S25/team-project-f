@@ -6,7 +6,7 @@ filtering application.
 """
 import unittest
 from unittest.mock import *
-import datasource
+from ProductionCode import datasource
 from app import app
 
 @patch('ProductionCode.datasource.psycopg2.connect')
