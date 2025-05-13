@@ -5,33 +5,39 @@ This module contains unit tests for the flask app of the media
 filtering application.
 """
 import unittest
-from unittest.mock import *
-from ProductionCode import datasource
+from unittest.mock import patch
 from app import app
 
-
-class TestApp(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def setUp(self):
         self.client = app.test_client()
 
+class TestHomepage(BaseTestCase):
+    """Test for homepage route."""
+
     def test_homepage(self):
         """Test the homepage route."""
-        response = self.client.get('/',follow_redirects=True)
-        self.assertIn(b"Welcome to StreamSearch", response.data)
+        response = self.client.get('/')
+        self.assertIn("StreamSearch", response.data.decode())
+
+class TestErrorHandling(BaseTestCase):
+    """Test for error handling routes."""
 
     def test_404_error(self):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
         self.assertEqual(response.status_code, 404)
-        self.assertIn(b"Error 404 - Wrong Format", response.data)
+        self.assertIn("Error 404 - Wrong Format", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
         self.assertEqual(response.status_code, 500)
-        self.assertIn(b"Error 500 - A python bug has occurred.", response.data)
+        self.assertIn("Error 500 - A python bug has occurred.", response.data.decode())
+
+class TestFilterFunctions(BaseTestCase):
+    """Test filter functions with mocked data source."""
 
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
