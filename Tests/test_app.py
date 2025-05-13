@@ -6,7 +6,7 @@ filtering application.
 """
 import unittest
 from unittest.mock import patch
-from app import *
+from app import app
 
 class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
