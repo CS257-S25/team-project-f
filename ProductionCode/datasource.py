@@ -7,23 +7,25 @@ class DataSource:
     """Handles database connection and queries for movie data."""
 
     def __init__(self):
-        '''Constructor that initiates connection to database'''
-        self.connection = self.connect()
+        """Constructor without immediate connection to the database."""
+        self.connection = None
 
     def connect(self):
         """
-        Initiates connection to database using credentials from psql_config.py.
+        Initiates connection to database using credentials from psqlConfig.py.
+        This method needs to be explicitly called to establish a connection.
         """
-        try:
-            connection = psycopg2.connect(
-                database=config.DATABASE,
-                user=config.USER,
-                password=config.PASSWORD,
-                host="localhost"
-            )
-        except psycopg2.DatabaseError as e:
-            raise ConnectionError(f"Connection error: {e}") from e
-        return connection
+        if self.connection is None:
+            try:
+                self.connection = psycopg2.connect(
+                    database=config.DATABASE,
+                    user=config.USER,
+                    password=config.PASSWORD,
+                    host="localhost"
+                )
+            except psycopg2.DatabaseError as e:
+                raise ConnectionError(f"Connection error: {e}") from e
+        return self.connection
 
     def get_movies_later_than(self, release_year):
         """
@@ -33,6 +35,9 @@ class DataSource:
         Returns:
             list of tuples: Movies released after the given year.
         """
+        if self.connection is None:
+            self.connect()
+
         try:
             cursor = self.connection.cursor()
             query = "SELECT * FROM stream_data WHERE release_year > %s ORDER BY release_year DESC"
@@ -50,6 +55,9 @@ class DataSource:
         Returns:
             list of tuples: Movie titles and descriptions featuring the actor.
         """
+        if self.connection is None:
+            self.connect()
+
         try:
             cursor = self.connection.cursor()
             query = "SELECT title, media_description FROM stream_data WHERE media_cast ILIKE %s"
@@ -67,6 +75,9 @@ class DataSource:
         Returns:
             list of tuples: Movies in the specified category.
         """
+        if self.connection is None:
+            self.connect()
+
         try:
             cursor = self.connection.cursor()
             query = "SELECT * FROM stream_data WHERE category ILIKE %s ORDER BY release_year DESC"
