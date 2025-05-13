@@ -8,7 +8,6 @@ class DataSource:
 
     def __init__(self):
         '''Constructor that initiates connection to database'''
-        self.connection = None
         self.connection = self.connect()
 
     def connect(self):
