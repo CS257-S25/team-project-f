@@ -9,9 +9,10 @@ from unittest.mock import *
 from ProductionCode import datasource
 from app import app
 
-@patch('ProductionCode.datasource.psycopg2.connect')
+
 class TestApp(unittest.TestCase):
     """Base test case to set up the Flask test client."""
+    @patch('ProductionCode.datasource.psycopg2.connect')
     def setUp(self):
         self.client = app.test_client()
         self.mock_conn = MagicMock()
