@@ -5,13 +5,15 @@ This module contains unit tests for the flask app of the media
 filtering application.
 """
 import unittest
-from unittest.mock import patch
+from unittest.mock import *
 from app import app
 
 class BaseTestCase(unittest.TestCase):
     """Base test case to set up the Flask test client."""
     def setUp(self):
         self.client = app.test_client()
+        self.mock_conn = MagicMock()
+        self.mock_cursor = self.mock_conn.cursor.return_value
 
 class TestHomepage(BaseTestCase):
     """Test for homepage route."""
@@ -38,18 +40,27 @@ class TestErrorHandling(BaseTestCase):
 
 class TestSearchFunctionality(BaseTestCase):
     """Test search functionality of all types."""
-    def test_actor_search(self):
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_actor_search(self, mock_connect):
         """Test actor search functionality."""
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.fetchone.return_value = ("The Croods")
         response = self.client.get('/actor/Emma%20Stone')
         self.assertIn(b"The Croods", response.data)
 
-    def test_category_search(self):
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_category_search(self,mock_connect):
         """Test actor search functionality."""
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.fetchone.return_value = ("Lieutenant Jangles")
         response = self.client.get('/category/Comedy')
         self.assertIn(b"Lieutenant Jangles", response.data)
 
-    def test_year_search(self):
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_year_search(self, mock_connect):
         """Test actor search functionality."""
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.fetchone.return_value = ("Cruising the Cut")
         response = self.client.get('/year/2010')
         self.assertIn(b"Cruising the Cut", response.data)
 
