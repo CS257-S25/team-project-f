@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+
+    </head>
+<body>
+    <h1>Search Movies by Genre</h1>
+    <form action="/genre/results" method="get">
+        <label for="category">Choose a Genre:</label>
+        <select id="category" name="category">
+            <option value="">-- Select Genre --</option>
+            {% for genre in categories %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>
