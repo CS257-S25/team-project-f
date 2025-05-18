@@ -18,15 +18,19 @@ h1.logo {
 
 
 h2 {
-    font-size: 2.5em;
+    font-size: 2em;
     margin-bottom: 0.3em;
     color: #a5afff;
 }
 
 h3 {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-bottom: 0.3em;
     color: #8f87ff;
+}
+
+p {
+    font-size: 1em;
 }
 
 
@@ -44,10 +48,45 @@ li {
 }
 
 
+div.search label {
+    display:none;
+}
+
+div.search {
+    margin:0;
+    padding:0;
+    text-align:left;
+}
+
+div.search input {
+    margin:0;
+    font-weight:bold;
+    border-radius: 6px;
+    border:none;
+    padding: 0.5em;
+    background-color:#464fd4;
+    color: #d8ddff;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 25%;
+    transition: width 0.4s ease-in-out;
+}
+
+
+div.search input::placeholder {
+    padding: 0.5em;
+    color: #aeb9ff;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+div.search input:focus {
+    width: 100%;
+}
+
 nav.topbar {
     border-radius: 12px;
     background-color: #626dff;
-    padding: 1em
 }
 
 nav.topbar ul {
@@ -55,8 +94,7 @@ nav.topbar ul {
     gap: 1em;
     justify-content: center;
     border-radius: 12px;
-    padding: 0.5em 0;
-    margin-bottom: 2em;
+    padding:1em;
     list-style-type: none;
     overflow: hidden;
 }
@@ -64,22 +102,25 @@ nav.topbar ul {
 nav.topbar li {
     display:inline-block;
     text-align: center;
-    font-weight: bold;
-    font-size: 1.1em;
-}
 
-nav.topbar li a {
-    display: block;
+}
+nav.topbar a {
+    padding: 0.5em;
+    border-radius: 12px;
+    background-color:#464fd4;
+
+    color:rgb(243, 245, 255);
     text-decoration: none;
-    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+
     transition: all 0.2s ease-in-out;
 }
 
+    
 nav li a:hover,
 nav li a:focus {
-    background-color: #9d4edd;
-    color: white;
-    outline: none;
+    background-color: #1a1b30;
 }
 
 div.content {
@@ -97,32 +138,9 @@ div.highlight {
 }
 
 
-nav.topbar li a {
-    color:white;
-    background-color:#464fd4;
-    display: block;
-    text-decoration: double;
-    text-align: center;
-    padding: 0.5em;
-    font-size: 20px;
-}
-
-nav li a:hover {
-    background-color: rgb(31, 44, 44);
-}
 
 
 
-
-nav.topbar li.search {
-    float: right;
-    padding: 10px 15px;
-    color:white;
-    font-size:10px;
-}
-
-nav.topbar li.search label {
-    flex-direction: column;
-    font-size:15px;
-
+span.blue {
+    color: #626dff;
 }

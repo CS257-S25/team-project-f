@@ -21,12 +21,23 @@
         } );
     </script>
 </head>
+
 <body>
     <h1 class="logo">
-            StreamSearch
+            Stream<span class="blue">Search</span>
     </h1>
-    <nav class="topbar">
 
+    <div class="search">
+        <p>
+            <form action="search">
+                <strong><label for="movies">Search titles across platforms</label></strong>
+                <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
+            </form>
+        </p>
+    </div>
+
+
+    <nav class="topbar">
         <ul>
             <li>
                 <a href="/about">About</a>
@@ -34,15 +45,9 @@
             <li>
                 <a href="/filter">Filter Titles</a>
             </li>
-            <li class="search">
-                <form action="search">
-                    <label for="movies">Search for movies and TV shows: </label>
-                    <input type="text" id="movies" name="moviechoice" value="Search titles across platforms...">
-                </form>
-            </li>
         </ul>
     </nav>
-    
+
     <h2>Welcome to StreamSearch!</h2>
     <p>StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</p>
 
