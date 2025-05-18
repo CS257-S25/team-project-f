@@ -80,18 +80,18 @@ def search_by_category(category):
         return f"Could not find movies in category: {category}"
 
 
-@app.route('/genre', methods=['GET'])
+@app.route('/filter', methods=['GET'])
 def genre_form():
     """Renders the genre selection form with dynamic dropdown."""
     categories = db.get_all_categories()
-    return render_template('genre.html', categories=categories)
+    return render_template('filter.html', categories=categories)
 
-@app.route('/genre/results', methods=['GET'])
+@app.route('/filter/results', methods=['GET'])
 def genre_results():
     """Handles genre search and displays results."""
     category = request.args.get('category', '')
     results = db.get_movies_by_category(category)
-    return render_template('genre_results.html', category=category, results=results)
+    return render_template('filter_results.html', category=category, results=results)
 
 
 @app.errorhandler(404)
@@ -146,4 +146,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5600)
+    app.run(port=5230)

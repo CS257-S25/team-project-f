@@ -22,21 +22,22 @@
     </script>
 </head>
 <body>
+    <h1 class="logo">
+            StreamSearch
+    </h1>
     <nav class="topbar">
+
         <ul>
             <li>
-                <h1 class="logo">
-                    StreamSearch
-                </h1>
+                <a href="/about">About</a>
             </li>
             <li>
-                <a href="/">Home</a>
-                <a href="/genre">Filter</a>
+                <a href="/filter">Filter</a>
             </li>
-            <li class="right">
+            <li class="search">
                 <form action="search">
                     <label for="movies">Search for movies and TV shows: </label>
-                    <input type="text" id="movies" name="moviechoice">
+                    <input type="text" id="movies" name="moviechoice" value="Search titles across platforms...">
                 </form>
             </li>
         </ul>
