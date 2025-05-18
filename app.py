@@ -108,13 +108,13 @@ def filter_results():
         print(type(results))
         return render_template('filter_results.html', year=year, results=results)
 
-
+""""
     if category ==''and actor!='' and year=='': 
-        filtered_data = db.filter_for_web(actor, category, year)
-        results = filtered_data.get_web_displayable_titles()
+        filtered_data = 
         print("Results all filters search:", results)
         print(type(results))
         return render_template('filter_results.html', year=year, results=results)
+"""
 @app.route('/about')
 def about_page():
     return render_template('about.html')
@@ -172,4 +172,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5330)
+    app.run(port=5000)
