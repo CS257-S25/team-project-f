@@ -144,12 +144,12 @@ ProductionCode/
 static/
     stylesheet.css: Default stylesheet loaded in all HTML pages.
 templates/
-    404.html:
-    500.html:
-    genre_results.html:
-    genre.html:
+    404.html: Page loaded when user attempts to load a page that cannot be found.
+    500.html: Page loaded when a bug occurs. Prompts redirect to homepage.
+    genre_results.html: Displays results of search in genre.html.
+    genre.html: Page to filter movies by genre.
     index.html: Homepage of the website.
-    results.html: 
+    results.html: Functions with the command line application.
 Tests/
     test_cl.py: Contains the automated test suite for the cl.py application.
     test_app.py: Contains the automated test suite for the app.py application.
