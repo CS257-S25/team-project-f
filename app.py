@@ -93,6 +93,10 @@ def genre_results():
     results = db.get_movies_by_category(category)
     return render_template('filter_results.html', category=category, results=results)
 
+@app.route('/about')
+def about_page():
+    return render_template('about.html')
+
 
 @app.errorhandler(404)
 def page_not_found(e):

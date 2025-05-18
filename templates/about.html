@@ -1,0 +1,51 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <script>
+        $( function() {
+            var availableTags = [
+                {% for movie in movies %}
+                    "{{movie}}",
+                {% endfor %}
+            ];
+            $( "#movies" ).autocomplete({
+            source: availableTags
+            });
+        } );
+    </script>
+</head>
+<body>
+    <h1 class="logo">
+            StreamSearch
+    </h1>
+    <nav class="topbar">
+
+        <ul>
+            <li>
+                <a href="/about">About</a>
+            </li>
+            <li>
+                <a href="/filter">Filter</a>
+            </li>
+            <li class="search">
+                <form action="search">
+                    <label for="movies">Search for movies and TV shows: </label>
+                    <input type="text" id="movies" name="moviechoice" value="Search titles across platforms...">
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <div class="main">
+    <h2>About Us</h2>
+    <p>This website was coded by Maria, Eva, Asa, and John.</p>
+
+    </div>
+</body>
+</html>
