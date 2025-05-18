@@ -86,3 +86,23 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return None
+
+    def get_all_categories(self):
+        """
+        Fetches a sorted list of unique categories from the database.
+
+        Returns:
+            list of str: All distinct movie categories.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            query = "SELECT DISTINCT category FROM stream_data ORDER BY category ASC"
+            cursor.execute(query)
+            results = cursor.fetchall()
+            return [row[0] for row in results if row[0]]  # avoid None values
+        except psycopg2.DatabaseError as e:
+            print("Query failed:", e)
+            return []

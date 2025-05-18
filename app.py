@@ -2,7 +2,7 @@
 Flask app for website.
 """
 
-from flask import Flask
+from flask import Flask, render_template
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ def homepage():
     Determines the text on the homepage of the website. 
     Displays detailed instructions regarding the usage of the application.
     """
+    return render_template("index.html")
     return (
         """
         <h1>Welcome to StreamSearch</h1></br></br>

@@ -1,0 +1,20 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StreamSearch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to StreamSearch</h1>
+    <p>StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</p>
+
+    <h2>How to Use StreamSearch:</h2>
+    <ul>
+        <li><strong>Actor:</strong> Enter the name of an actor to find movies or shows they appear in. Example: <code>/actor/Emma Stone</code></li>
+        <li><strong>Category:</strong> Search by genre or category (e.g., Comedy, Action, Drama). Example: <code>/category/Comedy</code></li>
+        <li><strong>Year:</strong> Filter results to show movies or shows released on or after a specified year. Example: <code>/year/2010</code></li>
+    </ul>
+</body>
+</html>
