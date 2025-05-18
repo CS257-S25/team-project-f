@@ -2,7 +2,7 @@
 Flask app for website.
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
@@ -15,24 +15,6 @@ def homepage():
     Displays detailed instructions regarding the usage of the application.
     """
     return render_template("index.html")
-    return (
-        """
-        <h1>Welcome to StreamSearch</h1></br></br>
-        StreamSearch helps you find movies and TV shows based on 
-        actor names, categories, and release years.</br></br>
-        <b>How to Use StreamSearch:</b></br>
-        * <b>Actor</b>: Enter the name of an actor to find movies or shows they appear in. </br>
-        * <b>Category</b>: Search by genre or category (e.g., Comedy, Action, Drama). </br>
-        * <b>Year</b>: Filter results to show movies or shows released on or after 
-        a specified year.</br></br>
-        
-        <b>Try these examples:</b></br>
-        [URL]/actor/Emma Stone</br>
-        [URL]/category/Comedy</br>
-        [URL]/year/2010</br></br>
-        """
-    )
-
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
@@ -101,6 +83,20 @@ def search_by_category(category):
 def show_filter_page():
     return render_template("filter.html")
 
+@app.route('/genre', methods=['GET'])
+def genre_form():
+    """Renders the genre selection form with dynamic dropdown."""
+    categories = db.get_all_categories()
+    return render_template('genre.html', categories=categories)
+
+@app.route('/genre/results', methods=['GET'])
+def genre_results():
+    """Handles genre search and displays results."""
+    category = request.args.get('category', '')
+    results = db.get_movies_by_category(category)
+    return render_template('genre_results.html', category=category, results=results)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     """
@@ -153,4 +149,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run()
