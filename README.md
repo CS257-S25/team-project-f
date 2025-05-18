@@ -134,30 +134,55 @@ team-project-f/
 └── UserStories.md
 ```
 cl.py: The command-line application script that parses command-line arguments and interacts with the ProductionCode.
+
 app.py: The script responsible for running the website application.
+
 ProductionCode/
+
     data.py: Contains the logic for loading and processing the movie/show data.
+
     datasource.py: Module for accessing and querying movie data from a PostgreSQL database.
+
     filtering.py: Contains the logic for filtering the movie/show data based on user input.
+
     formatting.py: Contains logic for miscellaneous reformatting needed in various locations.
+
     psql_config: Contains login information to access the databases. Assumed to exist by datasource.py, ignored in .gitignore
+
 static/
+
     stylesheet.css: Default stylesheet loaded in all HTML pages.
+
 templates/
+
     404.html: Page loaded when user attempts to load a page that cannot be found.
+
     500.html: Page loaded when a bug occurs. Prompts redirect to homepage.
+
     genre_results.html: Displays results of search in genre.html.
+
     genre.html: Page to filter movies by genre.
+
     index.html: Homepage of the website.
+
     results.html: Functions with the command line application.
+
 Tests/
+
     test_cl.py: Contains the automated test suite for the cl.py application.
+
     test_app.py: Contains the automated test suite for the app.py application.
+
 Data/
+
     metadata.md: Contains information on amazon_prime_titles.csv, disney_plus_titles.csv, hulu_titles.csv, and netflix_titles.csv. Refer there for information on each of those files.
+
 README.md: This file, providing an overview and usage instructions for the application.
+
 Proposal.md: Contains a proposal for what this project will be about.
+
 Contract.md: Contains the contract to ensure stability and deliverability in the group as we work together.
+
 UserStories.md: Contains the necessary user stories and acceptance tests.
 
 ## Data Setup

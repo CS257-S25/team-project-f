@@ -87,11 +87,20 @@ def genre_form():
     return render_template('filter.html', categories=categories)
 
 @app.route('/filter/results', methods=['GET'])
-def genre_results():
+def filter_results():
     """Handles genre search and displays results."""
     category = request.args.get('category', '')
-    results = db.get_movies_by_category(category)
-    return render_template('filter_results.html', category=category, results=results)
+    actor = request.args.get('actor', '')
+    year = request.args.get('year', '')
+    if category != ''and actor=='' and year=='':
+        results = db.get_movies_by_category(category)
+        return render_template('filter_results.html', category=category, results=results)
+
+    if category ==''and actor!='' and year=='': 
+        results = db.get_movie_titles_by_actor(actor)
+        print(results)
+        print(type(results))
+        return render_template('filter_results.html', actor=actor, results=results)
 
 @app.route('/about')
 def about_page():
