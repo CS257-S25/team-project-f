@@ -8,17 +8,27 @@ body {
     line-height: 1.6;
 }
 
-h1 {
-    color: white;
-    text-align: center;
 
+h1.logo {
+    text-align: center;
+    color:rgb(42, 47, 180);
+    font-size:60px;
+    margin:0.5em;
 }
+
 
 h2 {
-    font-size: 1.5em;
-    margin-top: 1.5em;
-    color: #130f5f;
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+    color: #211b94;
 }
+
+h3 {
+    font-size: 2em;
+    margin-bottom: 0.3em;
+    color: #211b94;
+}
+
 
 p {
     margin-bottom: 1em;
@@ -106,10 +116,7 @@ nav li a:hover {
 }
 
 
-h1.logo {
-    color:rgb(42, 47, 180);
-    font-size:60px;
-}
+
 
 nav.topbar li.search {
     float: right;
