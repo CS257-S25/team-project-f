@@ -98,10 +98,23 @@ def filter_results():
 
     if category ==''and actor!='' and year=='': 
         results = db.get_movie_titles_by_actor(actor)
-        print(results)
+        print("Results actor search:", results)
         print(type(results))
         return render_template('filter_results.html', actor=actor, results=results)
+    
+    if category ==''and actor=='' and year!='': 
+        results = db.get_movies_later_than(year)
+        print("Results year search:")
+        print(type(results))
+        return render_template('filter_results.html', year=year, results=results)
 
+
+    if category ==''and actor!='' and year=='': 
+        filtered_data = db.filter_for_web(actor, category, year)
+        results = filtered_data.get_web_displayable_titles()
+        print("Results all filters search:", results)
+        print(type(results))
+        return render_template('filter_results.html', year=year, results=results)
 @app.route('/about')
 def about_page():
     return render_template('about.html')
