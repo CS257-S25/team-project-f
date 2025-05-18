@@ -2,16 +2,16 @@ body {
     margin: 0 auto;
     padding: 2em;
     max-width: 960px;
-    background-color: #f9f5ff;
-    color: #5157b0;
+    background-color: #1a1b30;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
+    color:rgb(213, 219, 255);
 }
 
 
 h1.logo {
     text-align: center;
-    color:rgb(42, 47, 180);
+    color:rgb(237, 237, 255);
     font-size:60px;
     margin:0.5em;
 }
@@ -20,19 +20,15 @@ h1.logo {
 h2 {
     font-size: 2.5em;
     margin-bottom: 0.3em;
-    color: #211b94;
+    color: #a5afff;
 }
 
 h3 {
     font-size: 2em;
     margin-bottom: 0.3em;
-    color: #211b94;
+    color: #8f87ff;
 }
 
-
-p {
-    margin-bottom: 1em;
-}
 
 div {
     clear: left;
