@@ -3,14 +3,13 @@ body {
     padding: 2em;
     max-width: 960px;
     background-color: #f9f5ff;
-    color: #2c2c2c;
+    color: #5157b0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
 }
 
 h1 {
     padding: 0.8em;
-    background-color: #7b2cbf;
     color: white;
     text-align: center;
     border-radius: 12px;
@@ -20,7 +19,7 @@ h1 {
 h2 {
     font-size: 1.5em;
     margin-top: 1.5em;
-    color: #5f0f40;
+    color: #130f5f;
 }
 
 p {
@@ -91,7 +90,7 @@ nav.topbar {
 }
 
 nav.topbar ul {
-    background-color: rgb(0, 95, 95);
+    background-color: #626dff;
     list-style-type: none;
     overflow: hidden;
     padding:20px;
@@ -124,8 +123,7 @@ nav.topbar li h1.logo {
 
 h1.logo {
     color:white;
-    font-style: italic;
-    font-size:40px;
+    font-size:50px;
     margin-top: 0px; 
     margin-bottom: 0px;
 }
