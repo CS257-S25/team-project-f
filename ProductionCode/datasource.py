@@ -106,3 +106,23 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return []
+
+    def get_3_filter_media(self, actor_name, year, category):
+        """
+        Fetches a sorted list of a unique actor, year, category from the database.
+
+        Returns:
+            list of str: All distinct movies from filter.
+
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            query = "SELECT title, media_description, release_year, category FROM stream_data WHERE media_cast ILIKE %s AND WHERE release_year > %s ORDER BY release_year DESC AND WHERE category ILIKE %s ORDER BY release_year DESC"
+            cursor.execute(query, (f"%{actor_name}%",))
+            return cursor.fetchall()
+        except psycopg2.DatabaseError as e:
+            print("Query failed:", e)
+            return None
