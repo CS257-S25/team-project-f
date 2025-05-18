@@ -4,9 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <title>StreamSearch</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='static.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <script>
+        $( function() {
+            var availableTags = [
+                {% for movie in movies %}
+                    "{{movie}}",
+                {% endfor %}
+            ];
+            $( "#movies" ).autocomplete({
+            source: availableTags
+            });
+        } );
+    </script>
 </head>
 <body>
+    <nav class="topbar">
+        <ul>
+            <li>
+                <h1 class="logo">
+                    StreamSearch
+                </h1>
+            </li>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li class="right">
+                <form action="search">
+                    <label for="movies">Search for movies and TV shows: </label>
+                    <input type="text" id="movies" name="moviechoice">
+                </form>
+            </li>
+        </ul>
+    </nav>
     <h1>Welcome to StreamSearch</h1>
     <p>StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</p>
 
