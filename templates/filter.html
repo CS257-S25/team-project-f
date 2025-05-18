@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+
+    </head>
+    <body>
+        <h1>StreamSearch</h1>
+
+
+
+        
+        <nav>
+            <ul>
+                <li><a href="/">About</a></li>
+                <li><a href="/">Search</a></li>
+            </ul>
+        </nav>
+
+        <p>Filter Across Streaming Services</p>
+        <form action="displayfilteredresults">
+            
+            <label for="actor">Actor Name</label>
+            <input type="text" id="actor" name="actor" value="">
+
+            <label for="category">Category</label>
+            <select id="category" name="category">
+
+                {% for category in categories: %}
+                <option value ="{{category}}">{{category}}</option>
+                {% endfor %}
+
+            </select>
+
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" value="">
+            
+
+            <input type="submit" value="Submit">
+        </form>
+
+        <h2>
+            Hey, have you ever wanted to search your streams?
+        </h2>
+        <p>
+            Hello hello hello this is a webpage whoo whoo whoo
+        </p>
+        
+        <aside>
+            <h3>Cool facts corner</h3>
+            <p>ummmmmmm</p>
+        </aside>
+    </body>
+</html>

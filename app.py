@@ -97,6 +97,10 @@ def search_by_category(category):
         print("Lookup error in /category route:", e)
         return f"Could not find movies in category: {category}"
 
+@app.route('/filter', strict_slashes=False)
+def show_filter_page():
+    return render_template("filter.html")
+
 @app.errorhandler(404)
 def page_not_found(e):
     """
