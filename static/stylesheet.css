@@ -29,6 +29,49 @@ p {
     font-size: 1em;
 }
 
+section.filters {
+    margin:auto;
+    margin-top:2em;
+    width:50%;
+    text-align: center;
+    padding: 1em;
+    padding-bottom: 2em;
+    background-color: #272949;
+    border-radius: 12px;
+}
+
+section.filters form {
+    text-align:left;
+    width:50%;
+    margin:auto;
+}
+
+section.filters label {
+    font-size:18px;
+    margin-top:2em;
+}
+
+section.filters h2 {
+    font-size:40px;
+    margin:0.3em; 
+}
+
+section.filters input {
+    margin-bottom:1em;
+}
+input#submit {
+    margin:auto;
+    font-size:15px;
+    
+    padding: 0.5em;
+    transition:
+        outline 0.2s ease-in-out;
+    
+}
+input#submit:hover {
+    outline: #d8ddff solid 2px;
+}
+
 section.light {
     padding: 1em;
     background-color: #272949;
@@ -53,32 +96,71 @@ div.search {
     text-align:left;
 }
 
-div.search input {
-    width: 25%;
+
+select {
+    width:100%;
     font-weight:bold;
     border-radius: 6px;
     border:none;
-    padding: 0.5em;
+    padding: 0.3em;
 
     background-color:#464fd4;
     color: #d8ddff;
-    font-size: 15px;
+    font-size: 12px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
-
-    transition: width 0.4s ease-in-out;
+    transition:
+        outline 0.2s ease-in-out;
 }
 
-div.search input::placeholder {
+select:hover {
+    outline: #d8ddff solid 2px;
+}
+
+
+input {
+    width:100%;
+    font-weight:bold;
+    border-radius: 6px;
+    border:none;
+    padding: 0.3em;
+
+    background-color:#464fd4;
+    color: #d8ddff;
+    font-size: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    transition:
+        outline 0.2s ease-in-out;
+}
+
+input:focus {
+    outline: #d8ddff solid 2px;
+}
+
+input::placeholder {
     padding: 0.5em;
     color: #aeb9ff;
     font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+
+div.search input {
+    padding: 0.5em;
+    width: 25%;
+    font-size: 15px;
+    transition:
+        width 0.4s ease-in-out,
+        outline 0.2s ease-in-out;
+    
+
+}
+
 div.search input:focus {
     width: 100%;
 }
+
 
 nav.topbar {
     border-radius: 12px;
