@@ -48,6 +48,7 @@ section.filters form {
 
 section.filters label {
     font-size:18px;
+    font-weight:bold;
     margin-top:2em;
 }
 
@@ -106,7 +107,7 @@ select {
 
     background-color:#464fd4;
     color: #d8ddff;
-    font-size: 12px;
+    font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
     transition:
@@ -127,7 +128,7 @@ input {
 
     background-color:#464fd4;
     color: #d8ddff;
-    font-size: 12px;
+    font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
     transition:
