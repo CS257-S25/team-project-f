@@ -22,33 +22,46 @@
     </script>
 </head>
 <body>
-    <h1 class="logo">
-            StreamSearch
-    </h1>
-    <nav class="topbar">
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+            Stream<span class="blue">Search</span>
+            </h1>
+        </a>
 
-        <ul>
-            <li>
-                <a href="/">home :3</a>
-            </li>
-            <li>
-                <a href="/about">About</a>
-            </li>
-            <li>
-                <a href="/filter">Filter</a>
-            </li>
-            <li class="search">
+
+        <div class="search">
+            <p>
                 <form action="search">
-                    <label for="movies">Search for movies and TV shows: </label>
-                    <input type="text" id="movies" name="moviechoice" value="Search titles across platforms...">
+                    <strong><label for="movies">Search titles across platforms</label></strong>
+                    <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
                 </form>
-            </li>
-        </ul>
-    </nav>
+            </p>
+        </div>
+
+        <nav class="topbar">
+            <ul>
+
+                <li>
+                    <a href="/filter">Advanced Filters</a>
+                </li>
+                <li>
+                    <a href="/about" style="background-color: #1a1b30;">About</a>
+                </li>
+                <li>
+                    <a href="/">Use Old Flask App</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
     <div class="main">
     <h2>About Us</h2>
-    <p>This website was coded by Maria, Eva, Asa, and John.</p>
-
+    <p>
+        StreamSearch is a website created to help browse multiple streaming services at once with ease.
+        The services included in this application are Hulu, Disney+, Netflix, and Amazon Prime.
+        The data is not necessarily up to date and solely represents a proof of concept.<br>
+        This website was coded by Eva, Maria, Asa, and John for Team F.
+    </p>
     </div>
 </body>
 </html>
