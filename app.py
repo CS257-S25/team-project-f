@@ -32,7 +32,7 @@ def search_by_actor(name):
         results = db.get_movie_titles_by_actor(name)
         if not results:
             return f"No results found for actor: {name}"
-        return "</br></br>".join(f"<b>{title}</b>: {desc}" for title, desc in results)
+        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
     except LookupError as e:
         print("Lookup error in /actor route:", e)
         return f"Could not find actor: {name}"
@@ -50,7 +50,7 @@ def search_by_year(year):
              or a message indicating no results were found.
     """
     try:
-        results = db.get_movies_later_than(year)
+        results = db.get_movies_later_than(year-1)
         if not results:
             return f"No movies found released after {year}."
         return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
@@ -81,38 +81,67 @@ def search_by_category(category):
 
 
 @app.route('/filter', methods=['GET'])
-def genre_form():
-    """Renders the genre selection form with dynamic dropdown."""
+def filter_form():
+    """Renders genre selection form with dynamic dropdown."""
     categories = db.get_all_categories()
     return render_template('filter.html', categories=categories)
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
     """Handles genre search and displays results."""
-    category = request.args['category']
-    actor = request.args['actor']
-    year = request.args['year']
+    category = request.args.get('category', '')
+    actor = request.args.get('actor', '')
+    year = request.args.get('year', '')
+
+    #just category search
     if category != ''and actor=='' and year=='':
         results = db.get_movies_by_category(category)
-        return render_template('filter_results.html', category=category, results=results)
+        return render_template('genre_results.html', category=category, results=results)
 
+    #just actor search
     if category ==''and actor!='' and year=='': 
         results = db.get_movie_titles_by_actor(actor)
         print("Results actor search:", results)
         print(type(results))
         return render_template('filter_results.html', actor=actor, results=results)
     
-    if category ==''and actor=='' and year!='':
-        results = db.get_movies_later_than(year)
+    #just year search
+    if category ==''and actor=='' and year!='': 
+        results = db.get_movies_later_than(str(int(year)-1))
         print("Results year search:")
         print(type(results))
         return render_template('filter_results.html', year=year, results=results)
 
+    #Category, actor and year search (ALL THREE)
     if category !=''and actor!='' and year!='': 
-        filtered_data = db.get_3_filter_media(actor, year, category)
+        results = db.get_3_filter_media(actor, str(int(year)-1), category)
         print("Results all filters search:", results)
         print(type(results))
-    return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+
+    #Category and actor search
+    if category !=''and actor!='' and year=='': 
+        results = db.get_3_filter_media(actor, 0, category)
+        print("Results all filters search:", results)
+        print(type(results))
+        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+
+    #Category and  year search
+    if category !=''and actor=='' and year!='': 
+        results = db.get_3_filter_media(actor, str(int(year)-1), category)
+        print("Results all filters search:", results)
+        print(type(results))
+        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+
+    # Actor and year search
+    if category ==''and actor!='' and year!='': 
+        results = db.get_3_filter_media(actor, str(int(year)-1), category)
+        print("Results all filters search:", results)
+        print(type(results))
+        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+
+
+
 @app.route('/about')
 def about_page():
     return render_template('about.html')
@@ -170,4 +199,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=1337)
+    app.run(port=5002)
