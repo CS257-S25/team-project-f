@@ -99,10 +99,17 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT DISTINCT category FROM stream_data ORDER BY category ASC"
+            query = "SELECT category FROM stream_data WHERE category IS NOT NULL"
             cursor.execute(query)
             results = cursor.fetchall()
-            return [row[0] for row in results if row[0]]  # avoid None values
+
+            genre_set = set()
+            for row in results:
+                genres = [genre.strip() for genre in row[0].split(",")]
+                genre_set.update(genres)
+
+            return sorted(genre_set)
+        
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return []
