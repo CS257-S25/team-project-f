@@ -106,7 +106,7 @@ def filter_results():
     #just category search
     if category != ''and actor=='' and year=='':
         results = db.get_movies_by_category(category)
-        return render_template('filter_results.html', category=category, results=results)
+        return render_template('genre_results.html', category=category, results=results)
 
     #just actor search
     if category ==''and actor!='' and year=='': 
