@@ -120,8 +120,18 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT title, media_description, release_year, category FROM stream_data WHERE media_cast ILIKE %s AND category LIKE %s AND release_year > %s ORDER BY release_year DESC"
-            cursor.execute(query, (actor_name, category, release_year)) 
+            query = """
+            SELECT title, media_description, release_year, category 
+            FROM stream_data 
+            WHERE media_cast ILIKE %s 
+              AND category ILIKE %s 
+              AND release_year > %s 
+            ORDER BY release_year DESC
+        """
+            
+            
+            #"SELECT title, media_description, release_year, category FROM stream_data WHERE media_cast ILIKE %s AND category LIKE %s OR release_year > %s ORDER BY release_year DESC"
+            cursor.execute(query, (f"%{actor_name}%", f"%{category}%", release_year)) 
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)

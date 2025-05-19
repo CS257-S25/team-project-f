@@ -109,10 +109,13 @@ def filter_results():
         return render_template('filter_results.html', year=year, results=results)
 
     if category !=''and actor!='' and year!='': 
-        filtered_data = db.get_3_filter_media(actor, year, category)
+        results = db.get_3_filter_media(actor, year, category)
         print("Results all filters search:", results)
         print(type(results))
         return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+
+
+
 @app.route('/about')
 def about_page():
     return render_template('about.html')
