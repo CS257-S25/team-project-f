@@ -89,9 +89,9 @@ def genre_form():
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
     """Handles genre search and displays results."""
-    category = request.args.get('category', '')
-    actor = request.args.get('actor', '')
-    year = request.args.get('year', '')
+    category = request.args['category']
+    actor = request.args['actor']
+    year = request.args['year']
     if category != ''and actor=='' and year=='':
         results = db.get_movies_by_category(category)
         return render_template('filter_results.html', category=category, results=results)
@@ -102,7 +102,7 @@ def filter_results():
         print(type(results))
         return render_template('filter_results.html', actor=actor, results=results)
     
-    if category ==''and actor=='' and year!='': 
+    if category ==''and actor=='' and year!='':
         results = db.get_movies_later_than(year)
         print("Results year search:")
         print(type(results))
@@ -112,7 +112,7 @@ def filter_results():
         filtered_data = db.get_3_filter_media(actor, year, category)
         print("Results all filters search:", results)
         print(type(results))
-        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+    return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
 @app.route('/about')
 def about_page():
     return render_template('about.html')
@@ -170,4 +170,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=9403)
+    app.run(port=1337)
