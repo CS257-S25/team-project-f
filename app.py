@@ -159,21 +159,7 @@ def page_not_found(e):
         tuple: An error message and HTTP status code 404.
     """
     print(e)
-    return (
-    "<h1>Error 404 - Wrong Format</h1></br></br>"
-    "<p>Oops! The page you requested does not exist.</p>"
-    "<p>Make sure your URL follows one of these formats:</p>"
-
-    "[URL]/actor/Actor Name</br>"
-    "[URL]/category/Category Name</br>"
-    "[URL]/year/Year</br></br>"
-    "<b>Here are some example URLs:</br></br>"
-    "[URL]/actor/Emma Stone</br>"
-    "[URL]/category/Comedy</br>"
-    "[URL]/year/2010</br></br>"
-    "<p><a href=\"/\">Click to return to the homepage</a></p>", 
-    404)
-
+    return render_template('404.html')
 @app.errorhandler(500)
 def python_bug(e):
     """
@@ -186,10 +172,7 @@ def python_bug(e):
         tuple: An error message and HTTP status code 500.
     """
     print(e)
-    return (
-        "Error 500 - A python bug has occurred.</br></br>"
-        "Please check your input and try again.",
-        500)
+    return render_template('500.html')
 
 @app.route('/cause_500')
 def cause_500():
@@ -199,4 +182,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5002)
+    app.run(port=5004)
