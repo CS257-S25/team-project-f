@@ -9,11 +9,19 @@ body {
 }
 
 
+
+section.light {
+    padding: 1em;
+    background-color: #272949;
+    border-radius: 12px;
+}
+
 h1.logo {
     text-align: center;
     color:rgb(237, 237, 255);
     font-size:60px;
     margin:0.5em;
+    margin-bottom:0em;
 }
 
 
@@ -25,13 +33,15 @@ h2 {
 
 h3 {
     font-size: 1.5em;
-    margin-bottom: 0.3em;
+    margin: 0.3em;
     color: #8f87ff;
 }
 
 p {
     font-size: 1em;
 }
+
+
 
 
 div {
@@ -97,12 +107,13 @@ nav.topbar ul {
     padding:1em;
     list-style-type: none;
     overflow: hidden;
+    margin:0px;
 }
 
 nav.topbar li {
     display:inline-block;
     text-align: center;
-
+    margin:0px;
 }
 nav.topbar a {
     padding: 0.5em;
@@ -112,8 +123,8 @@ nav.topbar a {
     color:rgb(243, 245, 255);
     text-decoration: none;
     font-weight: bold;
-    font-size: 20px;
-
+    font-size: 18px;
+    margin:0px;
     transition: all 0.2s ease-in-out;
 }
 
