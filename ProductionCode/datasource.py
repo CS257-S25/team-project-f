@@ -40,7 +40,7 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT * FROM stream_data WHERE release_year > %s ORDER BY release_year DESC"
+            query = "SELECT title, media_type, media_description, category, release_year, platform FROM stream_data WHERE release_year > %s ORDER BY release_year DESC"
             cursor.execute(query, (release_year,))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
@@ -60,7 +60,7 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT * FROM stream_data WHERE media_cast ILIKE %s"
+            query = "SELECT title, media_type, media_description, category, release_year, platform FROM stream_data WHERE media_cast ILIKE %s"
             cursor.execute(query, (f"%{actor_name}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
@@ -80,7 +80,7 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT * FROM stream_data WHERE category ILIKE %s ORDER BY release_year DESC"
+            query = "SELECT title, media_type, media_description, category, release_year, platform FROM stream_data WHERE category ILIKE %s ORDER BY release_year DESC"
             cursor.execute(query, (f"%{category}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
@@ -128,16 +128,14 @@ class DataSource:
         try:
             cursor = self.connection.cursor()
             query = """
-            SELECT title, media_description, release_year, category 
-            FROM stream_data 
-            WHERE media_cast ILIKE %s 
-              AND category ILIKE %s 
-              AND release_year > %s 
-            ORDER BY release_year DESC
-        """
+                    SELECT title, media_type, media_description, category, release_year, platform
+                    FROM stream_data 
+                    WHERE media_cast ILIKE %s 
+                    AND category ILIKE %s 
+                    AND release_year > %s 
+                    ORDER BY release_year DESC
+            """
             
-            
-            #"SELECT title, media_description, release_year, category FROM stream_data WHERE media_cast ILIKE %s AND category LIKE %s OR release_year > %s ORDER BY release_year DESC"
             cursor.execute(query, (f"%{actor_name}%", f"%{category}%", release_year)) 
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
