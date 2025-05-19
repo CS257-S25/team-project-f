@@ -8,22 +8,9 @@ body {
     color:rgb(213, 219, 255);
 }
 
-
-
-section.light {
-    padding: 1em;
-    background-color: #272949;
-    border-radius: 12px;
+a {
+    text-decoration: none;
 }
-
-h1.logo {
-    text-align: center;
-    color:rgb(237, 237, 255);
-    font-size:60px;
-    margin:0.5em;
-    margin-bottom:0em;
-}
-
 
 h2 {
     font-size: 2em;
@@ -37,51 +24,50 @@ h3 {
     color: #8f87ff;
 }
 
+
 p {
     font-size: 1em;
 }
 
-
-
-
-div {
-    clear: left;
-    padding-bottom: 1em;
+section.light {
+    padding: 1em;
+    background-color: #272949;
+    border-radius: 12px;
 }
 
-ul {
-    padding-left: 1.2em;
+h1.title {
+    text-align: center;
+    color:rgb(237, 237, 255);
+    font-size:60px;
+    margin:0.5em;
+    margin-bottom:0em;
 }
-
-li {
-    margin-bottom: 0.5em;
-}
-
 
 div.search label {
     display:none;
 }
 
 div.search {
-    margin:0;
-    padding:0;
+    margin-bottom:0;
+    margin-top:0;
     text-align:left;
 }
 
 div.search input {
-    margin:0;
+    width: 25%;
     font-weight:bold;
     border-radius: 6px;
     border:none;
     padding: 0.5em;
+
     background-color:#464fd4;
     color: #d8ddff;
     font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 25%;
+    
+
     transition: width 0.4s ease-in-out;
 }
-
 
 div.search input::placeholder {
     padding: 0.5em;
@@ -147,10 +133,6 @@ div.highlight {
     margin: 12px;
     width: 300px;
 }
-
-
-
-
 
 span.blue {
     color: #626dff;
