@@ -106,7 +106,7 @@ def filter_results():
         results = db.get_movies_later_than(year)
         print("Results year search:")
         print(type(results))
-        return render_template('filter_results.html', year=year, results=results)
+        return render_template('year_results.html', year=year, results=results)
 
     if category !=''and actor!='' and year!='': 
         results = db.get_3_filter_media(actor, year, category)
