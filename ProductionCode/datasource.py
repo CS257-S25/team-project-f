@@ -60,7 +60,7 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = "SELECT title, media_description FROM stream_data WHERE media_cast ILIKE %s"
+            query = "SELECT * FROM stream_data WHERE media_cast ILIKE %s"
             cursor.execute(query, (f"%{actor_name}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
