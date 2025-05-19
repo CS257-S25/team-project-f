@@ -32,7 +32,7 @@ def search_by_actor(name):
         results = db.get_movie_titles_by_actor(name)
         if not results:
             return f"No results found for actor: {name}"
-        return "</br></br>".join(f"<b>{title}</b>: {desc}" for title, desc in results)
+        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
     except LookupError as e:
         print("Lookup error in /actor route:", e)
         return f"Could not find actor: {name}"
@@ -100,7 +100,7 @@ def filter_results():
         results = db.get_movie_titles_by_actor(actor)
         print("Results actor search:", results)
         print(type(results))
-        return render_template('filter_results.html', actor=actor, results=results)
+        return render_template('actor_results.html', actor=actor, results=results)
     
     if category ==''and actor=='' and year!='': 
         results = db.get_movies_later_than(year)
