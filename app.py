@@ -86,16 +86,6 @@ def filter_form():
     categories = db.get_all_categories()
     return render_template('filter.html', categories=categories)
 
-           ###### MEANT FOR SEARCHBAR WORK IN PROGRESS ######
-
-@app.route('/filter/search', methods=['GET'])
-def searchbar_results():
-    title = request.args.get('title', '')
-    titles = db.get_movie_by_title('title')
-    return render_template('index_html', catgeories=categories)
-
-           ###### MEANT FOR SEARCHBAR WORK IN PROGRESS ######
-
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
     """Handles genre search and displays results."""
