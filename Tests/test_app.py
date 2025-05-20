@@ -41,8 +41,7 @@ class TestFilterFunctions(BaseTestCase):
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
         mock_get_movies.return_value = [
-            ("The Grand Seduction", "A comedy about a small town...")
-        ]
+            ("The Grand Seduction", "A comedy about a small town...", "Comedy", 2013)]
 
         response = self.client.get('/actor/BRENDAN_GLEESON')
         self.assertIn("The Grand Seduction", response.data.decode())
