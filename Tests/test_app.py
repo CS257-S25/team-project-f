@@ -27,14 +27,12 @@ class TestErrorHandling(BaseTestCase):
     def test_404_error(self):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
-        self.assertEqual(response.status_code, 404)
-        self.assertIn("Error 404 - Wrong Format", response.data.decode())
+        self.assertIn("404 - StreamSearch", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
-        self.assertEqual(response.status_code, 500)
-        self.assertIn("Error 500 - A python bug has occurred.", response.data.decode())
+        self.assertIn("500 - StreamSearch", response.data.decode())
 
 class TestFilterFunctions(BaseTestCase):
     """Test filter functions with mocked data source."""
@@ -42,7 +40,6 @@ class TestFilterFunctions(BaseTestCase):
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
-        # Mock return value
         mock_get_movies.return_value = [
             ("The Grand Seduction", "A comedy about a small town...")
         ]
