@@ -88,62 +88,45 @@ def filter_form():
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
-    """Handles genre search and displays results."""
+    """Handles advanced filter search and displays results."""
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
 
-    #just category search
-    if category != ''and actor=='' and year=='':
+    results = []
+    year_val = str(int(year)-1) if year else "0"
+
+    if category and actor and year:
+        results = db.get_3_filter_media(actor, year_val, category)
+    elif category and actor:
+        results = db.get_3_filter_media(actor, "0", category)
+    elif category and year:
+        results = db.get_3_filter_media('', year_val, category)
+    elif actor and year:
+        results = db.get_3_filter_media(actor, year_val, '')
+    elif category:
         results = db.get_movies_by_category(category)
         return render_template('genre_results.html', category=category, results=results)
-
-    #just actor search
-    if category ==''and actor!='' and year=='': 
+    elif actor:
         results = db.get_movie_titles_by_actor(actor)
-        print("Results actor search:", results)
-        print(type(results))
-        return render_template('filter_results.html', actor=actor, results=results)
-    
-    #just year search
-    if category ==''and actor=='' and year!='': 
+    elif year:
         results = db.get_movies_later_than(str(int(year)-1))
-        print("Results year search:")
-        print(type(results))
-        return render_template('filter_results.html', year=year, results=results)
 
-    #Category, actor and year search (ALL THREE)
-    if category !=''and actor!='' and year!='': 
-        results = db.get_3_filter_media(actor, str(int(year)-1), category)
-        print("Results all filters search:", results)
-        print(type(results))
-        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
-
-    #Category and actor search
-    if category !=''and actor!='' and year=='': 
-        results = db.get_3_filter_media(actor, 0, category)
-        print("Results all filters search:", results)
-        print(type(results))
-        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
-
-    #Category and  year search
-    if category !=''and actor=='' and year!='': 
-        results = db.get_3_filter_media(actor, str(int(year)-1), category)
-        print("Results all filters search:", results)
-        print(type(results))
-        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
-
-    # Actor and year search
-    if category ==''and actor!='' and year!='': 
-        results = db.get_3_filter_media(actor, str(int(year)-1), category)
-        print("Results all filters search:", results)
-        print(type(results))
-        return render_template('filter_results.html', actor = actor, year=year, category = category, results=results)
+    return render_template(
+        'filter_results.html',
+        actor=actor,
+        year=year,
+        category=category,
+        results=results
+    )
 
 
 
 @app.route('/about')
 def about_page():
+    """
+    Renders the about page with information about the application.
+    """
     return render_template('about.html')
 
 
@@ -159,21 +142,7 @@ def page_not_found(e):
         tuple: An error message and HTTP status code 404.
     """
     print(e)
-    return (
-    "<h1>Error 404 - Wrong Format</h1></br></br>"
-    "<p>Oops! The page you requested does not exist.</p>"
-    "<p>Make sure your URL follows one of these formats:</p>"
-
-    "[URL]/actor/Actor Name</br>"
-    "[URL]/category/Category Name</br>"
-    "[URL]/year/Year</br></br>"
-    "<b>Here are some example URLs:</br></br>"
-    "[URL]/actor/Emma Stone</br>"
-    "[URL]/category/Comedy</br>"
-    "[URL]/year/2010</br></br>"
-    "<p><a href=\"/\">Click to return to the homepage</a></p>", 
-    404)
-
+    return render_template('404.html')
 @app.errorhandler(500)
 def python_bug(e):
     """
@@ -186,10 +155,7 @@ def python_bug(e):
         tuple: An error message and HTTP status code 500.
     """
     print(e)
-    return (
-        "Error 500 - A python bug has occurred.</br></br>"
-        "Please check your input and try again.",
-        500)
+    return render_template('500.html')
 
 @app.route('/cause_500')
 def cause_500():
@@ -199,4 +165,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5002)
+    app.run(port=5004)

@@ -17,6 +17,9 @@ parser.add_argument('-c', '--category', type=str, help='Filter by category')
 parser.add_argument('-y', '--year', type=int, help='Filter by release year')
 
 def main():
+    """
+    Main function to parse command line arguments and fetch data from the DataSource.
+    """
     args = parser.parse_args()
     ds = DataSource()
 
