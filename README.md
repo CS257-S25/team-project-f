@@ -97,13 +97,13 @@ Filters media entries based on year.
 [URL]/year/2010
 ```
 ## Scanability
-The webpage uses clear headers and navigation bar, making it easy for users to quickly spot the name of the app, and understand key sections which support different fuctionality. The consistent placement of the navigation bar across pages allows users to easily scan and move between different parts of the site. The functionalities themselves are broken up into concise small subsections with intuitive naming and good spacing, making it easy for users to quickly understand key sections which support their missions such as fitering movies by genre, actor, or year.
+The webpage features clear headers and a consistently placed navigation bar, enabling users to quickly identify the app’s name and easily locate key sections that support various functionalities. The uniform placement of the navigation bar across all pages allows users to effortlessly scan and navigate between different areas of the site. Functionalities are organized into concise, well-spaced subsections with intuitive labels, helping users rapidly grasp key options such as filtering movies by genre, actor, or year.
 
 ## Satisficing
-The input boxes for actor name and year, and the dropdown form for genre selection are all simple and intuitive, allowing users to act immediately without needing instructions. Traditional design elements like a familiar navigation bar, turning to a differnt color or becoming outlined when hovering on the tiles, make the page predictable and clearly indicate what are clickable so users don’t have to stop and think too hard about where to click or what to do. If someone selects the wrong option for filtering, it's easy to backtrack using the back to search link. 
+Input fields for actor name and year, along with the genre selection dropdown, are designed to be simple and intuitive, allowing users to interact immediately without additional instructions. Familiar design conventions—like a traditional navigation bar, tiles that change color or outline on hover, and underlined clickable links—make the interface predictable and clearly indicate interactive elements. This reduces cognitive load by guiding users smoothly through the process. If a user makes an incorrect filter choice, the easily accessible "Back to Search" link at the bottom of the page allows quick recovery.
 
 ## Muddling through
-The navigation bar and forms are self-explanatory, so users can jump in and start clicking without needing detailed guidance. Additionally, the form elements are made accessible with matching id and label tags, which is helpful for users navigating with screen readers or keyboards.
+The navigation bar and form elements are self-explanatory, encouraging users to jump in and explore without needing detailed guidance. Furthermore, accessibility considerations such as matching id and label tags on form inputs enhance usability for those navigating with screen readers or keyboards, ensuring a more inclusive user experience.
 
 
 ## File Structure
