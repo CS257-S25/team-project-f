@@ -106,7 +106,6 @@ def filter_results():
         results = db.get_3_filter_media(actor, year_val, '')
     elif category:
         results = db.get_movies_by_category(category)
-        return render_template('genre_results.html', category=category, results=results)
     elif actor:
         results = db.get_movie_titles_by_actor(actor)
     elif year:
@@ -119,8 +118,6 @@ def filter_results():
         category=category,
         results=results
     )
-
-
 
 @app.route('/about')
 def about_page():
@@ -165,4 +162,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5004)
+    app.run()
