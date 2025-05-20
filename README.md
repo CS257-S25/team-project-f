@@ -97,7 +97,7 @@ Filters media entries based on year.
 [URL]/year/2010
 ```
 ## Scanability
-The webpage features clear headers and a consistently placed navigation bar, enabling users to quickly identify the app’s name and easily locate key sections that support various functionalities. The uniform placement of the navigation bar across all pages allows users to effortlessly scan and navigate between different areas of the site. Functionalities are organized into concise, well-spaced subsections with intuitive labels, helping users rapidly grasp key options such as filtering movies by genre, actor, or year.
+The webpage features clear headers and a consistently placed navigation bar, which enables users to quickly identify the app’s name and easily locate key sections that support various functionalities. The uniform placement of the navigation bar across all pages allows users to scan and navigate between different areas of the site. Functionalities are organized into concise, well-spaced subsections with intuitive labels, helping users grasp key options such as filtering movies by genre, actor, or year.
 
 ## Satisficing
 Input fields for actor name and year, along with the genre selection dropdown, are designed to be simple and intuitive, allowing users to interact immediately without additional instructions. Familiar design conventions—like a traditional navigation bar, tiles that change color or outline on hover, and underlined clickable links—make the interface predictable and clearly indicate interactive elements. This reduces cognitive load by guiding users smoothly through the process. If a user makes an incorrect filter choice, the easily accessible "Back to Search" link at the bottom of the page allows quick recovery.
