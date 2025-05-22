@@ -133,7 +133,7 @@ class TestFilterFunctions(BaseTestCase):
                                       2020, "Drama", "Description", "Netflix")]
         response = self.client.get('/filter/results?actor=Actor&year=2021&category=Drama')
         self.assertIn("Movie Title A", response.data.decode())
-    
+
     @patch('app.db.get_3_filter_media')
 
     def test_filter_results_actor_category(self, mock_filter):
