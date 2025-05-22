@@ -133,7 +133,43 @@ class TestFilterFunctions(BaseTestCase):
                                       2020, "Drama", "Description", "Netflix")]
         response = self.client.get('/filter/results?actor=Actor&year=2021&category=Drama')
         self.assertIn("Movie Title A", response.data.decode())
+    
+    @patch('app.db.get_3_filter_media')
 
+    def test_filter_results_actor_category(self, mock_filter):
+        """
+        Test with only actor and category filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Action Star", "Some Actor", 2022,
+                                      "Action", "Explosive movie", "Hulu")]
+        response = self.client.get('/filter/results?actor=Some+Actor&category=Action')
+        self.assertIn("Action Star", response.data.decode())
+        mock_filter.assert_called_with("Some Actor", "0", "Action")
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_actor_year(self, mock_filter):
+        """
+        Test /filter/results with actor and year filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Comeback", "Old Actor", 2019,
+                                      "Drama", "A comeback role", "Netflix")]
+        response = self.client.get('/filter/results?actor=Old+Actor&year=2020')
+        self.assertIn("Comeback", response.data.decode())
+        mock_filter.assert_called_with("Old Actor", "2019", "")
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_category_year(self, mock_filter):
+        """
+        Test /filter/results with category and year filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Future Flick", "Lead", 2030,
+                                      "Sci-Fi", "Set in space", "Disney+")]
+        response = self.client.get('/filter/results?category=Sci-Fi&year=2029')
+        self.assertIn("Future Flick", response.data.decode())
+        mock_filter.assert_called_with("", "2028", "Sci-Fi")
 
 if __name__ == '__main__':
     unittest.main()
