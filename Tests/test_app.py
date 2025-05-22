@@ -41,7 +41,8 @@ class TestFilterFunctions(BaseTestCase):
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
         mock_get_movies.return_value = mock_get_movies.return_value = [
-            ("movie", "The Grand Seduction", "BRENDAN GLEESON", 2013, "Comedy", "A comedy set in Newfoundland.", "Netflix")
+            ("movie", "The Grand Seduction", "BRENDAN GLEESON", 2013,
+              "Comedy", "A comedy set in Newfoundland.", "Netflix")
         ]
         response = self.client.get('/actor/BRENDAN_GLEESON')
         self.assertIn("The Grand Seduction", response.data.decode())
@@ -90,7 +91,8 @@ class TestFilterFunctions(BaseTestCase):
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
         mock_get_movies.return_value = [
-            ("movie", "Action Movie", "Some Actor", 2022, "Action", "An action-packed thriller.", "Hulu")
+            ("movie", "Action Movie", "Some Actor", 2022, "Action",
+              "An action-packed thriller.", "Hulu")
         ]
         response = self.client.get('/category/Action')
         self.assertIn("Action Movie", response.data.decode())
@@ -109,6 +111,29 @@ class TestFilterFunctions(BaseTestCase):
         mock_get_movies.side_effect = LookupError("DB error")
         response = self.client.get('/category/Drama')
         self.assertIn("Could not find movies in category: Drama", response.data.decode())
+
+    @patch('app.db.get_all_categories')
+    def test_filter_form(self, mock_get_categories):
+        """
+        Test the filter form is rendered correctly and that
+        available movie categories are retrieved and displayed from the database.
+        """
+        mock_get_categories.return_value = ['Comedy', 'Action']
+        response = self.client.get('/filter')
+        self.assertIn("Comedy", response.data.decode())
+        self.assertIn("Action", response.data.decode())
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_all_filters(self, mock_filter):
+        """
+        Test when all query parameters are provided,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Movie Title A", "Actor",
+                                      2020, "Drama", "Description", "Netflix")]
+        response = self.client.get('/filter/results?actor=Actor&year=2021&category=Drama')
+        self.assertIn("Movie Title A", response.data.decode())
+
 
 if __name__ == '__main__':
     unittest.main()
