@@ -40,9 +40,9 @@ class TestFilterFunctions(BaseTestCase):
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
-        mock_get_movies.return_value = [
-            ("The Grand Seduction", "A comedy about a small town...", "Comedy", 2013)]
-
+        mock_get_movies.return_value = mock_get_movies.return_value = [
+            ("movie", "The Grand Seduction", "BRENDAN GLEESON", 2013, "Comedy", "A comedy set in Newfoundland.", "Netflix")
+        ]
         response = self.client.get('/actor/BRENDAN_GLEESON')
         self.assertIn("The Grand Seduction", response.data.decode())
 
@@ -65,9 +65,8 @@ class TestFilterFunctions(BaseTestCase):
     def test_year_filter_valid_result(self, mock_get_movies):
         """Test year filter with mocked results."""
         mock_get_movies.return_value = [
-            ("Some Movie", "A sci-fi film.", "Sci-Fi", 2020)
+            ("movie", "Some Movie", "Another Actor", 2021, "Drama", "A futuristic drama.", "Prime")
         ]
-
         response = self.client.get('/year/2019')
         self.assertIn("Some Movie", response.data.decode())
 
@@ -91,9 +90,8 @@ class TestFilterFunctions(BaseTestCase):
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
         mock_get_movies.return_value = [
-            ("Action Movie", "An action-packed adventure.", "Action", 2022)
+            ("movie", "Action Movie", "Some Actor", 2022, "Action", "An action-packed thriller.", "Hulu")
         ]
-
         response = self.client.get('/category/Action')
         self.assertIn("Action Movie", response.data.decode())
 
