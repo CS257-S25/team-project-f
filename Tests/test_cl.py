@@ -68,7 +68,7 @@ class TestCommandLineInterface(unittest.TestCase):
 
     def tearDown(self):
         """
-        Stop patching and restore stdout.
+        Restore stdout.
         """
         self.patcher.stop()
         sys.stdout = self.original_stdout

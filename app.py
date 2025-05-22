@@ -140,6 +140,7 @@ def page_not_found(e):
     """
     print(e)
     return render_template('404.html')
+
 @app.errorhandler(500)
 def python_bug(e):
     """
