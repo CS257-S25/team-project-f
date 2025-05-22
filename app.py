@@ -32,7 +32,7 @@ def search_by_actor(name):
         results = db.get_movie_titles_by_actor(name)
         if not results:
             return f"No results found for actor: {name}"
-        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
+        return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
     except LookupError as e:
         print("Lookup error in /actor route:", e)
         return f"Could not find actor: {name}"
