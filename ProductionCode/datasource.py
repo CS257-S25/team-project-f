@@ -81,8 +81,8 @@ class DataSource:
 
         try:
             cursor = self.connection.cursor()
-            query = """SELECT * FROM stream_data 
-            WHERE category ILIKE %s ORDER BY release_year DESC"""
+            query = """SELECT * FROM stream_data
+              WHERE category ILIKE %s ORDER BY release_year DESC"""
             cursor.execute(query, (f"%{category}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
