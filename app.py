@@ -53,7 +53,7 @@ def search_by_year(year):
         results = db.get_movies_later_than(year-1)
         if not results:
             return f"No movies found released after {year}."
-        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
+        return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
     except LookupError as e:
         print("Lookup error in /year route:", e)
         return f"Could not find titles after year: {year}"
@@ -74,7 +74,7 @@ def search_by_category(category):
         results = db.get_movies_by_category(category)
         if not results:
             return f"No movies found in category: {category}"
-        return "</br></br>".join(f"<b>{row[0]}</b> ({row[3]}): {row[1]}" for row in results)
+        return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
     except LookupError as e:
         print("Lookup error in /category route:", e)
         return f"Could not find movies in category: {category}"
