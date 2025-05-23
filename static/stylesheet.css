@@ -198,6 +198,10 @@ nav.topbar a {
     transition: all 0.2s ease-in-out;
 }
 
+
+nav li a#selected {
+    background-color: #1a1b30;
+}
     
 nav li a:hover,
 nav li a:focus {

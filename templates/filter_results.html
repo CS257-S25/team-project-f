@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
 <body>
+<<<<<<< HEAD
         <section id="heading">
+=======
+
+    <section id="heading">
+>>>>>>> 4070472dcb93f01df4385caa49ede522c6ef7eed
         <a href="/">
             <h1 class="title">
                 Stream<span class="blue">Search</span>
@@ -24,7 +29,11 @@
         <nav class="topbar">
             <ul>
                 <li>
+<<<<<<< HEAD
                     <a href="/filter" id="selected">Advanced Filters</a>
+=======
+                    <a href="/filter", id="selected">Advanced Filters</a>
+>>>>>>> 4070472dcb93f01df4385caa49ede522c6ef7eed
                 </li>
                 <li>
                     <a href="/about">About</a>
@@ -32,15 +41,25 @@
             </ul>
         </nav>
     </section>
+<<<<<<< HEAD
     <h2> Search Results:</h1>
+=======
+    <h2> Search Results:</h2>
+>>>>>>> 4070472dcb93f01df4385caa49ede522c6ef7eed
     {% if results %}
         <ul>
         {% for movie in results %}
         <p> 
             <li><strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
+<<<<<<< HEAD
                 <p>Description: {{ movie[5] }}</p>
                 <p>Category: {{ movie[4] }} </p>
                 <p>Availible on: {{ movie[6] }} </li></p>
+=======
+                <p><strong>Description:</strong> {{ movie[5] }}</p>
+                <p><strong>Category: </strong>{{ movie[4] }} </p>
+                <p><strong>Availible on:</strong> {{ movie[6] }} </li></p>
+>>>>>>> 4070472dcb93f01df4385caa49ede522c6ef7eed
             </p>
                 <hr style="background-color: #1a1b30;">
         {% endfor %}
