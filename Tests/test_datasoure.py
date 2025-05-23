@@ -124,6 +124,34 @@ class TestDataSource(unittest.TestCase):
         self.assertIsNone(result)
 
     @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_movie_titles_by_actor_query_error(self, mock_connect):
+        """
+        Test get_movie_titles_by_actor returns None on query error.
+        """
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
+
+        ds = DataSource()
+        ds.connect()
+        result = ds.get_movie_titles_by_actor("Actor Y")
+
+        self.assertIsNone(result)
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_movie_by_category_query_error(self, mock_connect):
+        """
+        Test get_movies_by_category returns None on query error.
+        """
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
+
+        ds = DataSource()
+        ds.connect()
+        result = ds.get_movies_by_category("Drama")
+
+        self.assertIsNone(result)
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_get_all_categories_query_error(self, mock_connect):
         """
         Test get_all_categories returns empty list on query error.
