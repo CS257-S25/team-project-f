@@ -3,8 +3,8 @@ Unit tests for the DataSource class in datasource.py.
 Uses mock objects to simulate database interactions.
 """
 import unittest
-import psycopg2
 from unittest.mock import patch, MagicMock
+import psycopg2
 from ProductionCode.datasource import DataSource
 
 class TestDataSource(unittest.TestCase):
@@ -78,7 +78,8 @@ class TestDataSource(unittest.TestCase):
         """
         Test get_all_categories returns unique categories split from comma-separated values.
         """
-        self.mock_cursor.fetchall.return_value = [("Action, Drama",), ("Comedy",), ("Drama, Sci-Fi",)]
+        self.mock_cursor.fetchall.return_value = [("Action, Drama",), ("Comedy",),
+                                                   ("Drama, Sci-Fi",)]
         ds = self.get_connected_datasource(mock_connect)
         result = ds.get_all_categories()
 
