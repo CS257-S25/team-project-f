@@ -137,5 +137,52 @@ class TestDataSource(unittest.TestCase):
 
         self.assertEqual(result, [])
 
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_movies_later_than_empty_result(self, mock_connect):
+        """
+        Test get_movies_later_than returns empty list if no movies found.
+        """
+        self.mock_cursor.fetchall.return_value = []
+        ds = self.get_connected_datasource(mock_connect)
+        result = ds.get_movies_later_than(2050)
+
+        self.assertEqual(result, [])
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_movie_titles_by_actor_empty_result(self, mock_connect):
+        """
+        Test get_movie_titles_by_actor returns empty list if actor not found.
+        """
+        self.mock_cursor.fetchall.return_value = []
+        ds = self.get_connected_datasource(mock_connect)
+        result = ds.get_movie_titles_by_actor("Unknown Actor")
+
+        self.assertEqual(result, [])
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_3_filter_media_empty_filters(self, mock_connect):
+        """
+        Test get_3_filter_media returns empty list when no filters provided.
+        """
+        self.mock_cursor.fetchall.return_value = []
+        ds = self.get_connected_datasource(mock_connect)
+        result = ds.get_3_filter_media("", "", "")
+
+        self.assertEqual(result, [])
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_3_filter_media_query_error(self, mock_connect):
+        """
+        Test get_3_filter_media returns None on query error.
+        """
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
+
+        ds = DataSource()
+        ds.connect()
+        result = ds.get_3_filter_media("Actor A", "2020", "Thriller")
+
+        self.assertIsNone(result)
+
 if __name__ == '__main__':
     unittest.main()
