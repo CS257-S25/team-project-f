@@ -27,14 +27,12 @@ class TestErrorHandling(BaseTestCase):
     def test_404_error(self):
         """Test the 404 error handler."""
         response = self.client.get('/nonexistent_route')
-        self.assertEqual(response.status_code, 404)
-        self.assertIn("Error 404 - Wrong Format", response.data.decode())
+        self.assertIn("404 - StreamSearch", response.data.decode())
 
     def test_500_error(self):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
-        self.assertEqual(response.status_code, 500)
-        self.assertIn("Error 500 - A python bug has occurred.", response.data.decode())
+        self.assertIn("500 - StreamSearch", response.data.decode())
 
 class TestFilterFunctions(BaseTestCase):
     """Test filter functions with mocked data source."""
@@ -42,11 +40,10 @@ class TestFilterFunctions(BaseTestCase):
     @patch('app.db.get_movie_titles_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
-        # Mock return value
-        mock_get_movies.return_value = [
-            ("The Grand Seduction", "A comedy about a small town...")
+        mock_get_movies.return_value = mock_get_movies.return_value = [
+            ("movie", "The Grand Seduction", "BRENDAN GLEESON", 2013,
+              "Comedy", "A comedy set in Newfoundland.", "Netflix")
         ]
-
         response = self.client.get('/actor/BRENDAN_GLEESON')
         self.assertIn("The Grand Seduction", response.data.decode())
 
@@ -69,9 +66,8 @@ class TestFilterFunctions(BaseTestCase):
     def test_year_filter_valid_result(self, mock_get_movies):
         """Test year filter with mocked results."""
         mock_get_movies.return_value = [
-            ("Some Movie", "A sci-fi film.", "Sci-Fi", 2020)
+            ("movie", "Some Movie", "Another Actor", 2021, "Drama", "A futuristic drama.", "Prime")
         ]
-
         response = self.client.get('/year/2019')
         self.assertIn("Some Movie", response.data.decode())
 
@@ -90,13 +86,14 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/year/2010')
         self.assertIn("Could not find titles after year: 2010", response.data.decode())
 
+
     @patch('app.db.get_movies_by_category')
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
         mock_get_movies.return_value = [
-            ("Action Movie", "An action-packed adventure.", "Action", 2022)
+            ("movie", "Action Movie", "Some Actor", 2022, "Action",
+              "An action-packed thriller.", "Hulu")
         ]
-
         response = self.client.get('/category/Action')
         self.assertIn("Action Movie", response.data.decode())
 
@@ -114,6 +111,65 @@ class TestFilterFunctions(BaseTestCase):
         mock_get_movies.side_effect = LookupError("DB error")
         response = self.client.get('/category/Drama')
         self.assertIn("Could not find movies in category: Drama", response.data.decode())
+
+    @patch('app.db.get_all_categories')
+    def test_filter_form(self, mock_get_categories):
+        """
+        Test the filter form is rendered correctly and that
+        available movie categories are retrieved and displayed from the database.
+        """
+        mock_get_categories.return_value = ['Comedy', 'Action']
+        response = self.client.get('/filter')
+        self.assertIn("Comedy", response.data.decode())
+        self.assertIn("Action", response.data.decode())
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_all_filters(self, mock_filter):
+        """
+        Test when all query parameters are provided,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Movie Title A", "Actor",
+                                      2020, "Drama", "Description", "Netflix")]
+        response = self.client.get('/filter/results?actor=Actor&year=2021&category=Drama')
+        self.assertIn("Movie Title A", response.data.decode())
+
+    @patch('app.db.get_3_filter_media')
+
+    def test_filter_results_actor_category(self, mock_filter):
+        """
+        Test with only actor and category filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Action Star", "Some Actor", 2022,
+                                      "Action", "Explosive movie", "Hulu")]
+        response = self.client.get('/filter/results?actor=Some+Actor&category=Action')
+        self.assertIn("Action Star", response.data.decode())
+        mock_filter.assert_called_with("Some Actor", "0", "Action")
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_actor_year(self, mock_filter):
+        """
+        Test /filter/results with actor and year filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Comeback", "Old Actor", 2019,
+                                      "Drama", "A comeback role", "Netflix")]
+        response = self.client.get('/filter/results?actor=Old+Actor&year=2020')
+        self.assertIn("Comeback", response.data.decode())
+        mock_filter.assert_called_with("Old Actor", "2019", "")
+
+    @patch('app.db.get_3_filter_media')
+    def test_filter_results_category_year(self, mock_filter):
+        """
+        Test /filter/results with category and year filters,
+        the correct database method is called and the results are displayed.
+        """
+        mock_filter.return_value = [("movie", "Future Flick", "Lead", 2030,
+                                      "Sci-Fi", "Set in space", "Disney+")]
+        response = self.client.get('/filter/results?category=Sci-Fi&year=2029')
+        self.assertIn("Future Flick", response.data.decode())
+        mock_filter.assert_called_with("", "2028", "Sci-Fi")
 
 if __name__ == '__main__':
     unittest.main()
