@@ -204,6 +204,10 @@ nav li a:focus {
     background-color: #1a1b30;
 }
 
+nav li a#selected {
+    background-color: #1a1b30;
+}
+
 div.content {
     width: 100%;
 }

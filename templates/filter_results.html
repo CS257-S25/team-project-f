@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Search Results - StreamSearch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
-<body style="background-color: #464fd4;">
-    <h1 style="color: whitesmoke;"> Search Results:</h1>
+<body>
+        <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="movies">Search titles across platforms</label></strong>
+                    <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
+                </form>
+            </p>
+        </div>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/filter" id="selected">Advanced Filters</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <h2> Search Results:</h1>
     {% if results %}
         <ul>
         {% for movie in results %}
         <p> 
-            <li style="color: 1a1b30"><strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
-                <p style="color: whitesmoke;"><strong>Description:</strong> {{ movie[5] }}</p>
-                <p style="color: whitesmoke;"><strong>Category: </strong>{{ movie[4] }} </p>
-                <p style="color: whitesmoke;"><strong>Availible on:</strong> {{ movie[6] }} </li></p>
+            <li><strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
+                <p>Description: {{ movie[5] }}</p>
+                <p>Category: {{ movie[4] }} </p>
+                <p>Availible on: {{ movie[6] }} </li></p>
             </p>
                 <hr style="background-color: #1a1b30;">
         {% endfor %}
