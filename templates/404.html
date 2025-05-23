@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="movies">Search titles across platforms</label></strong>
+                    <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
+                </form>
+            </p>
+        </div>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/filter">Advanced Filters</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    
+
+    <h2>Error 404: Page not Found</h2>
+
+    <section class="light">
+        <h3></h3>
+        <p>
+            Please <a href="/">click here</a> to return home and try again.<br>
+        </p>
+    </section>
+
+</body>
+</html>

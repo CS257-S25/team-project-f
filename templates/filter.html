@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Filter - StreamSearch</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+
+    </head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="movies">Search titles across platforms</label></strong>
+                    <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
+                </form>
+            </p>
+        </div>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/filter", id="selected">Advanced Filters</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+
+    <section class="filters">
+        <h2>Advanced Filters</h2>
+        <form action="/filter/results" method="get">
+            <label for="actor">Actor Name:</label><br>
+            <input type="text" id="actor" name="actor" value="">
+            <br>
+            <label for="year">Year:</label><br>
+            <input type="number" id="year" name="year" value="">
+            <br>
+            <label for="category">Category:</label><br>
+            <select id="category" name="category">
+                <option value="">Select Category...</option>
+                {% for genre in categories %}
+                    <option value="{{ genre }}">{{ genre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <input type="submit" id="submit" value="Search">
+        </form>
+    </section>
+</body>
+</html>
