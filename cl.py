@@ -22,7 +22,7 @@ def main():
     """
     args = parser.parse_args()
     ds = DataSource()
-    if not (args.actor or args.category or args.year)
+    if not (args.actor or args.category or args.year):
         print("Please provide at least one filter: --actor, --category, or --year")
         return
     results = ds.get_3_filter_media(
