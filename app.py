@@ -92,25 +92,11 @@ def filter_results():
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
-
-    results = []
-    year_val = str(int(year)-1) if year else "0"
-
-    if category and actor and year:
-        results = db.get_3_filter_media(actor, year_val, category)
-    elif category and actor:
-        results = db.get_3_filter_media(actor, "0", category)
-    elif category and year:
-        results = db.get_3_filter_media('', year_val, category)
-    elif actor and year:
-        results = db.get_3_filter_media(actor, year_val, '')
-    elif category:
-        results = db.get_movies_by_category(category)
-    elif actor:
-        results = db.get_movie_titles_by_actor(actor)
-    elif year:
-        results = db.get_movies_later_than(str(int(year)-1))
-
+    results = db.get_3_filter_media(
+        actor if actor else '',
+        str(int(year)-1) if year else 0,
+        category if category else ''
+    )
     return render_template(
         'filter_results.html',
         actor=actor,
