@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from ProductionCode.datasource import DataSource
 
 app = Flask(__name__)
-db = DataSource()
+ds = DataSource()
 
 @app.route('/')
 def homepage():
@@ -29,7 +29,7 @@ def search_by_actor(name):
              or a message indicating no results were found.
     """
     try:
-        results = db.get_movie_titles_by_actor(name)
+        results = ds.get_movie_titles_by_actor(name)
         if not results:
             return f"No results found for actor: {name}"
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -50,7 +50,7 @@ def search_by_year(year):
              or a message indicating no results were found.
     """
     try:
-        results = db.get_movies_later_than(year-1)
+        results = ds.get_movies_later_than(year-1)
         if not results:
             return f"No movies found released after {year}."
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -71,7 +71,7 @@ def search_by_category(category):
              or a message indicating no results were found.
     """
     try:
-        results = db.get_movies_by_category(category)
+        results = ds.get_movies_by_category(category)
         if not results:
             return f"No movies found in category: {category}"
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -83,7 +83,7 @@ def search_by_category(category):
 @app.route('/filter', methods=['GET'])
 def filter_form():
     """Renders genre selection form with dynamic dropdown."""
-    categories = db.get_all_categories()
+    categories = ds.get_all_categories()
     return render_template('filter.html', categories=categories)
 
 @app.route('/filter/results', methods=['GET'])
@@ -92,9 +92,9 @@ def filter_results():
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
-    results = db.get_3_filter_media(
+    results = ds.get_3_filter_media(
         actor if actor else '',
-        str(int(year)-1) if year else 0,
+        str(int(year)-1) if year else '0',
         category if category else ''
     )
     return render_template(
