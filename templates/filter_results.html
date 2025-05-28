@@ -41,11 +41,10 @@
         {% for movie in results %}
         <p> 
             <li><strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
-                <p><strong>Description:</strong> {{ movie[5] }}</p>
-                <p><strong>Category: </strong>{{ movie[4] }} </p>
-                <p><strong>Availible on:</strong> {{ movie[6] }} </li></p>
-            </p>
-                <hr style="background-color: #1a1b30;">
+                <p>Description: {{ movie[5] }}</p>
+                <p>Category: {{ movie[4] }} </p>
+                <p>Availible on: {{ movie[6] }} </li></p>
+        </p>
         {% endfor %}
         </ul>
     {% else %}
