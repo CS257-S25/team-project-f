@@ -17,7 +17,7 @@ def homepage():
     return render_template(
         "index.html",
         titles = ds.get_media_titles_only()
-        )
+    )
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
@@ -86,7 +86,11 @@ def search_by_category(category):
 def filter_form():
     """Renders genre selection form with dynamic dropdown."""
     categories = ds.get_all_categories()
-    return render_template('filter.html', categories=categories)
+    return render_template(
+        'filter.html', 
+        categories=categories,
+        titles = ds.get_media_titles_only()
+    )
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
@@ -104,7 +108,8 @@ def filter_results():
         actor=actor,
         year=year,
         category=category,
-        results=results
+        results=results,
+        titles = ds.get_media_titles_only()
     )
 
 @app.route('/about')
