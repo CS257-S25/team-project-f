@@ -129,7 +129,10 @@ def page_not_found(e):
         tuple: An error message and HTTP status code 404.
     """
     print(e)
-    return render_template('404.html')
+    return render_template(
+        '404.html',
+        titles = ds.get_media_titles_only()
+    )
 
 @app.errorhandler(500)
 def python_bug(e):
@@ -143,7 +146,10 @@ def python_bug(e):
         tuple: An error message and HTTP status code 500.
     """
     print(e)
-    return render_template('500.html')
+    return render_template(
+        '500.html',
+        titles = ds.get_media_titles_only()
+    )
 
 @app.route('/cause_500')
 def cause_500():

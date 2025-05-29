@@ -2,8 +2,22 @@
 <html>
     <head>
         <title>Filter - StreamSearch</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-
+        <script>
+            $( function() {
+                var availableTags = [
+                    {% for title in titles %}
+                        "{{title}}",
+                    {% endfor %}
+                ];
+                $( "#search_titles" ).autocomplete({
+                source: availableTags
+                });
+            } );
+        </script>
     </head>
 <body>
     <section id="heading">
@@ -16,8 +30,8 @@
         <div class="search">
             <p>
                 <form action="search">
-                    <strong><label for="movies">Search titles across platforms</label></strong>
-                    <input type="text" id="movies" name="moviechoice" placeholder="Search titles across platforms...">
+                    <strong><label for="search_titles">Search titles across platforms</label></strong>
+                    <input type="text" id="search_titles" name="title_choice" placeholder="Search titles across platforms...">
                 </form>
             </p>
         </div>
