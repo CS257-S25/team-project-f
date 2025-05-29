@@ -1,0 +1,66 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <script>
+        $( function() {
+            var availableTags = [
+                {% for title in titles %}
+                    "{{title}}",
+                {% endfor %}
+            ];
+            $( "#search_titles" ).autocomplete({
+            source: availableTags
+            });
+        } );
+    </script>
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+            Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="search_titles">Search titles across platforms</label></strong>
+                    <input type="text" id="search_titles" name="title_choice" placeholder="Search titles across platforms...">
+                </form>
+            </p>
+        </div>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Advanced Filters</a>
+                </li>
+                <li>
+                    <a href="/about" id="selected">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <div class="main">
+    <h2>About Us</h2>
+    <p>
+        StreamSearch is a website created to help browse multiple streaming services at once with ease.
+        The services included in this application are Hulu, Disney+, Netflix, and Amazon Prime.
+        The data is not necessarily up to date and solely represents a proof of concept.<br>
+        This website was coded by Eva, Maria, Asa, and John for Team F.
+    </p>
+    </div>
+</body>
+</html>
