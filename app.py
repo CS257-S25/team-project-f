@@ -14,7 +14,10 @@ def homepage():
     Determines the text on the homepage of the website. 
     Displays detailed instructions regarding the usage of the application.
     """
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        titles = ds.get_media_titles_only()
+        )
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):

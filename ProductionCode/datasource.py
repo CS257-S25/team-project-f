@@ -27,6 +27,28 @@ class DataSource:
                 raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
 
+    def get_media_titles_only(self):
+        """
+        Fetches a full titles-only list of media from the database.
+        For use in the searchbar in most webpages.
+        """
+        if self.connection is None:
+            self.connect()
+        
+        try: 
+            cursor = self.connection.cursor()
+            cursor.execute('''
+                SELECT title, release_year FROM stream_data
+                ORDER BY title ASC
+            ''')
+            titles = []
+            for title in cursor:
+                titles.append(str("".join(title[0].splitlines())))
+            return titles
+        except psycopg2.DatabaseError as e:
+            print("Something went wrong when executing the query:", e)
+            return None
+
     def get_movies_later_than(self, release_year):
         """
         Fetches full info of movies released after the specified year.
