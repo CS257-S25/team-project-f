@@ -211,7 +211,7 @@ class TestDataSource(unittest.TestCase):
         result = ds.get_3_filter_media("Actor A", "2020", "Thriller")
 
         self.assertIsNone(result)
-    
+
     @patch('ProductionCode.datasource.psycopg2.connect')
     def test_get_media_titles_only(self, mock_connect):
         """

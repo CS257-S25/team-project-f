@@ -34,8 +34,8 @@ class DataSource:
         """
         if self.connection is None:
             self.connect()
-        
-        try: 
+
+        try:
             cursor = self.connection.cursor()
             cursor.execute('''
                 SELECT title FROM stream_data
@@ -43,9 +43,6 @@ class DataSource:
             ''')
             titles = []
             for title in cursor:
-                ''' The .splitlines() into a "".join() is crucial;
-                if not added in, database entries with unescaped line 
-                breaks will brick the media search bar. '''
                 titles.append("".join(title[0].splitlines()))
             return titles
         except psycopg2.DatabaseError as e:
