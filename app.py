@@ -82,7 +82,6 @@ def search_by_category(category):
         print("Lookup error in /category route:", e)
         return f"Could not find movies in category: {category}"
 
-
 @app.route('/filter', methods=['GET'])
 def filter_form():
     """Renders genre selection form with dynamic dropdown."""
@@ -113,8 +112,10 @@ def about_page():
     """
     Renders the about page with information about the application.
     """
-    return render_template('about.html')
-
+    return render_template(
+        'about.html',
+        titles = ds.get_media_titles_only()
+    )
 
 @app.errorhandler(404)
 def page_not_found(e):
