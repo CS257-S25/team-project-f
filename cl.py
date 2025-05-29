@@ -1,10 +1,10 @@
-'''
+"""
 cl.py
 
 Command Line Interface for StreamSearch
 This module provides a command line interface for the StreamSearch application.
 It allows users to filter movies and shows based on actor names, categories, and release years.
-'''
+"""
 import argparse
 from ProductionCode.datasource import DataSource
 
@@ -22,14 +22,22 @@ def main():
     """
     args = parser.parse_args()
     ds = DataSource()
+
     if not (args.actor or args.category or args.year):
         print("Please provide at least one filter: --actor, --category, or --year")
         return
-    results = ds.get_3_filter_media(
-        args.actor if args.actor else '',
-        str(int(args.year)-1) if args.year else '0',
-        args.category if args.category else ''
-    )
+
+    if args.actor and args.category and args.year:
+        results = ds.get_3_filter_media(args.actor, args.year, args.category)
+    elif args.actor:
+        results = ds.get_movie_titles_by_actor(args.actor)
+    elif args.category:
+        results = ds.get_movies_by_category(args.category)
+    elif args.year:
+        results = ds.get_movies_later_than(args.year)
+    else:
+        results = []
+
     if not results:
         print("No matching results found.")
     else:
