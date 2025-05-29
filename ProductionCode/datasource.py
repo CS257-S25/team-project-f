@@ -38,12 +38,15 @@ class DataSource:
         try: 
             cursor = self.connection.cursor()
             cursor.execute('''
-                SELECT title, release_year FROM stream_data
+                SELECT title FROM stream_data
                 ORDER BY title ASC
             ''')
             titles = []
             for title in cursor:
-                titles.append(str("".join(title[0].splitlines())))
+                ''' The .splitlines() into a "".join() is crucial;
+                if not added in, database entries with unescaped line 
+                breaks will brick the media search bar. '''
+                titles.append("".join(title[0].splitlines()))
             return titles
         except psycopg2.DatabaseError as e:
             print("Something went wrong when executing the query:", e)

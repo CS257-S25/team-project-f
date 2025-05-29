@@ -16,7 +16,7 @@ def homepage():
     """
     return render_template(
         "index.html",
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.route('/actor/<name>', strict_slashes=False)
@@ -89,7 +89,7 @@ def filter_form():
     return render_template(
         'filter.html', 
         categories=categories,
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.route('/filter/results', methods=['GET'])
@@ -109,7 +109,7 @@ def filter_results():
         year=year,
         category=category,
         results=results,
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.route('/about')
@@ -119,7 +119,7 @@ def about_page():
     """
     return render_template(
         'about.html',
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.errorhandler(404)
@@ -136,7 +136,7 @@ def page_not_found(e):
     print(e)
     return render_template(
         '404.html',
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.errorhandler(500)
@@ -153,7 +153,7 @@ def python_bug(e):
     print(e)
     return render_template(
         '500.html',
-        titles = ds.get_media_titles_only()
+        titles=ds.get_media_titles_only()
     )
 
 @app.route('/cause_500')
