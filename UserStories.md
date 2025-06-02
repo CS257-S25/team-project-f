@@ -8,10 +8,6 @@ As a fan of \[actor name\], I want to see a list of all the films and shows they
 * User can enter an actor’s name.  
 * System returns a list of titles the actor appears in.  
 * Each result includes the title.  
-* Located in the following functions:  
-* ProductionCode/filter.py, Filter.filter\_by\_actor()  
-* cl.py → Command-line argument parsing with \--actor   
-* ProductionCode/filter.py, Output via Filter.print\_filtered\_titles()
 
 ### **User Story 2: Explore Category-Specific Content by Year**
 
