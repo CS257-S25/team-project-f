@@ -86,10 +86,12 @@ def search_by_category(category):
 def filter_form():
     """Renders genre selection form with dynamic dropdown."""
     categories = ds.get_all_categories()
+    actors = ds.get_all_actors()
     return render_template(
         'filter.html', 
         categories=categories,
-        titles=ds.get_media_titles_only()
+        titles=ds.get_media_titles_only(),
+        actors=actors
     )
 
 @app.route('/filter/results', methods=['GET'])

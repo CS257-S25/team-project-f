@@ -164,3 +164,28 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return None
+
+    def get_all_actors(self):
+        """
+        Returns a sorted list of unique actor names from the media_cast column.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            query = "SELECT media_cast FROM stream_data WHERE media_cast IS NOT NULL"
+            cursor.execute(query)
+            cast_rows = cursor.fetchall()
+
+            actor_set = set()
+            for row in cast_rows:
+                cast = row[0]
+                if cast:
+                    actors = [actor.strip() for actor in cast.split(',')]
+                    actor_set.update(actors)
+
+            return sorted(actor_set)
+        except psycopg2.DatabaseError as e:
+            print("Query failed:", e)
+            return []
