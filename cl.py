@@ -32,7 +32,7 @@ def main():
         args.year if args.year else '0',
         args.category if args.category else ''
     )
-    
+
     if not results:
         print("No matching results found.")
     else:
