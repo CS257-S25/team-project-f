@@ -27,11 +27,18 @@ def main():
         print("Please provide at least one filter: --actor, --category, or --year")
         return
 
-    results = ds.get_3_filter_media(
-        args.actor if args.actor else '',
-        args.year if args.year else '0',
-        args.category if args.category else ''
-    )
+    if args.actor and not args.category and not args.year:
+        results = ds.get_movie_titles_by_actor(args.actor)
+    elif args.category and not args.actor and not args.year:
+        results = ds.get_movies_by_category(args.category)
+    elif args.year and not args.actor and not args.category:
+        results = ds.get_movies_later_than(args.year)
+    else:
+        results = ds.get_3_filter_media(
+            args.actor if args.actor else '',
+            args.year if args.year else 0,
+            args.category if args.category else ''
+        )
 
     if not results:
         print("No matching results found.")
