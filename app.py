@@ -183,4 +183,5 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5150, host='0.0.0.0', debug=False)
+    app.run(port=5134)
+    #app.run(port=5150, host='0.0.0.0', debug=False)
