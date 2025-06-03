@@ -237,6 +237,6 @@ def title_unicode_fix(title):
             else:
                 a = str(chr(int(''.join(re.split('\x23([0-9A-Fa-f]+)',v)))))
         else:
-                a = v
+            a = v
         fixed_title_array.append(a)
     return "".join(fixed_title_array)
