@@ -43,15 +43,15 @@ class DataSource:
                 ORDER BY title ASC
             ''')
             titles = []
-            for title in cursor:
+            for title in cursor.fetchall():
                 titles.append(
                     title_unicode_fix(
-                    "".join(title[0].splitlines())
+                        "".join(str(title).splitlines())
                     )
                 )
             return titles
         except psycopg2.DatabaseError as e:
-            print("Something went wrong when executing the query:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_media_from_title(self, title):
@@ -67,11 +67,10 @@ class DataSource:
             SELECT * FROM stream_data
             WHERE title=%s
             """
-            print(title_unicode_fix(title))
             cursor.execute(query, (f"{title_unicode_fix(title)}",))
             return cursor.fetchall()[0]
         except psycopg2.DatabaseError as e:
-            print("Something went wrong when executing the query:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_movies_later_than(self, release_year):
@@ -92,7 +91,7 @@ class DataSource:
             cursor.execute(query, (release_year,))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
-            print("Something went wrong when executing the query:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_movie_titles_by_actor(self, actor_name):
@@ -112,7 +111,7 @@ class DataSource:
             cursor.execute(query, (f"%{actor_name}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
-            print("Query failed:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_movies_by_category(self, category):
@@ -133,7 +132,7 @@ class DataSource:
             cursor.execute(query, (f"%{category}%",))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
-            print("Query failed:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_all_categories(self):
@@ -160,7 +159,7 @@ class DataSource:
             return sorted(genre_set)
 
         except psycopg2.DatabaseError as e:
-            print("Query failed:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return []
 
     def get_3_filter_media(self, actor_name, release_year, category):
@@ -187,7 +186,7 @@ class DataSource:
             cursor.execute(query, (f"%{actor_name}%", f"%{category}%", release_year))
             return cursor.fetchall()
         except psycopg2.DatabaseError as e:
-            print("Query failed:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return None
 
     def get_all_actors(self):
@@ -212,7 +211,7 @@ class DataSource:
 
             return sorted(actor_set)
         except psycopg2.DatabaseError as e:
-            print("Query failed:", e)
+            print("Either the query failed or something went wrong executing it:", e)
             return []
 
 def title_unicode_fix(title):

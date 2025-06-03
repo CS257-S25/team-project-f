@@ -5,6 +5,7 @@ Uses mock objects to simulate database interactions.
 import unittest
 from unittest.mock import patch, MagicMock
 import psycopg2
+from ProductionCode import datasource
 from ProductionCode.datasource import DataSource
 
 class TestDataSource(unittest.TestCase):
@@ -213,7 +214,7 @@ class TestDataSource(unittest.TestCase):
         self.assertIsNone(result)
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_titles_only(self, mock_connect):
+    def test_get_media_titles_only_normal(self, mock_connect):
         """
         Tests get_media_titles_only under normal conditions.
         """
@@ -250,7 +251,7 @@ class TestDataSource(unittest.TestCase):
         )
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_titles_only_normal(self, mock_connect):
+    def test_get_media_titles_only_query_error(self, mock_connect):
         """
         Tests get_media_titles_only on query error.
         """
@@ -260,6 +261,52 @@ class TestDataSource(unittest.TestCase):
         ds.connect()
         result = ds.get_media_titles_only()
         self.assertIsNone(result)
+    
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_media_from_title_normal(self, mock_connect):
+        """
+        Tests get_media_from_title under normal conditions.
+        """
+        self.mock_cursor.fetchall.return_value = [
+            ('Movie','Movie X','Actor X','1','Genre X','Movie about Actor X in Genre X.','Platform X'),
+            ('Movie','Movie Y','Actor Y','1','Genre Y','Movie about Actor Y in Genre Y.','Platform Y'),
+            ('Movie','Movie Z','Actor Z','1','Genre Z','Movie about Actor Z in Genre Z.','Platform Z')
+        ]
+        ds = self.get_connected_datasource(mock_connect)
+        result = ds.get_media_from_title('Movie X')
+        self.assertEqual(
+            result,
+            ('Movie','Movie X','Actor X','1','Genre X','Movie about Actor X in Genre X.','Platform X')
+        )
+
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_media_from_title_query_error(self, mock_connect):
+        """
+        Tests get_media_from_title on query error.
+        """
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
+        ds = DataSource()
+        ds.connect()
+        result = ds.get_media_from_title('Movie Query')
+        self.assertIsNone(result)
+   
+    def test_title_unicode_fix(self):
+        """
+        Tests title_unicode_fix on a few strings.
+        """
+        self.assertEqual(
+            datasource.title_unicode_fix(
+                "needs no fixing"
+            ),
+            "needs no fixing"
+        )
+        self.assertEqual(
+            datasource.title_unicode_fix(
+                "needs &amp;&#34;&#39; fixing"
+            ),
+            """needs &"' fixing"""
+        )
 
 
 if __name__ == '__main__':
