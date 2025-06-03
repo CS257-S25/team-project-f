@@ -261,22 +261,45 @@ class TestDataSource(unittest.TestCase):
         ds.connect()
         result = ds.get_media_titles_only()
         self.assertIsNone(result)
-    
+
     @patch('ProductionCode.datasource.psycopg2.connect')
     def test_get_media_from_title_normal(self, mock_connect):
         """
         Tests get_media_from_title under normal conditions.
         """
         self.mock_cursor.fetchall.return_value = [
-            ('Movie','Movie X','Actor X','1','Genre X','Movie about Actor X in Genre X.','Platform X'),
-            ('Movie','Movie Y','Actor Y','1','Genre Y','Movie about Actor Y in Genre Y.','Platform Y'),
-            ('Movie','Movie Z','Actor Z','1','Genre Z','Movie about Actor Z in Genre Z.','Platform Z')
+            (
+                'Movie',
+                'Movie X',
+                'Actor X',
+                '1',
+                'Genre X',
+                'Movie about Actor X in Genre X.',
+                'Platform X'
+            ),
+            (
+                'Movie',
+                'Movie Y',
+                'Actor Y',
+                '1',
+                'Genre Y',
+                'Movie about Actor Y in Genre Y.',
+                'Platform Y'
+            )
         ]
         ds = self.get_connected_datasource(mock_connect)
         result = ds.get_media_from_title('Movie X')
         self.assertEqual(
             result,
-            ('Movie','Movie X','Actor X','1','Genre X','Movie about Actor X in Genre X.','Platform X')
+            (
+                'Movie',
+                'Movie X',
+                'Actor X',
+                '1',
+                'Genre X',
+                'Movie about Actor X in Genre X.',
+                'Platform X'
+            )
         )
 
     @patch('ProductionCode.datasource.psycopg2.connect')
@@ -290,7 +313,7 @@ class TestDataSource(unittest.TestCase):
         ds.connect()
         result = ds.get_media_from_title('Movie Query')
         self.assertIsNone(result)
-   
+
     def test_title_unicode_fix(self):
         """
         Tests title_unicode_fix on a few strings.
