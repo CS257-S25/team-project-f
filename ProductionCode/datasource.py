@@ -1,6 +1,7 @@
 """Module for accessing and querying movie data from a PostgreSQL database."""
 
 import psycopg2
+import re
 import ProductionCode.psql_config as config
 
 class DataSource:
@@ -43,8 +44,32 @@ class DataSource:
             ''')
             titles = []
             for title in cursor:
-                titles.append("".join(title[0].splitlines()))
+                titles.append(
+                    title_unicode_fix(
+                    "".join(title[0].splitlines())
+                    )
+                )
             return titles
+        except psycopg2.DatabaseError as e:
+            print("Something went wrong when executing the query:", e)
+            return None
+
+    def get_media_from_title(self, title):
+        """
+        Fetches a singular media object from a title.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            query = """
+            SELECT * FROM stream_data
+            WHERE title=%s
+            """
+            print(title_unicode_fix(title))
+            cursor.execute(query, (f"{title_unicode_fix(title)}",))
+            return cursor.fetchall()[0]
         except psycopg2.DatabaseError as e:
             print("Something went wrong when executing the query:", e)
             return None
@@ -189,3 +214,30 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Query failed:", e)
             return []
+
+def title_unicode_fix(title):
+    """
+    Some strings get parsed awkwardly and replace ' in strings with the
+    string "&#39;" or similar. This method uses re to patch this for
+    readability.
+
+    args: string title (ex: "Tom &amp; Phil&#39;s Day")
+
+    return: fixed string title (ex: "Tom & Phil's Day")
+    """
+    title_array = re.split(
+        '\x26([\x230-9A-Za-z]+)\x3b',
+        title
+    )
+    fixed_title_array = []
+    a = ''
+    for i, v in enumerate(title_array):
+        if i % 2 == 1:
+            if v == "amp":
+                a = "&"
+            else:
+                a = str(chr(int(''.join(re.split('\x23([0-9A-Fa-f]+)',v)))))
+        else:
+        	a = v
+        fixed_title_array.append(a)
+    return "".join(fixed_title_array)

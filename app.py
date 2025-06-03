@@ -84,7 +84,9 @@ def search_by_category(category):
 
 @app.route('/filter', methods=['GET'])
 def filter_form():
-    """Renders genre selection form with dynamic dropdown."""
+    """
+    Renders genre selection form with dynamic dropdown.
+    """
     categories = ds.get_all_categories()
     actors = ds.get_all_actors()
     return render_template(
@@ -96,7 +98,9 @@ def filter_form():
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
-    """Handles advanced filter search and displays results."""
+    """
+    Handles advanced filter search and displays results.
+    """
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
@@ -122,6 +126,19 @@ def about_page():
     return render_template(
         'about.html',
         titles=ds.get_media_titles_only()
+    )
+
+@app.route('/search',methods=['GET'])
+def search_result_page():
+    """
+    Renders the search result page given an individual movie.
+    """
+    title_choice = request.args.get('title_choice', '')
+    print(ds.get_media_from_title(title_choice))
+    return render_template(
+        'search_result.html',
+        titles=ds.get_media_titles_only(),
+        media=ds.get_media_from_title(title_choice)
     )
 
 @app.errorhandler(404)
