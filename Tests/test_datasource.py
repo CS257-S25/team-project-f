@@ -295,6 +295,8 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_media_from_title(self, mock_connect):
+        """ Tests get_media_from_title method with a specific title.
+        Mocks the database connection and cursor to return a predefined result."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_cursor.fetchall.return_value = [('The Matrix', 1999)]
