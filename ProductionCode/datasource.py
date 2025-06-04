@@ -171,6 +171,12 @@ class DataSource:
 
 
     def get_media_from_title(self, title):
+        """
+        Fetches media information based on the exact title.
+        Args:
+            title (str): The title of the media to search for.
+        Returns:
+            tuple: Media information if found, otherwise None."""
         if self.connection is None:
             self.connect()
 
@@ -188,4 +194,3 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Either the query failed or something went wrong executing it:", e)
             return "DB_ERROR"
-
