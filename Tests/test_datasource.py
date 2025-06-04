@@ -5,7 +5,6 @@ Uses mock objects to simulate database interactions.
 import unittest
 from unittest.mock import patch, MagicMock
 import psycopg2
-from ProductionCode import datasource
 from ProductionCode.datasource import DataSource
 
 class TestDataSource(unittest.TestCase):
