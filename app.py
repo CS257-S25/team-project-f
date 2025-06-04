@@ -178,42 +178,33 @@ def search_result_page():
         media=media
     )
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     """
     Handles 404 errors for undefined routes.
+
+    Args:
+        e (HTTPException): The error object for the 404 error.
+
+    Returns:
+        tuple: An error message and HTTP status code 404.
     """
-    print("404 error:", e)
-    titles = []
-    try:
-        titles = ds.get_media_titles_only()
-    except Exception as err:
-        print("Error getting titles in 404 handler:", err)
-
-    return render_template(
-        '404.html',
-        titles=titles
-    ), 404
-
+    print(e)
+    return render_template('404.html')
 
 @app.errorhandler(500)
 def python_bug(e):
     """
-    Handles 500 errors and logs error details.
+    Handles 500 errors caused by unhandled exceptions in the application.
+
+    Args:
+        e (Exception): The error object for the 500 error.
+
+    Returns:
+        tuple: An error message and HTTP status code 500.
     """
-    print("500 error:", e)
-    titles = []
-    try:
-        titles = ds.get_media_titles_only()
-    except Exception as err:
-        print("Error getting titles in 500 handler:", err)
-
-    return render_template(
-        '500.html',
-        titles=titles
-    ), 500
-
+    print(e)
+    return render_template('500.html')
 
 @app.route('/cause_500')
 def cause_500():
