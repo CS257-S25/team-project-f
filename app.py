@@ -90,7 +90,6 @@ def filter_form():
     try:
         categories = ds.get_all_categories()
         actors = ds.get_all_actors()
-        titles = ds.get_media_titles_only()
     except Exception as e:
         print("Error in /filter:", e)
 

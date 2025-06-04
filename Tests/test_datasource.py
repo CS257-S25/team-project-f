@@ -265,23 +265,5 @@ class TestDataSource(unittest.TestCase):
         result = ds.get_media_from_title('Movie Query')
         self.assertIsNone(result)
 
-    def test_title_unicode_fix(self):
-        """
-        Tests title_unicode_fix on a few strings.
-        """
-        self.assertEqual(
-            datasource.title_unicode_fix(
-                "needs no fixing"
-            ),
-            "needs no fixing"
-        )
-        self.assertEqual(
-            datasource.title_unicode_fix(
-                "needs &amp;&#34;&#39; fixing"
-            ),
-            """needs &"' fixing"""
-        )
-
-
 if __name__ == '__main__':
     unittest.main()

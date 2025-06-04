@@ -188,4 +188,3 @@ class DataSource:
         except psycopg2.DatabaseError as e:
             print("Either the query failed or something went wrong executing it:", e)
             return None
-
