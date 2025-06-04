@@ -1,6 +1,6 @@
 **User Stories and Acceptance Criteria**
 
-**User Story 1: Search by Actor**  
+### **User Story 1: Search by Actor**  
 As a fan of \[actor name\], I want to see a list of all the films and shows they appear in across streaming platforms, so I can easily find where to watch their work.
 
 **Acceptance Criteria:**
