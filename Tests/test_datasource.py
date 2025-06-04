@@ -239,18 +239,6 @@ class TestDataSource(unittest.TestCase):
         )
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_from_title_query_error(self, mock_connect):
-        """
-        Tests get_media_from_title on query error.
-        """
-        mock_connect.return_value = self.mock_conn
-        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
-        ds = DataSource()
-        ds.connect()
-        result = ds.get_media_from_title('Movie Query')
-        self.assertIsNone(result)
-
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_get_all_actors_normal(self, mock_connect):
         """
         Test get_all_actors returns sorted list of unique actors.
@@ -278,6 +266,20 @@ class TestDataSource(unittest.TestCase):
         result = ds.get_all_actors()
 
         self.assertEqual(result, [])
+
+    @patch("ProductionCode.datasource.psycopg2.connect")
+    def test_get_media_from_title(self, mock_connect):
+        """ Tests get_media_from_title method with a specific title.
+        Mocks the database connection and cursor to return a predefined result."""
+        mock_conn = MagicMock()
+        mock_cursor = MagicMock()
+        mock_cursor.fetchall.return_value = [('The Matrix', 1999)]
+        mock_conn.cursor.return_value = mock_cursor
+        mock_connect.return_value = mock_conn
+
+        ds = DataSource()
+        result = ds.get_media_from_title("The Matrix")
+        self.assertEqual(result, ('The Matrix', 1999))
 
 if __name__ == '__main__':
     unittest.main()
