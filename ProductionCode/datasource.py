@@ -44,15 +44,12 @@ class DataSource:
             ''')
             titles = []
             for title in cursor.fetchall():
-                titles.append(
-                    title_unicode_fix(
-                        "".join(str(title).splitlines())
-                    )
-                )
+                titles.append("".join(str(title).splitlines()))
             return titles
         except psycopg2.DatabaseError as e:
             print("Either the query failed or something went wrong executing it:", e)
             return None
+
 
     def get_media_from_title(self, title):
         """
@@ -65,13 +62,14 @@ class DataSource:
             cursor = self.connection.cursor()
             query = """
             SELECT * FROM stream_data
-            WHERE title=%s
+            WHERE title = %s
             """
-            cursor.execute(query, (f"{title_unicode_fix(title)}",))
+            cursor.execute(query, (title,))
             return cursor.fetchall()[0]
         except psycopg2.DatabaseError as e:
             print("Either the query failed or something went wrong executing it:", e)
             return None
+
 
     def get_movies_later_than(self, release_year):
         """
