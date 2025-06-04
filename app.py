@@ -15,8 +15,7 @@ def homepage():
     Displays detailed instructions regarding the usage of the application.
     """
     return render_template(
-        "index.html",
-        titles=ds.get_media_titles_only()
+        "index.html"
     )
 
 @app.route('/actor/<name>', strict_slashes=False)
@@ -105,35 +104,21 @@ def filter_form():
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
-    """
-    Handles advanced filter search and displays results.
-    """
+    """Handles advanced filter search and displays results."""
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
-
-    results, titles = [], []
-    try:
-        results = ds.get_3_filter_media(
-            actor if actor else '',
-            str(int(year) - 1) if year else '0',
-            category if category else ''
-        )
-    except Exception as e:
-        print("Error in /filter/results query:", e)
-
-    try:
-        titles = ds.get_media_titles_only()
-    except Exception as e:
-        print("Error getting titles in /filter/results:", e)
-
+    results = ds.get_3_filter_media(
+        actor if actor else '',
+        str(int(year)-1) if year else '0',
+        category if category else ''
+    )
     return render_template(
         'filter_results.html',
         actor=actor,
         year=year,
         category=category,
-        results=results,
-        titles=titles
+        results=results
     )
 
 
@@ -142,16 +127,7 @@ def about_page():
     """
     Renders the about page with information about the application.
     """
-    titles = []
-    try:
-        titles = ds.get_media_titles_only()
-    except Exception as e:
-        print("Error in /about:", e)
-
-    return render_template(
-        'about.html',
-        titles=titles
-    )
+    return render_template('about.html')
 
 
 @app.route('/search', methods=['GET'])
