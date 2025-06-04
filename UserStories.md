@@ -25,7 +25,7 @@ As a \[genre\] fan, I want to browse all movies of that category released after 
 
 ### **User Story 3: Advanced Search by Year, Actor, and Category**
 
-### As a movie enthusiast, I want to search for titles by combining release year, actor, and category, so that I can find highly specific content that aligns with my exact preferences.
+As a movie enthusiast, I want to search for titles by combining release year, actor, and category, so that I can find highly specific content that aligns with my exact preferences.
 
 **Acceptance Criteria:**
 
