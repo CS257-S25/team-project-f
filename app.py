@@ -87,14 +87,21 @@ def filter_form():
     """
     Renders genre selection form with dynamic dropdown.
     """
-    categories = ds.get_all_categories()
-    actors = ds.get_all_actors()
+    categories, actors, titles = [], [], []
+    try:
+        categories = ds.get_all_categories()
+        actors = ds.get_all_actors()
+        titles = ds.get_media_titles_only()
+    except Exception as e:
+        print("Error in /filter:", e)
+
     return render_template(
-        'filter.html', 
+        'filter.html',
         categories=categories,
-        titles=ds.get_media_titles_only(),
-        actors=actors
+        actors=actors,
+        titles=titles
     )
+
 
 @app.route('/filter/results', methods=['GET'])
 def filter_results():
@@ -104,76 +111,109 @@ def filter_results():
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
-    results = ds.get_3_filter_media(
-        actor if actor else '',
-        str(int(year)-1) if year else '0',
-        category if category else ''
-    )
+
+    results, titles = [], []
+    try:
+        results = ds.get_3_filter_media(
+            actor if actor else '',
+            str(int(year) - 1) if year else '0',
+            category if category else ''
+        )
+    except Exception as e:
+        print("Error in /filter/results query:", e)
+
+    try:
+        titles = ds.get_media_titles_only()
+    except Exception as e:
+        print("Error getting titles in /filter/results:", e)
+
     return render_template(
         'filter_results.html',
         actor=actor,
         year=year,
         category=category,
         results=results,
-        titles=ds.get_media_titles_only()
+        titles=titles
     )
+
 
 @app.route('/about')
 def about_page():
     """
     Renders the about page with information about the application.
     """
+    titles = []
+    try:
+        titles = ds.get_media_titles_only()
+    except Exception as e:
+        print("Error in /about:", e)
+
     return render_template(
         'about.html',
-        titles=ds.get_media_titles_only()
+        titles=titles
     )
 
-@app.route('/search',methods=['GET'])
+
+@app.route('/search', methods=['GET'])
 def search_result_page():
     """
     Renders the search result page given an individual movie.
     """
     title_choice = request.args.get('title_choice', '')
-    print(ds.get_media_from_title(title_choice))
+    media, titles = None, []
+
+    try:
+        media = ds.get_media_from_title(title_choice)
+    except Exception as e:
+        print("Error getting media from title:", e)
+
+    try:
+        titles = ds.get_media_titles_only()
+    except Exception as e:
+        print("Error getting titles in /search:", e)
+
     return render_template(
         'search_result.html',
-        titles=ds.get_media_titles_only(),
-        media=ds.get_media_from_title(title_choice)
+        titles=titles,
+        media=media
     )
+
 
 @app.errorhandler(404)
 def page_not_found(e):
     """
     Handles 404 errors for undefined routes.
-
-    Args:
-        e (HTTPException): The error object for the 404 error.
-
-    Returns:
-        tuple: An error message and HTTP status code 404.
     """
-    print(e)
+    print("404 error:", e)
+    titles = []
+    try:
+        titles = ds.get_media_titles_only()
+    except Exception as err:
+        print("Error getting titles in 404 handler:", err)
+
     return render_template(
         '404.html',
-        titles=ds.get_media_titles_only()
-    )
+        titles=titles
+    ), 404
+
 
 @app.errorhandler(500)
 def python_bug(e):
     """
-    Handles 500 errors caused by unhandled exceptions in the application.
-
-    Args:
-        e (Exception): The error object for the 500 error.
-
-    Returns:
-        tuple: An error message and HTTP status code 500.
+    Handles 500 errors and logs error details.
     """
-    print(e)
+    print("500 error:", e)
+    titles = []
+    try:
+        titles = ds.get_media_titles_only()
+    except Exception as err:
+        print("Error getting titles in 500 handler:", err)
+
     return render_template(
         '500.html',
-        titles=ds.get_media_titles_only()
-    )
+        titles=titles
+    ), 500
+
 
 @app.route('/cause_500')
 def cause_500():
