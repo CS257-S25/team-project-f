@@ -171,9 +171,6 @@ class DataSource:
 
 
     def get_media_from_title(self, title):
-        """
-        Fetches a singular media object from a title.
-        """
         if self.connection is None:
             self.connect()
 
@@ -181,10 +178,14 @@ class DataSource:
             cursor = self.connection.cursor()
             query = """
             SELECT * FROM stream_data
-            WHERE title = %s
+            WHERE title ILIKE %s
             """
             cursor.execute(query, (title,))
-            return cursor.fetchall()[0]
+            results = cursor.fetchall()
+            if not results:
+                return None
+            return results[0]
         except psycopg2.DatabaseError as e:
             print("Either the query failed or something went wrong executing it:", e)
-            return None
+            return "DB_ERROR"
+

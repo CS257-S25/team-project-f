@@ -37,9 +37,30 @@
     <h2>Error 404: Page not Found</h2>
 
     <section class="light">
-        <h3></h3>
+        <p>Sorry, the page you requested does not exist.</p>
+        <p>Please <a href="/">click here</a> to return home and try again.</p>
+    </section>
+
+    <section class="instructions">
+        <h3>How to Use StreamSearch</h3>
+        <p>StreamSearch helps you find movies and shows available on streaming platforms. Here’s how to get started:</p>
+        <ul>
+            <li><strong>Search by Title:</strong> Use the search box on the <a href="/filter">Advanced Filters</a> 
+                page to enter the exact or partial title of a movie or show.</li>
+            <li><strong>Advanced Filters:</strong> Go to the <a href="/filter">Advanced Filters</a> page
+                 to find media by actor, genre/category, or release year.</li>
+        </ul>
+        <p>If you have any questions or feedback, visit our <a href="/about">About</a> page.</p>
+    </section>
+
+    <p>To use the old Flask app:</p>
+    <section class="light">
         <p>
-            Please <a href="/">click here</a> to return home and try again.<br>
+            <ul>
+                <li><strong>Actor:</strong> Enter the name of an actor to find movies or shows they appear in. Example: <code>/actor/Emma Stone</code></li>
+                <li><strong>Category:</strong> Search by genre or category (e.g., Comedy, Action, Drama). Example: <code>/category/Comedy</code></li>
+                <li><strong>Year:</strong> Filter results to show movies or shows released on or after a specified year. Example: <code>/year/2010</code></li>
+            </ul>
         </p>
     </section>
 
