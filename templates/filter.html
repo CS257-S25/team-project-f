@@ -9,16 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
     <script>
         $(function() {
-            // Title search bar autocomplete
-            var availableTitles = [
-                {% for title in titles %}
-                    "{{ title }}"{% if not loop.last %},{% endif %}
-                {% endfor %}
-            ];
-            $("#search_titles").autocomplete({
-                source: availableTitles
-            });
-
             // Actor filter bar autocomplete
             var availableActors = [
                 {% for actor in actors %}

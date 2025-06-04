@@ -1,6 +1,5 @@
 """Module for accessing and querying movie data from a PostgreSQL database."""
 
-import re
 import psycopg2
 import ProductionCode.psql_config as config
 
@@ -27,48 +26,6 @@ class DataSource:
             except psycopg2.DatabaseError as e:
                 raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
-
-    def get_media_titles_only(self):
-        """
-        Fetches a full titles-only list of media from the database.
-        For use in the searchbar in most webpages.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute('''
-                SELECT title FROM stream_data
-                ORDER BY title ASC
-            ''')
-            titles = []
-            for title in cursor.fetchall():
-                titles.append("".join(str(title).splitlines()))
-            return titles
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
-
-
-    def get_media_from_title(self, title):
-        """
-        Fetches a singular media object from a title.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """
-            SELECT * FROM stream_data
-            WHERE title = %s
-            """
-            cursor.execute(query, (title,))
-            return cursor.fetchall()[0]
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
 
 
     def get_movies_later_than(self, release_year):
@@ -212,29 +169,23 @@ class DataSource:
             print("Either the query failed or something went wrong executing it:", e)
             return []
 
-def title_unicode_fix(title):
-    """
-    Some strings get parsed awkwardly and replace ' in strings with the
-    string "&#39;" or similar. This method uses re to patch this for
-    readability.
 
-    args: string title (ex: "Tom &amp; Phil&#39;s Day")
+    def get_media_from_title(self, title):
+        """
+        Fetches a singular media object from a title.
+        """
+        if self.connection is None:
+            self.connect()
 
-    return: fixed string title (ex: "Tom & Phil's Day")
-    """
-    title_array = re.split(
-        '\x26([\x230-9A-Za-z]+)\x3b',
-        title
-    )
-    fixed_title_array = []
-    a = ''
-    for i, v in enumerate(title_array):
-        if i % 2 == 1:
-            if v == "amp":
-                a = "&"
-            else:
-                a = str(chr(int(''.join(re.split('\x23([0-9A-Fa-f]+)',v)))))
-        else:
-            a = v
-        fixed_title_array.append(a)
-    return "".join(fixed_title_array)
+        try:
+            cursor = self.connection.cursor()
+            query = """
+            SELECT * FROM stream_data
+            WHERE title = %s
+            """
+            cursor.execute(query, (title,))
+            return cursor.fetchall()[0]
+        except psycopg2.DatabaseError as e:
+            print("Either the query failed or something went wrong executing it:", e)
+            return None
+

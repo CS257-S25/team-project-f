@@ -133,26 +133,18 @@ def about_page():
 @app.route('/search', methods=['GET'])
 def search_result_page():
     """
-    Renders the search result page given an individual movie.
+    Renders the search result page given an individual movie title.
     """
     title_choice = request.args.get('title_choice', '')
-    media, titles = None, []
+    media = None
 
     try:
         media = ds.get_media_from_title(title_choice)
     except Exception as e:
         print("Error getting media from title:", e)
 
-    try:
-        titles = ds.get_media_titles_only()
-    except Exception as e:
-        print("Error getting titles in /search:", e)
+    return render_template('search_result.html', media=media)
 
-    return render_template(
-        'search_result.html',
-        titles=titles,
-        media=media
-    )
 
 @app.errorhandler(404)
 def page_not_found(e):
