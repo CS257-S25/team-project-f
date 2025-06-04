@@ -1,7 +1,7 @@
 """
 Flask app for website.
 """
-
+from psycopg2 import DatabaseError
 from flask import Flask, render_template, request
 from ProductionCode.datasource import DataSource
 
@@ -90,8 +90,8 @@ def filter_form():
     try:
         categories = ds.get_all_categories()
         actors = ds.get_all_actors()
-    except Exception as e:
-        print("Error in /filter:", e)
+    except DatabaseError as e:
+        print("Database error in /filter:", e)
 
     return render_template(
         'filter.html',
@@ -139,8 +139,8 @@ def search_result_page():
 
     try:
         media = ds.get_media_from_title(title_choice)
-    except Exception as e:
-        print("Error getting media from title:", e)
+    except DatabaseError as e:
+        print("Database error in /search:", e)
 
     return render_template('search_result.html', media=media)
 
