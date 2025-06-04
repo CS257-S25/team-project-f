@@ -214,55 +214,6 @@ class TestDataSource(unittest.TestCase):
         self.assertIsNone(result)
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_titles_only_normal(self, mock_connect):
-        """
-        Tests get_media_titles_only under normal conditions.
-        """
-        self.mock_cursor.fetchall.return_value = [
-            ('Movie X'),
-            ('TV Show Y')
-        ]
-        ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_media_titles_only()
-        self.assertEqual(
-            result,
-            [
-                'Movie X',
-                'TV Show Y'
-            ]
-        )
-
-    @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_titles_only_linebreaks_in_entry(self, mock_connect):
-        """
-        Tests get_media_titles_only when an entry contains
-        linebreaks. Crucial to ensure the autocomplete bars work.
-        """
-        self.mock_cursor.fetchall.return_value = [
-            ('The\nLinebreak\nShow')
-        ]
-        ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_media_titles_only()
-        self.assertEqual(
-            result,
-            [
-                'TheLinebreakShow'
-            ]
-        )
-
-    @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_media_titles_only_query_error(self, mock_connect):
-        """
-        Tests get_media_titles_only on query error.
-        """
-        mock_connect.return_value = self.mock_conn
-        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
-        ds = DataSource()
-        ds.connect()
-        result = ds.get_media_titles_only()
-        self.assertIsNone(result)
-
-    @patch('ProductionCode.datasource.psycopg2.connect')
     def test_get_media_from_title_normal(self, mock_connect):
         """
         Tests get_media_from_title under normal conditions.
