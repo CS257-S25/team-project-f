@@ -114,12 +114,14 @@ class TestFilterFunctions(BaseTestCase):
 
     @patch('app.ds.get_all_categories')
     @patch('app.ds.get_all_actors')
-    def test_filter_form(self, mock_get_categories):
+    def test_filter_form(self, mock_get_actors, mock_get_categories):
         """
         Test the filter form is rendered correctly and that
-        available movie categories are retrieved and displayed from the database.
+        available movie categories and actors are retrieved and 
+        displayed from the database.
         """
         mock_get_categories.return_value = ['Comedy', 'Action']
+        mock_get_actors.return_value = ['Brad Pitt', 'Sandra Bullock']
         response = self.client.get('/filter')
         self.assertIn("Comedy", response.data.decode())
         self.assertIn("Action", response.data.decode())
