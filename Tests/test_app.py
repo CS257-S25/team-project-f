@@ -113,6 +113,7 @@ class TestFilterFunctions(BaseTestCase):
         self.assertIn("Could not find movies in category: Drama", response.data.decode())
 
     @patch('app.ds.get_all_categories')
+    @patch('app.ds.get_all_actors')
     def test_filter_form(self, mock_get_categories):
         """
         Test the filter form is rendered correctly and that
