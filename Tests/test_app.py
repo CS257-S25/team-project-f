@@ -21,6 +21,15 @@ class TestHomepage(BaseTestCase):
         response = self.client.get('/')
         self.assertIn("StreamSearch", response.data.decode())
 
+class TestAboutPage(BaseTestCase):
+    """Test for the about page route."""
+
+    def test_about_page(self):
+        """Test that the about page renders correctly."""
+        response = self.client.get('/about')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("About", response.data.decode())
+        
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
 
