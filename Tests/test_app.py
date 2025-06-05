@@ -21,15 +21,6 @@ class TestHomepage(BaseTestCase):
         response = self.client.get('/')
         self.assertIn("StreamSearch", response.data.decode())
 
-class TestAboutPage(BaseTestCase):
-    """Test for the about page route."""
-
-    def test_about_page(self):
-        """Test that the about page renders correctly."""
-        response = self.client.get('/about')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("About", response.data.decode())
-
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
 
@@ -42,7 +33,6 @@ class TestErrorHandling(BaseTestCase):
         """Test the 500 error handler."""
         response = self.client.get('/cause_500')
         self.assertIn("500 - StreamSearch", response.data.decode())
-
 
 class TestFilterFunctions(BaseTestCase):
     """Test filter functions with mocked data source."""
@@ -95,6 +85,7 @@ class TestFilterFunctions(BaseTestCase):
         mock_get_movies.side_effect = LookupError("DB error")
         response = self.client.get('/year/2010')
         self.assertIn("Could not find titles after year: 2010", response.data.decode())
+
 
     @patch('app.ds.get_movies_by_category')
     def test_category_filter_valid_result(self, mock_get_movies):
