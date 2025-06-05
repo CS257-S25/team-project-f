@@ -294,5 +294,15 @@ class TestDataSource(unittest.TestCase):
 
         self.assertEqual(result, "DB_ERROR")
 
+        def test_get_movies_by_category_empty_result(self, mock_connect):
+        """
+        Test get_movies_by_category returns empty list if no movies found for category.
+        """
+        self.mock_cursor.fetchall.return_value = []
+        ds = self.get_connected_datasource(mock_connect)
+        result = ds.get_movies_by_category("NonExistentCategory")
+
+        self.assertEqual(result, [])
+
 if __name__ == '__main__':
     unittest.main()
