@@ -1,0 +1,52 @@
+<!-- filter_results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Filter by Actor, Genre, or Year</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <h2> Search Results:</h2>
+    {% if results %}
+        <ul>
+        {% for movie in results %}
+        <p> 
+            <li><strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
+                <p>Description: {{ movie[5] }}</p>
+                <p>Category: {{ movie[4] }} </p>
+                <p>Availible on: {{ movie[6] }} </li></p>
+        </p>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movies found in this genre.</p>
+    {% endif %}
+    <a href="/filter">Search Again </a>
+</body>
+</html>
+
+
