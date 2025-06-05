@@ -29,7 +29,7 @@ class TestAboutPage(BaseTestCase):
         response = self.client.get('/about')
         self.assertEqual(response.status_code, 200)
         self.assertIn("About", response.data.decode())
-        
+
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
 
