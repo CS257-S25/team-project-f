@@ -280,5 +280,19 @@ class TestDataSource(unittest.TestCase):
         result = ds.get_media_from_title("The Matrix")
         self.assertEqual(result, ('The Matrix', 1999))
 
+    @patch('ProductionCode.datasource.psycopg2.connect')
+    def test_get_media_from_title_query_error(self, mock_connect):
+        """
+        Test get_media_from_title returns 'DB_ERROR' on database error.
+        """
+        mock_connect.return_value = self.mock_conn
+        self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
+
+        ds = DataSource()
+        ds.connect()
+        result = ds.get_media_from_title("Some Title")
+
+        self.assertEqual(result, "DB_ERROR")
+
 if __name__ == '__main__':
     unittest.main()
