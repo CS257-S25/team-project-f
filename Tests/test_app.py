@@ -30,6 +30,24 @@ class TestAboutPage(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("About", response.data.decode())
 
+    class TestSearchPage(BaseTestCase):
+        """Test for the search result page route."""
+
+        @patch('app.ds.get_media_from_title')
+        def test_search_page(self, mock_get_media):
+            """Test the search page with a valid title query parameter."""
+            mock_get_media.return_value = {
+                'title': 'Some Movie',
+                'actor': 'Some Famous Actor',
+                'year': 2021,
+                'category': 'Romantic Comedy',
+                'description': 'It is a gripping drama.',
+                'platform': 'Netflix'
+            }
+            response = self.client.get('/search?title_choice=Some+Movie')
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('Some Movie', response.data.decode())
+
 class TestErrorHandling(BaseTestCase):
     """Test for error handling routes."""
 
