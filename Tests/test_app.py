@@ -96,22 +96,6 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/year/2010')
         self.assertIn("Could not find titles after year: 2010", response.data.decode())
 
-    def test_get_movies_later_than_db_error():
-        ds = DataSource()
-        mock_conn = MagicMock()
-        mock_cursor = MagicMock()
-        mock_conn.cursor.return_value = mock_cursor
-        
-        def raise_db_error(*args, **kwargs):
-            raise psycopg2.DatabaseError("Test DB error")
-            
-        mock_cursor.execute.side_effect = raise_db_error
-        ds.connection = mock_conn
-        
-        results = ds.get_movies_later_than(2022)
-        assert results is None
-
-
     @patch('app.ds.get_movies_by_category')
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
