@@ -15,7 +15,7 @@ Country
 Date Added
 Release Year
 Ratin 
-Duration
+Duration 
 Genre
 ~~~
 We plan to analyze trends and create visualizations that compare streaming platforms across dimensions like genre, country of origin, representation, and platform-specific trends. We will also include features such as searching for titles with a specific actor, or determining where a specific title can be watched.
