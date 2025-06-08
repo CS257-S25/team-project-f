@@ -8,6 +8,17 @@ from ProductionCode.datasource import DataSource
 app = Flask(__name__)
 ds = DataSource()
 
+def get_searchbar_titles():
+    """
+    Small helper method that gets media titles for the
+    autocomplete searchbar at the top of most pages.
+    """
+    try:
+        return ds.get_media_titles_only()
+    except DatabaseError as e:
+        print('Database error in get_searchbar_titles(): ', e)
+        return None
+
 @app.route('/')
 def homepage():
     """
@@ -15,7 +26,8 @@ def homepage():
     Displays detailed instructions regarding the usage of the application.
     """
     return render_template(
-        "index.html"
+        "index.html",
+        titles=get_searchbar_titles()
     )
 
 @app.route('/actor/<name>', strict_slashes=False)
@@ -86,7 +98,7 @@ def filter_form():
     """
     Renders genre selection form with dynamic dropdown.
     """
-    categories, actors, titles = [], [], []
+    categories, actors = [], []
     try:
         categories = ds.get_all_categories()
         actors = ds.get_all_actors()
@@ -97,7 +109,7 @@ def filter_form():
         'filter.html',
         categories=categories,
         actors=actors,
-        titles=titles
+        titles=get_searchbar_titles()
     )
 
 
@@ -107,18 +119,22 @@ def filter_results():
     category = request.args.get('category', '')
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
-    results = ds.get_3_filter_media(
-        actor if actor else '',
-        str(int(year)-1) if year else '0',
-        category if category else ''
-    )
+    results = None
+    try:      
+        results = ds.get_3_filter_media(
+            actor if actor else '',
+            str(int(year)-1) if year else '0',
+            category if category else ''
+        )
+    except DatabaseError as e:
+        print("Database error in /filter/results:", e)
     return render_template(
         'filter_results.html',
         actor=actor,
         year=year,
         category=category,
-        results=results,
-        titles=ds.get_media_titles_only()
+        titles=get_searchbar_titles(),
+        results=results
     )
 
 
@@ -127,7 +143,10 @@ def about_page():
     """
     Renders the about page with information about the application.
     """
-    return render_template('about.html')
+    return render_template(
+        'about.html',
+        titles=get_searchbar_titles()
+    )
 
 
 @app.route('/search', methods=['GET'])
@@ -143,7 +162,11 @@ def search_result_page():
     except DatabaseError as e:
         print("Database error in /search:", e)
 
-    return render_template('search_result.html', media=media)
+    return render_template(
+        "search_result.html",
+        titles=get_searchbar_titles(),
+        media=media
+    )
 
 
 @app.errorhandler(404)
@@ -158,7 +181,10 @@ def page_not_found(e):
         tuple: An error message and HTTP status code 404.
     """
     print(e)
-    return render_template('404.html')
+    return render_template(
+        '404.html',
+        titles=get_searchbar_titles()
+    )
 
 @app.errorhandler(500)
 def python_bug(e):
@@ -182,4 +208,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5150, host='0.0.0.0', debug=False)
+    app.run(port=5134)

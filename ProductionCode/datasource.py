@@ -1,5 +1,6 @@
 """Module for accessing and querying movie data from a PostgreSQL database."""
 
+import html
 import psycopg2
 import ProductionCode.psql_config as config
 
@@ -136,7 +137,7 @@ class DataSource:
 
             titles = []
             for media in cursor.fetchall():
-                titles.append(media[0])
+                titles.append(html.unescape("".join(media[0].splitlines())))
             return titles
 
         except psycopg2.DatabaseError as e:

@@ -13,6 +13,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    {% if titles %}
+    <script>
+        $(function() {
+            // Title search bar autocomplete
+            var availableTitles = [
+                {% for title in titles %}`{{ title|safe }}`{% if not loop.last %}, 
+                {% endif %} {% endfor %}
+            ];
+            $("#search_titles").autocomplete({
+                source: availableTitles,
+                minLength: 4,
+                delay: 500
+            });
+        });
+    </script>
+    {% endif %}
 </head>
 <body>
     <section id="heading">
@@ -28,6 +44,16 @@
                 <li><a href="/about">About</a></li>
             </ul>
         </nav>
+        {% if titles %}
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="search_titles">Search by title across platforms</label></strong>
+                    <input type="text" id="search_titles" name="title_choice" placeholder="Search by title across platforms...">
+                </form>
+            </p>
+        </div>
+        {% endif %}
     </section>
 
     {% if media %}
