@@ -120,7 +120,7 @@ def filter_results():
     actor = request.args.get('actor', '')
     year = request.args.get('year', '')
     results = None
-    try:      
+    try:
         results = ds.get_3_filter_media(
             actor if actor else '',
             str(int(year)-1) if year else '0',
@@ -208,4 +208,4 @@ def cause_500():
     raise RuntimeError("Test exception to trigger 500 error")
 
 if __name__ == "__main__":
-    app.run(port=5134)
+    app.run(port=5150,host='0.0.0.0',debug=False)
