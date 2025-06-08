@@ -9,15 +9,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
     <script>
         $(function() {
-            // Actor filter bar autocomplete
-            var availableActors = [
-                {% for actor in actors %}
-                    "{{ actor }}"{% if not loop.last %},{% endif %}
-                {% endfor %}
-            ];
-            $("#actor").autocomplete({
-                source: availableActors
-            });
+            {% if titles %}
+                // Title search bar autocomplete
+                var availableTitles = [
+                    {% for title in titles %}
+                        "{{ title }}"{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+                $("#search_titles").autocomplete({
+                    source: availableTitles,
+                    minLength: 4,
+                    delay: 750
+                });
+            {% endif %}
+            {% if actors %}
+                // Actor filter bar autocomplete
+                var availableActors = [
+                    {% for actor in actors %}
+                        "{{ actor }}"{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ];
+                $("#actor").autocomplete({
+                    source: availableActors,
+                    minLength: 4,
+                    delay: 750
+                });
+            {% endif %}
         });
     </script>
 </head>
