@@ -61,10 +61,13 @@
         <ul>
         {% for movie in results %}
             <li>
-                <strong >{{ movie[1] }}</strong> ({{ movie[0] }}, {{ movie[3] }}). 
-                <p>Description: {{ movie[5] }}</p>
-                <p>Category: {{ movie[4] }} </p>
-                <p>Availible on: {{ movie[6] }} </p>
+                <form action="/search">
+                    <input type="hidden" id="result_titles" name="title_choice" value="{{movie[1]}}">
+                    <button><strong >{{ movie[1] }}</strong></button> ({{ movie[0] }}, {{ movie[3] }}). 
+                    <p>Description: {{ movie[5] }}</p>
+                    <p>Category: {{ movie[4] }} </p>
+                    <p>Availible on: {{ movie[6] }} </p>
+                </form>
             </li>
         {% endfor %}
         </ul>
