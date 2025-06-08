@@ -117,7 +117,8 @@ def filter_results():
         actor=actor,
         year=year,
         category=category,
-        results=results
+        results=results,
+        titles=ds.get_media_titles_only()
     )
 
 

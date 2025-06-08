@@ -117,6 +117,32 @@ class DataSource:
             print("Either the query failed or something went wrong executing it:", e)
             return []
 
+    def get_media_titles_only(self):
+        """
+        Gets a list of all media titles. Used by the title autocomplete search bar
+        on most webpages.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(
+                """
+                SELECT title, release_year FROM stream_data
+                ORDER BY release_year DESC
+                """
+            )
+
+            titles = []
+            for media in cursor.fetchall():
+                titles.append(media[0])
+            return titles
+
+        except psycopg2.DatabaseError as e:
+            print("Either the query failed or something went wrong executing it:", e)
+            return []
+
     def get_3_filter_media(self, actor_name, release_year, category):
         """
         Fetches a sorted list of a unique actor, year, category from the database.
