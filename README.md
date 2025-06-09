@@ -21,18 +21,17 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 # Option B: Front-End Design Improvements
 
-## Usability Issue 1: Autocomplete for Search Bar
+## Usability Issue 1: Overwhelming Text on Results Page
 
-- **Issue**: The autocompletion for the search bar was not working, making it harder for users to find valid actor names.
-- **Page**: `templates/filter.html`
-- **What we did**:  
-  Implemented.... This allows users to see suggestions as they type, improving search efficiency and experience.
+- **Issue**: The `/filter_results` page would often include overwhelming text that was difficult to differentiate -- each result was not delineated well, and text was all formatted the same way. Additionally, the "search again" link did not stand out much. The text on detailed result pages (`/search?title_choice=[title]`) was similarly difficult to parse.
+- **Page**: `templates/filter.html` and `/search?title_choice=[title]`
+- **What we did**: Each result has been given a lighter background to act as a visual seperator, and the descriptive text has been slightly reformatted. The "search again" link has been centered and made an eye-catching color. Additionally, the table on the detailed results page has been re-spaced to be more readable from a glance.
 
 ## Usability Issue 2: Limited Search Results Display
 
 - **Issue**: Movie/show results on the `/filter_results` page were very limited. If users wanted to see more detailed information such as the entire cast, they had no way to access it.
 - **Page**: `templates/results.html`
-- **What we did**: Each result on `filter_results` now includes a direct link to a more detailed page (accessible at `/search?title_choice=[title]`) that lists the media type, year released, categories, full cast list, description, and list of services it is available on. Additionally, the results have been reformatted to be easier to parse visually, and the links have been made to stand out.
+- **What we did**: Each result on `filter_results` now includes a direct link to a more detailed page (accessible at `/search?title_choice=[title]`) that lists the media type, year released, categories, full cast list, description, and list of services it is available on. 
 
 # StreamSearch CLI
 
