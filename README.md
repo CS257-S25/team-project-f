@@ -19,7 +19,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ---
 
-#Option B: Front-End Design Improvements
+# Option B: Front-End Design Improvements
 
 ## Usability Issue 1: Autocomplete for Search Bar
 
