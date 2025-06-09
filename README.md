@@ -6,7 +6,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
 
-- **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*
+- **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*.
 The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()). This repetitive code makes methods contain too many lines of code.
 - **Location**: `ProductionCode/datasource.py`, lines 34–54, `_ensure_connection()`
 - **What we did**:  
@@ -14,7 +14,7 @@ The original `ProductionCode/datasource.py` file had many methods having the sam
 
 ## Code Smell/Naming Issue 2: *Bloaters / Long Method* in cl.py `main()`
 
-- **Type of issue**: Code Smell – *Bloaters / Long Method*
+- **Type of issue**: Code Smell – *Bloaters / Long Method*.
   The main() function violated the Single Responsibility Principle and it attempted to handle multiple unrelated concerns such as conditional logic to determine which filtering method to call from the `DataSource` class, and formatting/displaying results. This resulted in a long block of code that was difficult to read, modify, or extend.
 - **Location**: `cl.py`, lines 11-22(helper function to parses command line arguments), lines 24-38(Determines which DataSource method to call), lines 40-49(format results).
 - **What we did**: We have a halper function to parses command line arguments, extracted the filtering logic into a helper method called `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow: argument parsing, validation, and output. This makes the code easier to read and improves separation of concerns.
