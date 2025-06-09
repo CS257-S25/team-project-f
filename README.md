@@ -35,7 +35,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ## Usability Issue 3: Autocomplete for Search Bar
 
-- **Issue**: The autocompletion for the search bar was not working, making it harder for users to find valid film names.
+- **Issue**: The search bar across platform did not support autocompletion, which made it difficult for users to discover or input valid film/show names. This reduced usability, especially when users were unsure of the exact spelling.
 - **Page**: `templates/filter.html`, lines 12-24
 - **What we did**: Added autocomplete for title search bar (<input id="search_titles">) to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1.only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker or fast firing.
 
