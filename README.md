@@ -6,7 +6,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
 
-- **Type of issue**: Code Smell – *Dispensables / Duplicate Code* *Bloaters / Long Method*
+- **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*
 - **Location**: `ProductionCode/datasource.py`, lines 31–58
 - **What we did**:  
   Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query. Reduced long methods by delegating to helper. This improves maintainability and removes duplicated logic.
