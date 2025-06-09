@@ -1,8 +1,11 @@
-"""Module for accessing and querying movie data from a PostgreSQL database."""
+"""
+Module for accessing and querying movie data from a PostgreSQL database.
+"""
 
 import html
 import psycopg2
 import ProductionCode.psql_config as config
+
 
 class DataSource:
     """Handles database connection and queries for movie data."""
@@ -12,10 +15,7 @@ class DataSource:
         self.connection = None
 
     def connect(self):
-        """
-        Initiates connection to database using credentials from psqlConfig.py.
-        This method needs to be explicitly called to establish a connection.
-        """
+        """Initiates connection to the database if not connected."""
         if self.connection is None:
             try:
                 self.connection = psycopg2.connect(
@@ -28,196 +28,114 @@ class DataSource:
                 raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
 
+    def _execute_query(self, query, params=None, fetch_one=False, fetch_all=True):
+        """
+        Internal helper to execute queries and fetch results safely.
+
+        Args:
+            query (str): SQL query to execute.
+            params (tuple): Parameters for query placeholders.
+            fetch_one (bool): If True, fetch one row only.
+            fetch_all (bool): If True, fetch all rows.
+
+        Returns:
+            list or tuple or None: Query result(s) or None on error.
+        """
+        if self.connection is None:
+            self.connect()
+
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(query, params)
+                if fetch_one:
+                    return cursor.fetchone()
+                if fetch_all:
+                    return cursor.fetchall()
+                self.connection.commit()
+                return None
+        except psycopg2.DatabaseError as e:
+            print(f"Query failed: {e}")
+            return None
 
     def get_movies_later_than(self, release_year):
+        query = """
+            SELECT * FROM stream_data 
+            WHERE release_year > %s 
+            ORDER BY release_year DESC
         """
-        Fetches full info of movies released after the specified year.
-        Args:
-            release_year (int): The year to compare against.
-        Returns:
-            list of tuples: Movies released after the given year.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """SELECT *
-            FROM stream_data WHERE release_year > %s ORDER BY release_year DESC"""
-            cursor.execute(query, (release_year,))
-            return cursor.fetchall()
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
+        return self._execute_query(query, (release_year,))
 
     def get_movie_titles_by_actor(self, actor_name):
+        query = """
+            SELECT * FROM stream_data 
+            WHERE media_cast ILIKE %s
         """
-        Fetch movie titles where the given actor appears in the Casting field.
-        Args:
-            actor_name (str): Name of the actor to search for.
-        Returns:
-            list of tuples: Movie titles and descriptions featuring the actor.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """SELECT * FROM stream_data WHERE media_cast ILIKE %s"""
-            cursor.execute(query, (f"%{actor_name}%",))
-            return cursor.fetchall()
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
+        return self._execute_query(query, (f"%{actor_name}%",))
 
     def get_movies_by_category(self, category):
+        query = """
+            SELECT * FROM stream_data 
+            WHERE category ILIKE %s 
+            ORDER BY release_year DESC
         """
-        Fetches full info of movies by the specified category.
-        Args:
-            category (str): The category to filter movies by.
-        Returns:
-            list of tuples: Movies in the specified category.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """SELECT * FROM stream_data
-              WHERE category ILIKE %s ORDER BY release_year DESC"""
-            cursor.execute(query, (f"%{category}%",))
-            return cursor.fetchall()
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
+        return self._execute_query(query, (f"%{category}%",))
 
     def get_all_categories(self):
+        query = """
+            SELECT category FROM stream_data WHERE category IS NOT NULL
         """
-        Fetches a sorted list of unique categories from the database.
-
-        Returns:
-            list of str: All distinct movie categories.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = "SELECT category FROM stream_data WHERE category IS NOT NULL"
-            cursor.execute(query)
-            results = cursor.fetchall()
-
-            genre_set = set()
-            for row in results:
-                genres = [genre.strip() for genre in row[0].split(",")]
-                genre_set.update(genres)
-
-            return sorted(genre_set)
-
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
+        results = self._execute_query(query)
+        if results is None:
             return []
+
+        genre_set = set()
+        for row in results:
+            genres = [genre.strip() for genre in row[0].split(",")]
+            genre_set.update(genres)
+
+        return sorted(genre_set)
 
     def get_media_titles_only(self):
+        query = """
+            SELECT title, release_year FROM stream_data
+            ORDER BY release_year DESC
         """
-        Gets a list of all media titles. Used by the title autocomplete search bar
-        on most webpages.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(
-                """
-                SELECT title, release_year FROM stream_data
-                ORDER BY release_year DESC
-                """
-            )
-
-            titles = []
-            for media in cursor.fetchall():
-                titles.append(html.unescape("".join(media[0].splitlines())))
-            return titles
-
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
+        results = self._execute_query(query)
+        if results is None:
             return []
+
+        titles = [html.unescape("".join(row[0].splitlines())) for row in results]
+        return titles
 
     def get_3_filter_media(self, actor_name, release_year, category):
+        query = """
+            SELECT * FROM stream_data 
+            WHERE media_cast ILIKE %s 
+            AND category ILIKE %s 
+            AND release_year > %s 
+            ORDER BY release_year DESC
         """
-        Fetches a sorted list of a unique actor, year, category from the database.
-
-        Returns:
-            list of str: All distinct movies from filter.
-
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """
-                    SELECT * FROM stream_data 
-                    WHERE media_cast ILIKE %s 
-                    AND category ILIKE %s 
-                    AND release_year > %s 
-                    ORDER BY release_year DESC
-            """
-
-            cursor.execute(query, (f"%{actor_name}%", f"%{category}%", release_year))
-            return cursor.fetchall()
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return None
+        return self._execute_query(query, (f"%{actor_name}%", f"%{category}%", release_year))
 
     def get_all_actors(self):
+        query = """
+            SELECT media_cast FROM stream_data WHERE media_cast IS NOT NULL
         """
-        Returns a sorted list of unique actor names from the media_cast column.
-        """
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = "SELECT media_cast FROM stream_data WHERE media_cast IS NOT NULL"
-            cursor.execute(query)
-            cast_rows = cursor.fetchall()
-
-            actor_set = set()
-            for row in cast_rows:
-                cast = row[0]
-                if cast:
-                    actors = [actor.strip() for actor in cast.split(',')]
-                    actor_set.update(actors)
-
-            return sorted(actor_set)
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
+        results = self._execute_query(query)
+        if results is None:
             return []
 
+        actor_set = set()
+        for row in results:
+            if row[0]:
+                actors = [actor.strip() for actor in row[0].split(',')]
+                actor_set.update(actors)
+
+        return sorted(actor_set)
 
     def get_media_from_title(self, title):
+        query = """
+            SELECT * FROM stream_data WHERE title ILIKE %s
         """
-        Fetches media information based on the exact title.
-        Args:
-            title (str): The title of the media to search for.
-        Returns:
-            tuple: Media information if found, otherwise None."""
-        if self.connection is None:
-            self.connect()
-
-        try:
-            cursor = self.connection.cursor()
-            query = """
-            SELECT * FROM stream_data
-            WHERE title ILIKE %s
-            """
-            cursor.execute(query, (title,))
-            results = cursor.fetchall()
-            if not results:
-                return None
-            return results[0]
-        except psycopg2.DatabaseError as e:
-            print("Either the query failed or something went wrong executing it:", e)
-            return "DB_ERROR"
+        result = self._execute_query(query, (title,), fetch_one=True)
+        return result if result else None
