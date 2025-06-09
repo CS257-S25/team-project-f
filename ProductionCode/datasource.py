@@ -118,7 +118,7 @@ class DataSource:
             genre_set.update(genres)
 
         return sorted(genre_set)
-    
+
     def get_media_by_advanced_filter(self, actor_name, release_year, category):
         """
         Retrieves media based on actor name, category, and release year.
