@@ -30,11 +30,9 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 ## Usability Issue 2: Limited Search Results Display
 
-- **Issue**: Movie results on the `/filter_results` page were very limited. If users wanted to see more detailed information such as the entire cast, they had no way to access it.
+- **Issue**: Movie/show results on the `/filter_results` page were very limited. If users wanted to see more detailed information such as the entire cast, they had no way to access it.
 - **Page**: `templates/results.html`
-- **What we did**:  
-  Enhanced the results display to include more information such as full cast, ...
-
+- **What we did**: Each result on `filter_results` now includes a direct link to a more detailed page (accessible at `/search?title_choice=[title]`) that lists the media type, year released, categories, full cast list, description, and list of services it is available on. Additionally, the results have been reformatted to be easier to parse visually, and the links have been made to stand out.
 
 # StreamSearch CLI
 

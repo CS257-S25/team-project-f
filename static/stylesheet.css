@@ -13,6 +13,8 @@ a {
     color:#ff758f;
 }
 
+
+
 h2 {
     font-size: 2em;
     margin-bottom: 0.3em;
@@ -85,6 +87,9 @@ ul.result {
     margin:0;
     list-style-type: none;
 }
+
+
+
 
 section.result {
     margin: 1em;
@@ -211,6 +216,8 @@ nav.topbar a {
 }
 
 button {
+    border:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 0.5em;
     border-radius: 12px;
     background-color:#464fd4;
@@ -220,10 +227,7 @@ button {
     font-size: 18px;
     margin:0px;
     transition: all 0.2s ease-in-out;
-}
-
-button#selected {
-    background-color: #1a1b30;
+    margin-right: 0.5em;
 }
 
 button:hover,
@@ -231,7 +235,11 @@ button:focus {
     background-color: #1a1b30;
 }
 
-    
+a#search_again:hover,
+a#search_again:focus { 
+    background-color: #64122d;
+}
+
 nav li a:hover,
 nav li a:focus {
     background-color: #1a1b30;
@@ -257,4 +265,44 @@ div.highlight {
 
 span.blue {
     color: #626dff;
+}
+
+a#search_again {
+    width:20%;
+    display:block;
+    text-align:center;
+    margin: auto;
+    padding: 0.5em;
+    border-radius: 12px;
+    background-color:#ff3358;
+    color:rgb(255, 243, 244);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+}
+
+span#media_type_and_release_date {
+    font-style:italic;
+    font-weight:bold;
+    color:rgb(139, 151, 185);
+    font-size: 1.1em;
+}
+p#description {
+    font-size:1.1em;
+}
+p#category {
+    color:rgb(152, 166, 203);
+}
+p#streaming_service_availability {
+    color:rgb(152, 166, 203);
+}
+
+th {    
+    color:#7885e7;
+    text-align:left;
+    font-size:1.1em;
+}
+table {
+    border-spacing:1em 0.5em;
 }

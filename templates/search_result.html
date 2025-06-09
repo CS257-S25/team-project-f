@@ -33,16 +33,18 @@
     {% if media %}
         <section>
             <h2 class="movie_title">{{ media[1] }}</h2>
-            <table class="movie_table">
-                <tbody>
-                    <tr><th>MEDIA TYPE</th><td>{{ media[0] }}</td></tr>
-                    <tr><th>YEAR</th><td>{{ media[3] }}</td></tr>
-                    <tr><th>CATEGORY</th><td>{{ media[4] }}</td></tr>
-                    <tr><th>CAST</th><td>{{ media[2] }}</td></tr>
-                    <tr><th>DESCRIPTION</th><td>{{ media[5] }}</td></tr>
-                    <tr><th>AVAILABLE ON</th><td>{{ media[6] }}</td></tr>
-                </tbody>
-            </table>
+            <section class="light">
+                <table class="movie_table">
+                    <tbody>
+                        <tr><th>MEDIA TYPE</th><td>{{ media[0] }}</td></tr>
+                        <tr><th>YEAR</th><td>{{ media[3] }}</td></tr>
+                        <tr><th>CATEGORY</th><td>{{ media[4] }}</td></tr>
+                        <tr><th>CAST</th><td>{{ media[2] }}</td></tr>
+                        <tr><th>DESCRIPTION</th><td>{{ media[5] }}</td></tr>
+                        <tr><th>AVAILABLE ON</th><td>{{ media[6] }}</td></tr>
+                    </tbody>
+                </table>
+            </section>
         </section>
     {% else %}
         <section>
@@ -50,6 +52,7 @@
             <p>We couldn't find any media matching that title. Please try another search.</p>
         </section>
     {% endif %}
-    <a href="/filter">Search Again </a>
+    <p><a href="/filter" id="search_again">Search Again </a></p>
+    
 </body>
 </html>
