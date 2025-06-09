@@ -7,10 +7,10 @@ The members of this team are: Eva, Maria, John, and Asa.
 ## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
 
 - **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*.
-The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()). This repetitive code makes methods contain too many lines of code.
-- **Location**: `ProductionCode/datasource.py`, lines 34–54, `_ensure_connection()`
+The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()) and contained embedded similar SQL execution logic. This repetitive code makes methods contain too many lines of code.
+- **Location**: `ProductionCode/datasource.py`, lines 34–54, `execute_query`
 - **What we did**:  
-  Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query, and reduced long methods by delegating to helper. This helps improve maintainability of the code file.
+  We introduced a new helper method, execute_query(), to centralize connection verification and SQL query execution. All data retrieval methods now delegate to this helper, allowing them to focus solely on defining SQL logic and getting results.
 
 ## Code Smell/Naming Issue 2: *Bloaters / Long Method* in cl.py `main()`
 
