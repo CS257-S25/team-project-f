@@ -7,19 +7,21 @@ The members of this team are: Eva, Maria, John, and Asa.
 ## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
 
 - **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*
-- **Location**: `ProductionCode/datasource.py`, lines 31–58
+The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()). This repetitive code makes methods contain too many lines of code.
+- **Location**: `ProductionCode/datasource.py`, lines 34–54, `_ensure_connection()`
 - **What we did**:  
-  Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query. Reduced long methods by delegating to helper. This improves maintainability and removes duplicated logic.
+  Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query, and reduced long methods by delegating to helper. This helps improve maintainability of the code file.
 
-## Code Smell/Naming Issue 2: Long Method in cl.py `main()`
+## Code Smell/Naming Issue 2: *Bloaters / Long Method* in cl.py `main()`
 
 - **Type of issue**: Code Smell – *Bloaters / Long Method*
-- **Location**: `cl.py`, lines 22–35
-- **What we did**:  The `main()` function originally contained conditional logic to determine which filtering method to call from the `DataSource` class based on individual arguments and displaying results. This made the function long and violates the principle of "one level of abstraction". We extracted the filtering logic into a helper method called `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow: argument parsing, validation, and output. This makes the code easier to read, reduces duplication, and improves separation of concerns.
+  The main() function violated the Single Responsibility Principle and it attempted to handle multiple unrelated concerns such as conditional logic to determine which filtering method to call from the `DataSource` class, and formatting/displaying results. This resulted in a long block of code that was difficult to read, modify, or extend.
+- **Location**: `cl.py`, lines 11-22(helper function to parses command line arguments), lines 24-38(Determines which DataSource method to call), lines 40-49(format results).
+- **What we did**: We have a halper function to parses command line arguments, extracted the filtering logic into a helper method called `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow: argument parsing, validation, and output. This makes the code easier to read and improves separation of concerns.
 
 ## Code Smell/Naming Issue 3: Unintuitive naming 
 
-- **Type of issue**: Unintuitive naming. Originally, several method names in DataSource were unclear, such as: get_movies_later_than(when it returns both movies and shows), get_movie_titles_by_actor(when it return more than just titles), get_3_filter_media, ect. These names were inconsistent in terms of terminology, did not fully reflect what the functions returned, and were difficult to understand at a glance.
+- **Type of issue**: Unintuitive naming. Originally, several method names in DataSource were unclear, such as: get_movies_later_than(when it returns both movies and shows), get_movie_titles_by_actor(when it return more than just titles), get_3_filter_media(unituitive), ect. These names were inconsistent in terms of terminology, did not fully reflect what the functions returned, and were difficult to understand at a glance.
 - **Location**: `ProductionCode/datasource.py`
 - **What we did**: We renamed the affected methods to be more descriptive, accurate, and consistent with each other. For example: get_movies_later_than → get_media_later_than, get_3_filter_media → get_media_by_advanced_filter, get_media_titles_only → get_all_media_titles. These changes help clarify what kind of data is being returned and improve the readability and maintainability of the code.
 
@@ -44,7 +46,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 - **Issue**: The search bar across platform did not support autocompletion, which made it difficult for users to discover or input valid film/show names. This reduced usability, especially when users were unsure of the exact spelling.
 - **Page**: `templates/filter.html`, lines 12-24
-- **What we did**: Added autocomplete for title search bar (<input id="search_titles">) to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1.only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker or fast firing.
+- **What we did**: Added autocomplete for title search bar to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1. only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker or fast firing.
 
 # StreamSearch CLI
 
