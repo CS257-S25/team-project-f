@@ -80,6 +80,18 @@ section.light {
     border-radius: 12px;
 }
 
+ul.result {
+    padding:0;
+    margin:0;
+    list-style-type: none;
+}
+
+section.result {
+    margin: 1em;
+    padding: 1em;
+    background-color: #272949;
+    border-radius: 12px;
+}
 h1.title {
     text-align: center;
     color:rgb(237, 237, 255);
@@ -198,10 +210,27 @@ nav.topbar a {
     transition: all 0.2s ease-in-out;
 }
 
+button {
+    padding: 0.5em;
+    border-radius: 12px;
+    background-color:#464fd4;
+    color:rgb(243, 245, 255);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    margin:0px;
+    transition: all 0.2s ease-in-out;
+}
 
-nav li a#selected {
+button#selected {
     background-color: #1a1b30;
 }
+
+button:hover,
+button:focus {
+    background-color: #1a1b30;
+}
+
     
 nav li a:hover,
 nav li a:focus {
