@@ -34,7 +34,6 @@ def get_cl_filtered_results(args, ds):
             args.category if args.category else ''
         )
 
-
 def main():
     """
     Main function to parse command line arguments and fetch data from the DataSource.
