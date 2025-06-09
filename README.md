@@ -7,7 +7,7 @@ The members of this team are: Eva, Maria, John, and Asa.
 ## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
 
 - **Type of issue**: Code Smell – *Dispensables / Duplicate Code* and *Bloaters / Long Method*.
-The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()) and contained embedded similar SQL execution logic. This repetitive code makes methods contain too many lines of code.
+The original `ProductionCode/datasource.py` file had many methods having the same logic to check and initiate the database connection (if self.connection is None: self.connect()) and contained embedded similar SQL execution process. This repetitive code makes methods contain too many lines of code.
 - **Location**: `ProductionCode/datasource.py`, lines 34–54, `execute_query`
 - **What we did**:  
   We introduced a new helper method, execute_query(), to centralize connection verification and SQL query execution. All data retrieval methods now delegate to this helper, allowing them to focus solely on defining SQL logic and getting results.
@@ -15,9 +15,9 @@ The original `ProductionCode/datasource.py` file had many methods having the sam
 ## Code Smell/Naming Issue 2: *Bloaters / Long Method* in cl.py `main()`
 
 - **Type of issue**: Code Smell – *Bloaters / Long Method*.
-  The main() function violated the Single Responsibility Principle and it attempted to handle multiple unrelated concerns such as conditional logic to determine which filtering method to call from the `DataSource` class, and formatting/displaying results. This resulted in a long block of code that was difficult to read, modify, or extend.
-- **Location**: `cl.py`, lines 11-22(helper function to parses command line arguments), lines 24-38(Determines which DataSource method to call), lines 40-49(format results).
-- **What we did**: We have a halper function to parses command line arguments, extracted the filtering logic into a helper method called `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow: argument parsing, validation, and output. This makes the code easier to read and improves separation of concerns.
+  The main() function in cl.py violated the Single Responsibility Principle and it attempted to handle multiple unrelated concerns such as conditional logic to determine which filtering method to call from the `DataSource` class, and formatting/displaying results. This resulted in a long block of code that was difficult to read, modify, or extend.
+- **Location**: `cl.py`, lines 11-22(parses command line arguments), lines 24-38(Determines which DataSource method to call), lines 40-49(format results).
+- **What we did**: We have halper functions to parses command line arguments, extracted the filtering logic into `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow. This makes the code easier to read and improves separation of concerns.
 
 ## Code Smell/Naming Issue 3: Unintuitive naming 
 
@@ -44,9 +44,9 @@ The original `ProductionCode/datasource.py` file had many methods having the sam
 
 ## Usability Issue 3: Autocomplete for Search Bar
 
-- **Issue**: The search bar across platform did not support autocompletion, which made it difficult for users to discover or input valid film/show names. This reduced usability, especially when users were unsure of the exact spelling.
+- **Issue**: The search bar across platform did not support autocompletion, which made it difficult for users to discover or input valid film/show names. This reduced usability especially when users were unsure of the exact spelling.
 - **Page**: `templates/filter.html`, lines 12-24
-- **What we did**: Added autocomplete for title search bar to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1. only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker or fast firing.
+- **What we did**: Added autocomplete for title search bar to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1. only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker.
 
 # StreamSearch CLI
 
