@@ -11,11 +11,11 @@ The members of this team are: Eva, Maria, John, and Asa.
 - **What we did**:  
   Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query. Reduced long methods by delegating to helper. This improves maintainability and removes duplicated logic.
 
-## Code Smell/Naming Issue 2: [INSERT TITLE]
+## Code Smell/Naming Issue 2: Long Method in cl.py `main()`
 
-- **Type of issue**:
-- **Location**:
-- **What we did**:  
+- **Type of issue**: Code Smell – *Bloaters / Long Method*
+- **Location**: `cl.py`, lines 22–35
+- **What we did**:  The `main()` function originally contained conditional logic to determine which filtering method to call from the `DataSource` class based on individual arguments. This made the function long and violates the principle of "one level of abstraction". We extracted this logic into a helper method called `get_cl_filtered_results(args, ds)`, allowing the `main()` function to focus solely on argument parsing and result display. This makes the code easier to read, reduces duplication, and improves separation of concerns.
 
 ---
 
