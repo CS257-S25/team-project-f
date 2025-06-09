@@ -23,16 +23,15 @@ def get_cl_filtered_results(args, ds):
     """
     if args.actor and not args.category and not args.year:
         return ds.get_movie_titles_by_actor(args.actor)
-    elif args.category and not args.actor and not args.year:
+    if args.category and not args.actor and not args.year:
         return ds.get_movies_by_category(args.category)
-    elif args.year and not args.actor and not args.category:
+    if args.year and not args.actor and not args.category:
         return ds.get_movies_later_than(args.year)
-    else:
-        return ds.get_3_filter_media(
-            args.actor if args.actor else '',
-            args.year if args.year else 0,
-            args.category if args.category else ''
-        )
+    return ds.get_3_filter_media(
+        args.actor if args.actor else '',
+        args.year if args.year else 0,
+        args.category if args.category else ''
+    )
 
 def main():
     """
