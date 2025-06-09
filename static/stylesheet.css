@@ -167,7 +167,7 @@ input::placeholder {
 
 div.search input {
     padding: 0.5em;
-    width: 25%;
+    width: 26%;
     font-size: 15px;
     transition:
         width 0.4s ease-in-out,
@@ -177,7 +177,7 @@ div.search input {
 }
 
 div.search input:focus {
-    width: 100%;
+    width: 99%;
 }
 
 
