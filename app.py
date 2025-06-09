@@ -25,10 +25,7 @@ def homepage():
     Determines the text on the homepage of the website. 
     Displays detailed instructions regarding the usage of the application.
     """
-    return render_template(
-        "index.html",
-        titles=get_searchbar_titles()
-    )
+    return render_template("index.html")
 
 @app.route('/actor/<name>', strict_slashes=False)
 def search_by_actor(name):
@@ -133,7 +130,6 @@ def filter_results():
         actor=actor,
         year=year,
         category=category,
-        titles=get_searchbar_titles(),
         results=results
     )
 
@@ -164,7 +160,6 @@ def search_result_page():
 
     return render_template(
         "search_result.html",
-        titles=get_searchbar_titles(),
         media=media
     )
 
@@ -181,10 +176,7 @@ def page_not_found(e):
         tuple: An error message and HTTP status code 404.
     """
     print(e)
-    return render_template(
-        '404.html',
-        titles=get_searchbar_titles()
-    )
+    return render_template('404.html')
 
 @app.errorhandler(500)
 def python_bug(e):
