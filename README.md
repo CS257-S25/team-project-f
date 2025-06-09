@@ -33,6 +33,12 @@ The members of this team are: Eva, Maria, John, and Asa.
 - **Page**: `templates/results.html`
 - **What we did**: Each result on `filter_results` now includes a direct link to a more detailed page (accessible at `/search?title_choice=[title]`) that lists the media type, year released, categories, full cast list, description, and list of services it is available on. 
 
+## Usability Issue 3: Autocomplete for Search Bar
+
+- **Issue**: The autocompletion for the search bar was not working, making it harder for users to find valid film names.
+- **Page**: `templates/filter.html`, lines 12-24
+- **What we did**: Added autocomplete for title search bar (<input id="search_titles">) to allow users to get suggestions as they type movie/show names. And the autocompletes now include 2 additional features: 1.only trigger after 4 characters to prevent overwhelming results, and 2. adds a delay before querying to reduce flicker or fast firing.
+
 # StreamSearch CLI
 
 ## Overview
