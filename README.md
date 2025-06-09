@@ -1,6 +1,40 @@
-# CS257-F23-TeamTemplate
+# CS257-F23-Team
 This is the repository for Team F's project.
 The members of this team are: Eva, Maria, John, and Asa.
+
+# Option A: Code Design Improvements
+
+## Code Smell/Naming Issue 1: Repetitive Database Connection Logic
+
+- **Type of issue**: Code Smell – *Dispensables / Duplicate Code*
+- **Location**: `ProductionCode/datasource.py`, lines 31–58
+- **What we did**:  
+  Refactored the repeated database connection logic into a private `_ensure_connection()` method to ensure connection establishment happens uniformly before each query. This improves maintainability and removes duplicated logic.
+
+## Code Smell/Naming Issue 2: [INSERT TITLE]
+
+- **Type of issue**:
+- **Location**:
+- **What we did**:  
+
+---
+
+#Option B: Front-End Design Improvements
+
+## Usability Issue 1: Autocomplete for Search Bar
+
+- **Issue**: The autocompletion for the search bar was not working, making it harder for users to find valid actor names.
+- **Page**: `templates/filter.html`
+- **What we did**:  
+  Implemented.... This allows users to see suggestions as they type, improving search efficiency and experience.
+
+## Usability Issue 2: Limited Search Results Display
+
+- **Issue**: Movie results on the `/filter_results` page were very limited. If users wanted to see more detailed information such as the entire cast, they had no way to access it.
+- **Page**: `templates/results.html`
+- **What we did**:  
+  Enhanced the results display to include more information such as full cast, ...
+
 
 # StreamSearch CLI
 
