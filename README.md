@@ -15,7 +15,14 @@ The members of this team are: Eva, Maria, John, and Asa.
 
 - **Type of issue**: Code Smell – *Bloaters / Long Method*
 - **Location**: `cl.py`, lines 22–35
-- **What we did**:  The `main()` function originally contained conditional logic to determine which filtering method to call from the `DataSource` class based on individual arguments. This made the function long and violates the principle of "one level of abstraction". We extracted this logic into a helper method called `get_cl_filtered_results(args, ds)`, allowing the `main()` function to focus solely on argument parsing and result display. This makes the code easier to read, reduces duplication, and improves separation of concerns.
+- **What we did**:  The `main()` function originally contained conditional logic to determine which filtering method to call from the `DataSource` class based on individual arguments and displaying results. This made the function long and violates the principle of "one level of abstraction". We extracted the filtering logic into a helper method called `get_cl_filtered_results(args, ds)` and the displaying result into `display_results(results)`, allowing the `main()` function to focus solely on high-level flow: argument parsing, validation, and output. This makes the code easier to read, reduces duplication, and improves separation of concerns.
+
+## Code Smell/Naming Issue 3: Unintuitive naming 
+
+- **Type of issue**: Unintuitive naming. Originally, several method names in DataSource were unclear, such as: get_movies_later_than(when it returns both movies and shows), get_movie_titles_by_actor(when it return more than just titles), get_3_filter_media, ect. These names were inconsistent in terms of terminology, did not fully reflect what the functions returned, and were difficult to understand at a glance.
+- **Location**: `ProductionCode/datasource.py`
+- **What we did**: We renamed the affected methods to be more descriptive, accurate, and consistent with each other. For example: get_movies_later_than → get_media_later_than, get_3_filter_media → get_media_by_advanced_filter, get_media_titles_only → get_all_media_titles. These changes help clarify what kind of data is being returned and improve the readability and maintainability of the code.
+
 
 ---
 
