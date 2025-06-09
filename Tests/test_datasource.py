@@ -2,10 +2,9 @@
 Unit tests for the DataSource class in ProductionCode.datasource.
 Uses unittest and unittest.mock to simulate database behavior.
 """
-
-import psycopg2  # Third-party imports go first
 import unittest
 from unittest.mock import patch, MagicMock
+import psycopg2
 
 from ProductionCode.datasource import DataSource
 
