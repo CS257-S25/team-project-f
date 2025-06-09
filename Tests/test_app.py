@@ -112,9 +112,10 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/category/Drama')
         self.assertIn("Could not find movies in category: Drama", response.data.decode())
 
-    @patch('app.ds.get_all_categories')
-    @patch('app.ds.get_all_actors')
-    def test_filter_form(self, mock_get_actors, mock_get_categories):
+    @patch('ProductionCode.datasource.DataSource.get_all_categories')
+    @patch('ProductionCode.datasource.DataSource.get_all_actors')
+    @patch('ProductionCode.datasource.DataSource.get_media_titles_only')
+    def test_filter_form(self, mock_titles, mock_get_actors, mock_get_categories):
         """
         Test the filter form is rendered correctly and that
         available movie categories and actors are retrieved and 
@@ -122,9 +123,14 @@ class TestFilterFunctions(BaseTestCase):
         """
         mock_get_categories.return_value = ['Comedy', 'Action']
         mock_get_actors.return_value = ['Brad Pitt', 'Sandra Bullock']
+        mock_titles.return_value = ['Movie A', 'Movie B']
+
         response = self.client.get('/filter')
-        self.assertIn("Comedy", response.data.decode())
-        self.assertIn("Action", response.data.decode())
+        html = response.data.decode()
+        self.assertIn("Comedy", html)
+        self.assertIn("Action", html)
+        self.assertIn("Brad Pitt", html)
+        self.assertIn("Sandra Bullock", html)
 
     @patch('app.ds.get_3_filter_media')
     def test_filter_results_all_filters(self, mock_filter):
