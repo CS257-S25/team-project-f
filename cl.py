@@ -9,6 +9,9 @@ import argparse
 from ProductionCode.datasource import DataSource
 
 def parse_args():
+    """
+    Parses command line arguments for filtering movies/shows.
+    """
     parser = argparse.ArgumentParser(
         prog="StreamSearch",
         description="Search for movies/shows across streaming platforms."
