@@ -15,7 +15,10 @@ class DataSource:
         self.connection = None
 
     def connect(self):
-        """Initiates connection to the database if not connected."""
+        """
+        Initiates connection to database using credentials from psqlConfig.py.
+        This method needs to be explicitly called to establish a connection.
+        """
         if self.connection is None:
             try:
                 self.connection = psycopg2.connect(
@@ -28,15 +31,13 @@ class DataSource:
                 raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
 
-    def _execute_query(self, query, params=None, fetch_one=False, fetch_all=True):
+    def _execute_query(self, query, params=None):
         """
         Internal helper to execute queries and fetch results safely.
 
         Args:
             query (str): SQL query to execute.
             params (tuple): Parameters for query placeholders.
-            fetch_one (bool): If True, fetch one row only.
-            fetch_all (bool): If True, fetch all rows.
 
         Returns:
             list or tuple or None: Query result(s) or None on error.
@@ -45,14 +46,9 @@ class DataSource:
             self.connect()
 
         try:
-            with self.connection.cursor() as cursor:
-                cursor.execute(query, params)
-                if fetch_one:
-                    return cursor.fetchone()
-                if fetch_all:
-                    return cursor.fetchall()
-                self.connection.commit()
-                return None
+            cursor = self.connection.cursor()
+            cursor.execute(query, params)
+            return cursor.fetchall()
         except psycopg2.DatabaseError as e:
             print(f"Query failed: {e}")
             return None
@@ -191,5 +187,5 @@ class DataSource:
         query = """
             SELECT * FROM stream_data WHERE title ILIKE %s
         """
-        result = self._execute_query(query, (title,), fetch_one=True)
-        return result if result else None
+        result = self._execute_query(query, (title,))
+        return result[0] if result else None
