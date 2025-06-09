@@ -8,14 +8,15 @@ It allows users to filter movies and shows based on actor names, categories, and
 import argparse
 from ProductionCode.datasource import DataSource
 
-parser = argparse.ArgumentParser(
-    prog="StreamSearch",
-    description="Search for movies/shows across streaming platforms."
-)
-parser.add_argument('-a', '--actor', type=str, help='Filter by actor name')
-parser.add_argument('-c', '--category', type=str, help='Filter by category')
-parser.add_argument('-y', '--year', type=int, help='Filter by release year')
-
+def parse_args():
+    parser = argparse.ArgumentParser(
+        prog="StreamSearch",
+        description="Search for movies/shows across streaming platforms."
+    )
+    parser.add_argument('-a', '--actor', type=str, help='Filter by actor name')
+    parser.add_argument('-c', '--category', type=str, help='Filter by category')
+    parser.add_argument('-y', '--year', type=int, help='Filter by release year')
+    return parser.parse_args()
 
 def get_cl_filtered_results(args, ds):
     """
@@ -33,25 +34,30 @@ def get_cl_filtered_results(args, ds):
         args.category if args.category else ''
     )
 
+def display_results(results):
+    """
+    Prints the query results.
+    """
+    if not results:
+        print("No matching results found.")
+        return
+
+    for row in results:
+        print(" | ".join(str(field) for field in row))
+
 def main():
     """
     Main function to parse command line arguments and fetch data from the DataSource.
     """
-    args = parser.parse_args()
-    ds = DataSource()
+    args = parse_args()
 
     if not (args.actor or args.category or args.year):
         print("Please provide at least one filter: --actor, --category, or --year")
         return
 
+    ds = DataSource()
     results = get_cl_filtered_results(args, ds)
-
-    if not results:
-        print("No matching results found.")
-    else:
-        for row in results:
-            print(" | ".join(str(field) for field in row))
-
+    display_results(results)
 
 if __name__ == "__main__":
     main()
