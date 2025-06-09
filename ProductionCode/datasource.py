@@ -58,6 +58,14 @@ class DataSource:
             return None
 
     def get_movies_later_than(self, release_year):
+        """        
+        Retrieves all movies released after a specified year.
+
+        Args:
+            release_year (int): The year to filter movies by.   
+        Returns:
+            list: A list of tuples containing movie data, or None if an error occurs.
+        """
         query = """
             SELECT * FROM stream_data 
             WHERE release_year > %s 
@@ -66,6 +74,14 @@ class DataSource:
         return self._execute_query(query, (release_year,))
 
     def get_movie_titles_by_actor(self, actor_name):
+        """
+        Retrieves movie titles and descriptions for a specific actor.
+        Args:
+            actor_name (str): The name of the actor to filter movies by.
+        Returns:
+            list: A list of tuples containing movie titles and descriptions, 
+            or None if an error occurs.
+        """
         query = """
             SELECT * FROM stream_data 
             WHERE media_cast ILIKE %s
@@ -73,6 +89,13 @@ class DataSource:
         return self._execute_query(query, (f"%{actor_name}%",))
 
     def get_movies_by_category(self, category):
+        """
+        Retrieves movies in a specific category or genre.
+        Args:
+            category (str): The genre or category to filter movies by.
+        Returns:
+            list: A list of tuples containing movie data, or None if an error occurs.
+        """
         query = """
             SELECT * FROM stream_data 
             WHERE category ILIKE %s 
@@ -81,6 +104,11 @@ class DataSource:
         return self._execute_query(query, (f"%{category}%",))
 
     def get_all_categories(self):
+        """
+        Retrieves all unique categories from the database.
+        Returns:
+            list: A sorted list of unique categories, or an empty list if none found.
+        """
         query = """
             SELECT category FROM stream_data WHERE category IS NOT NULL
         """
@@ -96,6 +124,11 @@ class DataSource:
         return sorted(genre_set)
 
     def get_media_titles_only(self):
+        """
+        Retrieves all movie titles sorted by release year in descending order.
+        Returns:
+            list: A list of movie titles, or an empty list if none found.
+        """
         query = """
             SELECT title, release_year FROM stream_data
             ORDER BY release_year DESC
@@ -108,6 +141,15 @@ class DataSource:
         return titles
 
     def get_3_filter_media(self, actor_name, release_year, category):
+        """
+        Retrieves media based on actor name, category, and release year.
+        Args:
+            actor_name (str): The name of the actor to filter by.
+            release_year (int): The year to filter movies released after.
+            category (str): The genre or category to filter movies by.
+        Returns:
+            list: A list of tuples containing media data, or None if an error occurs.
+        """
         query = """
             SELECT * FROM stream_data 
             WHERE media_cast ILIKE %s 
@@ -118,6 +160,11 @@ class DataSource:
         return self._execute_query(query, (f"%{actor_name}%", f"%{category}%", release_year))
 
     def get_all_actors(self):
+        """
+        Retrieves all unique actors from the database.
+        Returns:
+            list: A sorted list of unique actor names, or an empty list if none found.
+        """
         query = """
             SELECT media_cast FROM stream_data WHERE media_cast IS NOT NULL
         """
@@ -134,6 +181,13 @@ class DataSource:
         return sorted(actor_set)
 
     def get_media_from_title(self, title):
+        """
+        Retrieves media data based on the title.
+        Args:
+            title (str): The title of the media to search for.
+        Returns:
+            tuple: A tuple containing media data if found, or None if not found.
+        """
         query = """
             SELECT * FROM stream_data WHERE title ILIKE %s
         """

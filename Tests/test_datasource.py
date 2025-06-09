@@ -1,17 +1,25 @@
+"""
+Unit tests for the DataSource class in ProductionCode.datasource.
+Uses unittest and unittest.mock to simulate database behavior.
+"""
+
+import psycopg2  # Third-party imports go first
 import unittest
 from unittest.mock import patch, MagicMock
+
 from ProductionCode.datasource import DataSource
-import psycopg2
+
 
 class TestDataSource(unittest.TestCase):
+    """Unit tests for the DataSource class methods."""
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movies_later_than(self, mock_connect):
+        """Test getting movies released after a given year with valid result."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Movie A', 2022)]
 
         ds = DataSource()
@@ -20,11 +28,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movies_later_than_empty_result(self, mock_connect):
+        """Test getting movies with no results returned."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = []
 
         ds = DataSource()
@@ -33,11 +41,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movies_later_than_query_error(self, mock_connect):
+        """Test behavior when a query error occurs."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.execute.side_effect = psycopg2.DatabaseError
 
         ds = DataSource()
@@ -46,11 +54,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movie_titles_by_actor(self, mock_connect):
+        """Test retrieving movies by actor name."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Movie X', 'Actor Y')]
 
         ds = DataSource()
@@ -59,11 +67,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movie_titles_by_actor_empty_result(self, mock_connect):
+        """Test actor name search with no results."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = []
 
         ds = DataSource()
@@ -72,11 +80,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movie_titles_by_actor_query_error(self, mock_connect):
+        """Test actor search with a query failure."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.execute.side_effect = psycopg2.DatabaseError
 
         ds = DataSource()
@@ -85,11 +93,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_movies_by_category(self, mock_connect):
+        """Test category-based movie search."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Movie B', '2021')]
 
         ds = DataSource()
@@ -98,11 +106,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_all_categories(self, mock_connect):
+        """Test extracting and deduplicating all genres/categories."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Action, Drama',), ('Comedy, Sci-Fi',)]
 
         ds = DataSource()
@@ -111,11 +119,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_3_filter_media(self, mock_connect):
+        """Test media filtering by actor, category, and release year."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Movie Z', 2023)]
 
         ds = DataSource()
@@ -124,11 +132,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_3_filter_media_empty_filters(self, mock_connect):
+        """Test media filter query returning no matches."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = []
 
         ds = DataSource()
@@ -137,11 +145,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_3_filter_media_query_error(self, mock_connect):
+        """Test media filtering query with database error."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.execute.side_effect = psycopg2.DatabaseError
 
         ds = DataSource()
@@ -150,11 +158,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_all_actors_normal(self, mock_connect):
+        """Test deduplication and alphabetizing of actor names."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchall.return_value = [('Actor A, Actor B',), ('Actor C, Actor D',)]
 
         ds = DataSource()
@@ -163,11 +171,11 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_media_from_title(self, mock_connect):
+        """Test searching a movie by title."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchone.return_value = ('The Matrix', 1999)
 
         ds = DataSource()
@@ -176,13 +184,17 @@ class TestDataSource(unittest.TestCase):
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_media_from_title_normal(self, mock_connect):
+        """Test normal media lookup by title with full data."""
         mock_conn = MagicMock()
         mock_cursor = MagicMock()
         mock_connect.return_value = mock_conn
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-
         mock_cursor.fetchone.return_value = ('Movie', 'Movie X', 'Actor X', '1', 'Genre X')
 
         ds = DataSource()
         result = ds.get_media_from_title("Movie X")
         self.assertEqual(result, ('Movie', 'Movie X', 'Actor X', '1', 'Genre X'))
+
+
+if __name__ == '__main__':
+    unittest.main()
