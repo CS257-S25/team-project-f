@@ -126,11 +126,10 @@ class TestFilterFunctions(BaseTestCase):
         mock_titles.return_value = ['Movie A', 'Movie B']
 
         response = self.client.get('/filter')
-        html = response.data.decode()
-        self.assertIn("Comedy", html)
-        self.assertIn("Action", html)
-        self.assertIn("Brad Pitt", html)
-        self.assertIn("Sandra Bullock", html)
+        self.assertIn("Comedy", response.data.decode())
+        self.assertIn("Action", response.data.decode())
+        self.assertIn("Brad Pitt", response.data.decode())
+        self.assertIn("Sandra Bullock", response.data.decode())
 
     @patch('app.ds.get_media_by_advanced_filter')
     def test_filter_results_all_filters(self, mock_filter):
