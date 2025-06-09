@@ -23,7 +23,15 @@ def parse_args():
 
 def get_cl_filtered_results(args, ds):
     """
-    Determines which DataSource method to call based on provided filters.
+    Applies filtering logic based on command line arguments and calls the appropriate
+    method from the DataSource.
+
+    Parameters:
+        args (Namespace): Parsed command line arguments containing actor, category, and/or year.
+        ds (DataSource): An instance of the DataSource class to query media data from.
+
+    Returns:
+        list: A list of media entries (tuples) that match the given filters.
     """
     if args.actor and not args.category and not args.year:
         return ds.get_media_by_actor(args.actor)
