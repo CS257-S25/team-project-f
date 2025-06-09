@@ -25,6 +25,10 @@ The original `ProductionCode/datasource.py` file had many methods having the sam
 - **Location**: `ProductionCode/datasource.py`
 - **What we did**: We renamed the affected methods to be more descriptive, accurate, and consistent with each other. For example: get_movies_later_than → get_media_later_than, get_3_filter_media → get_media_by_advanced_filter, get_media_titles_only → get_all_media_titles. These changes help clarify what kind of data is being returned and improve the readability and maintainability of the code.
 
+## Code Smell/Commenting Issue 4: Incomplete Docstring for Output Function
+- **Type of issue**: The function display_results (results) in cl.py only had this unclear docstring: """Prints the query results.""" that fails to mention the structure results is, how the function handles empty results and, how the output is formatted. 
+- **Location**: '`cl.py` 49-51 (old docstring) and 49-58 (new docstring)
+- **What we did**: We rewrote the docstring to be more specific and descriptive, clarifying the parameter type and explaining the format as well as the functions behavior. This helped increase clarity within our code to support the clarity of the programs output structure. 
 
 ---
 
