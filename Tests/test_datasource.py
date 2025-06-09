@@ -258,25 +258,18 @@ class TestDataSource(unittest.TestCase):
         """
         Test get_all_actors returns empty list on query error.
         """
-        mock_connect.return_value = self.mock_conn
+        ds = self.get_connected_datasource(mock_connect)
         self.mock_cursor.execute.side_effect = psycopg2.DatabaseError("Query failed")
 
-        ds = DataSource()
-        ds.connect()
         result = ds.get_all_actors()
-
         self.assertEqual(result, [])
 
     @patch("ProductionCode.datasource.psycopg2.connect")
     def test_get_media_from_title(self, mock_connect):
-        """ Tests get_media_from_title method with a specific title."""
-        mock_conn = MagicMock()
-        mock_cursor = MagicMock()
-        mock_cursor.fetchall.return_value = [('The Matrix', 1999)]
-        mock_conn.cursor.return_value = mock_cursor
-        mock_connect.return_value = mock_conn
+        """Tests get_media_from_title method with a specific title."""
+        self.mock_cursor.fetchall.return_value = [('The Matrix', 1999)]
+        ds = self.get_connected_datasource(mock_connect)
 
-        ds = DataSource()
         result = ds.get_media_from_title("The Matrix")
         self.assertEqual(result, ('The Matrix', 1999))
 

@@ -1,7 +1,7 @@
 """
 test_cl.py
-
-Unit tests for the command-line interface of the StreamSearch application."""
+Unit tests for the command-line interface of the StreamSearch application.
+"""
 
 import unittest
 import sys
