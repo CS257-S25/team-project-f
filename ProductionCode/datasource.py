@@ -31,7 +31,7 @@ class DataSource:
                 raise ConnectionError(f"Connection error: {e}") from e
         return self.connection
 
-    def _execute_query(self, query, params=None):
+    def execute_query(self, query, params=None):
         """
         Internal helper to execute queries and fetch results safely.
 
@@ -67,7 +67,7 @@ class DataSource:
             WHERE release_year > %s 
             ORDER BY release_year DESC
         """
-        return self._execute_query(query, (release_year,))
+        return self.execute_query(query, (release_year,))
 
     def get_media_by_actor(self, actor_name):
         """
@@ -82,7 +82,7 @@ class DataSource:
             SELECT * FROM stream_data 
             WHERE media_cast ILIKE %s
         """
-        return self._execute_query(query, (f"%{actor_name}%",))
+        return self.execute_query(query, (f"%{actor_name}%",))
 
     def get_media_by_category(self, category):
         """
@@ -97,7 +97,7 @@ class DataSource:
             WHERE category ILIKE %s 
             ORDER BY release_year DESC
         """
-        return self._execute_query(query, (f"%{category}%",))
+        return self.execute_query(query, (f"%{category}%",))
 
     def get_all_categories(self):
         """
@@ -108,7 +108,7 @@ class DataSource:
         query = """
             SELECT category FROM stream_data WHERE category IS NOT NULL
         """
-        results = self._execute_query(query)
+        results = self.execute_query(query)
         if results is None:
             return []
 
@@ -136,7 +136,7 @@ class DataSource:
             AND release_year > %s 
             ORDER BY release_year DESC
         """
-        return self._execute_query(query, (f"%{actor_name}%", f"%{category}%", release_year))
+        return self.execute_query(query, (f"%{actor_name}%", f"%{category}%", release_year))
 
     def get_all_media_titles(self):
         """
@@ -148,7 +148,7 @@ class DataSource:
             SELECT title, release_year FROM stream_data
             ORDER BY release_year DESC
         """
-        results = self._execute_query(query)
+        results = self.execute_query(query)
         if results is None:
             return []
 
@@ -164,7 +164,7 @@ class DataSource:
         query = """
             SELECT media_cast FROM stream_data WHERE media_cast IS NOT NULL
         """
-        results = self._execute_query(query)
+        results = self.execute_query(query)
         if results is None:
             return []
 
@@ -187,5 +187,5 @@ class DataSource:
         query = """
             SELECT * FROM stream_data WHERE title ILIKE %s
         """
-        result = self._execute_query(query, (title,))
+        result = self.execute_query(query, (title,))
         return result[0] if result else None
