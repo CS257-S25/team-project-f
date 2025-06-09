@@ -14,7 +14,7 @@ def get_searchbar_titles():
     autocomplete searchbar at the top of most pages.
     """
     try:
-        return ds.get_media_titles_only()
+        return ds.get_all_media_titles()
     except DatabaseError as e:
         print('Database error in get_searchbar_titles(): ', e)
         return None
@@ -40,7 +40,7 @@ def search_by_actor(name):
              or a message indicating no results were found.
     """
     try:
-        results = ds.get_movie_titles_by_actor(name)
+        results = ds.get_media_by_actor(name)
         if not results:
             return f"No results found for actor: {name}"
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -61,7 +61,7 @@ def search_by_year(year):
              or a message indicating no results were found.
     """
     try:
-        results = ds.get_movies_later_than(year-1)
+        results = ds.get_media_later_than(year-1)
         if not results:
             return f"No movies found released after {year}."
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -82,7 +82,7 @@ def search_by_category(category):
              or a message indicating no results were found.
     """
     try:
-        results = ds.get_movies_by_category(category)
+        results = ds.get_media_by_category(category)
         if not results:
             return f"No movies found in category: {category}"
         return "</br></br>".join(f"<b>{row[1]}</b> ({row[3]}): {row[5]}" for row in results)
@@ -118,7 +118,7 @@ def filter_results():
     year = request.args.get('year', '')
     results = None
     try:
-        results = ds.get_3_filter_media(
+        results = ds.get_media_by_advanced_filter(
             actor if actor else '',
             str(int(year)-1) if year else '0',
             category if category else ''

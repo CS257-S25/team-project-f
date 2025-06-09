@@ -37,7 +37,7 @@ class TestErrorHandling(BaseTestCase):
 class TestFilterFunctions(BaseTestCase):
     """Test filter functions with mocked data source."""
 
-    @patch('app.ds.get_movie_titles_by_actor')
+    @patch('app.ds.get_media_by_actor')
     def test_actor_filter_valid_result(self, mock_get_movies):
         """Test actor filter with a known actor using mock."""
         mock_get_movies.return_value = mock_get_movies.return_value = [
@@ -47,7 +47,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/actor/BRENDAN_GLEESON')
         self.assertIn("The Grand Seduction", response.data.decode())
 
-    @patch('app.ds.get_movie_titles_by_actor')
+    @patch('app.ds.get_media_by_actor')
     def test_actor_filter_no_result(self, mock_get_movies):
         """Test actor filter with no results."""
         mock_get_movies.return_value = []
@@ -55,14 +55,14 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/actor/UNKNOWN_ACTOR')
         self.assertIn("No results found for actor", response.data.decode())
 
-    @patch('app.ds.get_movie_titles_by_actor')
+    @patch('app.ds.get_media_by_actor')
     def test_actor_filter_lookup_error(self, mock_get_movies):
         """Test actor filter route when a LookupError is raised."""
         mock_get_movies.side_effect = LookupError("DB error")
         response = self.client.get('/actor/ERROR_ACTOR')
         self.assertIn("Could not find actor: ERROR_ACTOR", response.data.decode())
 
-    @patch('app.ds.get_movies_later_than')
+    @patch('app.ds.get_media_later_than')
     def test_year_filter_valid_result(self, mock_get_movies):
         """Test year filter with mocked results."""
         mock_get_movies.return_value = [
@@ -71,7 +71,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/year/2019')
         self.assertIn("Some Movie", response.data.decode())
 
-    @patch('app.ds.get_movies_later_than')
+    @patch('app.ds.get_media_later_than')
     def test_year_filter_no_result(self, mock_get_movies):
         """Test year filter with no results."""
         mock_get_movies.return_value = []
@@ -79,7 +79,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/year/2050')
         self.assertIn("No movies found released after 2050", response.data.decode())
 
-    @patch('app.ds.get_movies_later_than')
+    @patch('app.ds.get_media_later_than')
     def test_year_filter_lookup_error(self, mock_get_movies):
         """Test year filter route when a LookupError is raised."""
         mock_get_movies.side_effect = LookupError("DB error")
@@ -87,7 +87,7 @@ class TestFilterFunctions(BaseTestCase):
         self.assertIn("Could not find titles after year: 2010", response.data.decode())
 
 
-    @patch('app.ds.get_movies_by_category')
+    @patch('app.ds.get_media_by_category')
     def test_category_filter_valid_result(self, mock_get_movies):
         """Test category filter with mocked results."""
         mock_get_movies.return_value = [
@@ -97,7 +97,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/category/Action')
         self.assertIn("Action Movie", response.data.decode())
 
-    @patch('app.ds.get_movies_by_category')
+    @patch('app.ds.get_media_by_category')
     def test_category_filter_no_result(self, mock_get_movies):
         """Test category filter with no results."""
         mock_get_movies.return_value = []
@@ -105,7 +105,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/category/UnknownCategory')
         self.assertIn("No movies found in category: UnknownCategory", response.data.decode())
 
-    @patch('app.ds.get_movies_by_category')
+    @patch('app.ds.get_media_by_category')
     def test_category_filter_lookup_error(self, mock_get_movies):
         """Test category filter route when a LookupError is raised."""
         mock_get_movies.side_effect = LookupError("DB error")
@@ -114,7 +114,7 @@ class TestFilterFunctions(BaseTestCase):
 
     @patch('ProductionCode.datasource.DataSource.get_all_categories')
     @patch('ProductionCode.datasource.DataSource.get_all_actors')
-    @patch('ProductionCode.datasource.DataSource.get_media_titles_only')
+    @patch('ProductionCode.datasource.DataSource.get_all_media_titles')
     def test_filter_form(self, mock_titles, mock_get_actors, mock_get_categories):
         """
         Test the filter form is rendered correctly and that
@@ -132,7 +132,7 @@ class TestFilterFunctions(BaseTestCase):
         self.assertIn("Brad Pitt", html)
         self.assertIn("Sandra Bullock", html)
 
-    @patch('app.ds.get_3_filter_media')
+    @patch('app.ds.get_media_by_advanced_filter')
     def test_filter_results_all_filters(self, mock_filter):
         """
         Test when all query parameters are provided,
@@ -143,7 +143,7 @@ class TestFilterFunctions(BaseTestCase):
         response = self.client.get('/filter/results?actor=Actor&year=2021&category=Drama')
         self.assertIn("Movie Title A", response.data.decode())
 
-    @patch('app.ds.get_3_filter_media')
+    @patch('app.ds.get_media_by_advanced_filter')
 
     def test_filter_results_actor_category(self, mock_filter):
         """
@@ -156,7 +156,7 @@ class TestFilterFunctions(BaseTestCase):
         self.assertIn("Action Star", response.data.decode())
         mock_filter.assert_called_with("Some Actor", "0", "Action")
 
-    @patch('app.ds.get_3_filter_media')
+    @patch('app.ds.get_media_by_advanced_filter')
     def test_filter_results_actor_year(self, mock_filter):
         """
         Test /filter/results with actor and year filters,
@@ -168,7 +168,7 @@ class TestFilterFunctions(BaseTestCase):
         self.assertIn("Comeback", response.data.decode())
         mock_filter.assert_called_with("Old Actor", "2019", "")
 
-    @patch('app.ds.get_3_filter_media')
+    @patch('app.ds.get_media_by_advanced_filter')
     def test_filter_results_category_year(self, mock_filter):
         """
         Test /filter/results with category and year filters,

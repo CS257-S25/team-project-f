@@ -41,35 +41,35 @@ class TestDataSource(unittest.TestCase):
         self.assertEqual(conn, self.mock_conn)
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movies_later_than(self, mock_connect):
+    def test_get_media_later_than(self, mock_connect):
         """
         Test get_movies_later_than returns expected movie data.
         """
         self.mock_cursor.fetchall.return_value = [('Movie A', 2022)]
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_movies_later_than(2020)
+        result = ds.get_media_later_than(2020)
 
         self.assertEqual(result, [('Movie A', 2022)])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movie_titles_by_actor(self, mock_connect):
+    def test_get_media_by_actor(self, mock_connect):
         """
         Test get_movie_titles_by_actor returns movies matching actor name.
         """
         self.mock_cursor.fetchall.return_value = [('Movie X', 'Actor Y')]
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_movie_titles_by_actor("Actor Y")
+        result = ds.get_media_by_actor("Actor Y")
 
         self.assertEqual(result, [('Movie X', 'Actor Y')])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movies_by_category(self, mock_connect):
+    def test_media_by_category(self, mock_connect):
         """
         Test get_movies_by_category returns movies matching category.
         """
         self.mock_cursor.fetchall.return_value = [('Movie B', '2021')]
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_movies_by_category("Horror")
+        result = ds.get_media_by_category("Horror")
 
         self.assertEqual(result, [('Movie B', '2021')])
 
@@ -86,13 +86,13 @@ class TestDataSource(unittest.TestCase):
         self.assertEqual(result, ['Action', 'Comedy', 'Drama', 'Sci-Fi'])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_3_filter_media(self, mock_connect):
+    def test_media_by_advanced_filter(self, mock_connect):
         """
         Test get_3_filter_media returns media filtered by actor, year, and category.
         """
         self.mock_cursor.fetchall.return_value = [('Movie Z', 2023)]
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_3_filter_media("Actor A", "2020", "Thriller")
+        result = ds.get_media_by_advanced_filter("Actor A", "2020", "Thriller")
 
         self.assertEqual(result, [('Movie Z', 2023)])
 
@@ -110,7 +110,7 @@ class TestDataSource(unittest.TestCase):
         self.assertIn("Connection error", str(context.exception))
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movies_later_than_query_error(self, mock_connect):
+    def test_get_media_later_than_query_error(self, mock_connect):
         """
         Test get_movies_later_than returns None on query error.
         """
@@ -119,12 +119,12 @@ class TestDataSource(unittest.TestCase):
 
         ds = DataSource()
         ds.connect()
-        result = ds.get_movies_later_than(2020)
+        result = ds.get_media_later_than(2020)
 
         self.assertIsNone(result)
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movie_titles_by_actor_query_error(self, mock_connect):
+    def test_get_media_by_actor_query_error(self, mock_connect):
         """
         Test get_movie_titles_by_actor returns None on query error.
         """
@@ -133,7 +133,7 @@ class TestDataSource(unittest.TestCase):
 
         ds = DataSource()
         ds.connect()
-        result = ds.get_movie_titles_by_actor("Actor Y")
+        result = ds.get_media_by_actor("Actor Y")
 
         self.assertIsNone(result)
 
@@ -152,40 +152,40 @@ class TestDataSource(unittest.TestCase):
         self.assertEqual(result, [])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movies_later_than_empty_result(self, mock_connect):
+    def test_get_media_later_than_empty_result(self, mock_connect):
         """
         Test get_movies_later_than returns empty list if no movies found.
         """
         self.mock_cursor.fetchall.return_value = []
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_movies_later_than(2050)
+        result = ds.get_media_later_than(2050)
 
         self.assertEqual(result, [])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_movie_titles_by_actor_empty_result(self, mock_connect):
+    def test_get_media_by_actor_empty_result(self, mock_connect):
         """
         Test get_movie_titles_by_actor returns empty list if actor not found.
         """
         self.mock_cursor.fetchall.return_value = []
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_movie_titles_by_actor("Unknown Actor")
+        result = ds.get_media_by_actor("Unknown Actor")
 
         self.assertEqual(result, [])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_3_filter_media_empty_filters(self, mock_connect):
+    def test_get_media_by_advanced_filter_empty_filters(self, mock_connect):
         """
         Test get_3_filter_media returns empty list when no filters provided.
         """
         self.mock_cursor.fetchall.return_value = []
         ds = self.get_connected_datasource(mock_connect)
-        result = ds.get_3_filter_media("", "", "")
+        result = ds.get_media_by_advanced_filter("", "", "")
 
         self.assertEqual(result, [])
 
     @patch('ProductionCode.datasource.psycopg2.connect')
-    def test_get_3_filter_media_query_error(self, mock_connect):
+    def test_get_media_by_advanced_filter_query_error(self, mock_connect):
         """
         Test get_3_filter_media returns None on query error.
         """
@@ -194,7 +194,7 @@ class TestDataSource(unittest.TestCase):
 
         ds = DataSource()
         ds.connect()
-        result = ds.get_3_filter_media("Actor A", "2020", "Thriller")
+        result = ds.get_media_by_advanced_filter("Actor A", "2020", "Thriller")
 
         self.assertIsNone(result)
 

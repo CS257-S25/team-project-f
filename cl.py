@@ -26,12 +26,12 @@ def get_cl_filtered_results(args, ds):
     Determines which DataSource method to call based on provided filters.
     """
     if args.actor and not args.category and not args.year:
-        return ds.get_movie_titles_by_actor(args.actor)
+        return ds.get_media_by_actor(args.actor)
     if args.category and not args.actor and not args.year:
-        return ds.get_movies_by_category(args.category)
+        return ds.get_media_by_category(args.category)
     if args.year and not args.actor and not args.category:
-        return ds.get_movies_later_than(args.year)
-    return ds.get_3_filter_media(
+        return ds.get_media_later_than(args.year)
+    return ds.get_media_by_advanced_filter(
         args.actor if args.actor else '',
         args.year if args.year else 0,
         args.category if args.category else ''

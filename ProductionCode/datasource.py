@@ -53,7 +53,7 @@ class DataSource:
             print(f"Query failed: {e}")
             return None
 
-    def get_movies_later_than(self, release_year):
+    def get_media_later_than(self, release_year):
         """        
         Retrieves all movies released after a specified year.
 
@@ -69,7 +69,7 @@ class DataSource:
         """
         return self._execute_query(query, (release_year,))
 
-    def get_movie_titles_by_actor(self, actor_name):
+    def get_media_by_actor(self, actor_name):
         """
         Retrieves movie titles and descriptions for a specific actor.
         Args:
@@ -84,7 +84,7 @@ class DataSource:
         """
         return self._execute_query(query, (f"%{actor_name}%",))
 
-    def get_movies_by_category(self, category):
+    def get_media_by_category(self, category):
         """
         Retrieves movies in a specific category or genre.
         Args:
@@ -118,25 +118,8 @@ class DataSource:
             genre_set.update(genres)
 
         return sorted(genre_set)
-
-    def get_media_titles_only(self):
-        """
-        Retrieves all movie titles sorted by release year in descending order.
-        Returns:
-            list: A list of movie titles, or an empty list if none found.
-        """
-        query = """
-            SELECT title, release_year FROM stream_data
-            ORDER BY release_year DESC
-        """
-        results = self._execute_query(query)
-        if results is None:
-            return []
-
-        titles = [html.unescape("".join(row[0].splitlines())) for row in results]
-        return titles
-
-    def get_3_filter_media(self, actor_name, release_year, category):
+    
+    def get_media_by_advanced_filter(self, actor_name, release_year, category):
         """
         Retrieves media based on actor name, category, and release year.
         Args:
@@ -154,6 +137,23 @@ class DataSource:
             ORDER BY release_year DESC
         """
         return self._execute_query(query, (f"%{actor_name}%", f"%{category}%", release_year))
+
+    def get_all_media_titles(self):
+        """
+        Retrieves all movie titles sorted by release year in descending order.
+        Returns:
+            list: A list of movie titles, or an empty list if none found.
+        """
+        query = """
+            SELECT title, release_year FROM stream_data
+            ORDER BY release_year DESC
+        """
+        results = self._execute_query(query)
+        if results is None:
+            return []
+
+        titles = [html.unescape("".join(row[0].splitlines())) for row in results]
+        return titles
 
     def get_all_actors(self):
         """

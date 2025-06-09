@@ -22,25 +22,25 @@ class MockDataSource:
         self.combo_results = [["Title D", "2024", "Action"]]
         self.empty_results = []
 
-    def get_movie_titles_by_actor(self, actor):
+    def get_media_by_actor(self, actor):
         """
         Return mock results if the actor matches 'Actor X', otherwise empty list.
         """
         return self.actor_results if actor == "Actor X" else self.empty_results
 
-    def get_movies_by_category(self, category):
+    def get_media_by_category(self, category):
         """
         Return mock results if the category matches 'Drama', otherwise empty list.
         """
         return self.category_results if category == "Drama" else self.empty_results
 
-    def get_movies_later_than(self, year):
+    def get_media_later_than(self, year):
         """
         Return mock results if the year matches 2022, otherwise empty list.
         """
         return self.year_results if year == 2022 else self.empty_results
 
-    def get_3_filter_media(self, actor, year, category):
+    def get_media_by_advanced_filter(self, actor, year, category):
         """
         Return mock results if all three filters match specific expected values,
         otherwise empty list.
