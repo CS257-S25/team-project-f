@@ -50,11 +50,13 @@ def display_results(results):
     Displays query results in a readable format.
 
     Parameters:
-        results (list of tuples): Each tuple represents a media record retrieved from the data source.
-                                  Fields are printed separated by vertical bars.
+        results (list of tuples): Each tuple represents a media record
+                retrieved from the data source.
+                Fields are printed separated by vertical bars.
 
     Output:
-        Prints each result on a separate line. If no results are found, a corresponding message is displayed.
+        Prints each result on a separate line. 
+        If no results are found, a corresponding message is displayed.
     """
     if not results:
         print("No matching results found.")
