@@ -33,7 +33,7 @@ class DataSource:
 
     def execute_query(self, query, params=None):
         """
-        Internal helper to execute queries and fetch results safely.
+        Helper method to execute queries and fetch results safely.
 
         Args:
             query (str): SQL query to execute.
