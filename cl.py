@@ -27,8 +27,8 @@ def get_cl_filtered_results(args, ds):
     method from the DataSource.
 
     Parameters:
-        args (Namespace): Parsed command line arguments containing actor, category, and/or year.
-        ds (DataSource): An instance of the DataSource class to query media data from.
+        args: Parsed command line arguments containing actor, category, and/or year.
+        ds: An instance of the DataSource class to query media data from.
 
     Returns:
         list: A list of media entries (tuples) that match the given filters.
@@ -52,7 +52,7 @@ def display_results(results):
     Parameters:
         results (list of tuples): Each tuple represents a media record
                 retrieved from the data source.
-                Fields are printed separated by vertical bars.
+                Fields/columns are printed separated by vertical bars.
 
     Output:
         Prints each result on a separate line. 
