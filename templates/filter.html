@@ -1,0 +1,89 @@
+<!-- filter.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filter - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+    {% if titles or actors %}
+    <script>
+        $(function() {
+            {% if titles %}
+                // Title search bar autocomplete
+                var availableTitles = [
+                    {% for title in titles %}`{{ title|safe }}`{% if not loop.last %}, 
+                    {% endif %} {% endfor %}
+                ];
+                $("#search_titles").autocomplete({
+                    source: availableTitles,
+                    minLength: 4,
+                    delay: 500
+                });
+            {% endif %}
+            {% if actors %}
+                // Actor filter bar autocomplete
+                var availableActors = [
+                    {% for actor in actors %}"{{ actor }}"{% if not loop.last %}, 
+                    {% endif %} {% endfor %}
+                ];
+                $("#actor").autocomplete({
+                    source: availableActors,
+                    minLength: 4,
+                    delay: 500
+                });
+            {% endif %}
+        });
+    </script>
+    {% endif %}
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/filter" id="selected">Search</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+        {% if titles %}
+        <div class="search">
+            <p>
+                <form action="search">
+                    <strong><label for="search_titles">Search by title across platforms</label></strong>
+                    <input type="text" id="search_titles" name="title_choice" placeholder="Search by title across platforms...">
+                </form>
+            </p>
+        </div>
+        {% endif %}
+    </section>
+
+    <section class="filters">
+        <h2>Advanced Filters</h2>
+        <form action="/filter/results" method="get">
+            <label for="actor">Actor Name:</label><br>
+            <input type="text" id="actor" name="actor" placeholder="i.e. Emma Stone" value=""><br>
+
+            <label for="year">Released After:</label><br>
+            <input type="number" id="year" placeholder="i.e. 2010" name="year" value=""><br>
+
+            <label for="category">Category:</label><br>
+            <select id="category" name="category">
+                <option value="">Select Category...</option>
+                {% for genre in categories %}
+                    <option value="{{ genre }}">{{ genre }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <input type="submit" id="submit" value="Search">
+        </form>
+    </section>
+</body>
+</html>

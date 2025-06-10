@@ -1,0 +1,61 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/", id="selected">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Search</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    
+
+    <h2>Welcome to StreamSearch!</h2>
+    <p>StreamSearch helps you find movies and TV shows based on actor names, categories, and release years.</p>
+
+    <section class="light">
+        <h3>How to Use StreamSearch:</h3>
+        <p>
+            Click the "Search" button in the top bar to get started!
+            You can use the provided search bar to search for titles across platforms.<br>
+            Alternatively, you can filter by Actor, Year, and Release Date.
+        </p>
+    </section>
+
+    <p>To use the old Flask app:</p>
+    <section class="light">
+        <p>
+            <ul>
+                <li><strong>Actor:</strong> Enter the name of an actor to find movies or shows they appear in. Example: <code>/actor/Emma Stone</code></li>
+                <li><strong>Category:</strong> Search by genre or category (e.g., Comedy, Action, Drama). Example: <code>/category/Comedy</code></li>
+                <li><strong>Year:</strong> Filter results to show movies or shows released on or after a specified year. Example: <code>/year/2010</code></li>
+            </ul>
+        </p>
+    </section>
+
+</body>
+</html>

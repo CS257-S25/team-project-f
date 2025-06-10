@@ -1,0 +1,63 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Search</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    
+
+    <h2>Error 404: Page not Found</h2>
+
+    <section class="light">
+        <p>Sorry, the page you requested does not exist.</p>
+        <p>Please <a href="/">click here</a> to return home and try again.</p>
+    </section>
+
+    <section class="instructions">
+        <h3>How to Use StreamSearch</h3>
+        <p>StreamSearch helps you find movies and shows available on streaming platforms. Here’s how to get started:</p>
+        <ul>
+            <li><strong>Search by Title:</strong> Use the search box on the <a href="/filter">Advanced Filters</a> 
+                page to enter the exact or partial title of a movie or show.</li>
+            <li><strong>Advanced Filters:</strong> Go to the <a href="/filter">Advanced Filters</a> page
+                 to find media by actor, genre/category, or release year.</li>
+        </ul>
+        <p>To use the old Flask app:</p>
+        <ul>
+                <li><strong>Actor:</strong> Enter the name of an actor to find movies or shows they appear in. Example: <code>/actor/Emma Stone</code></li>
+                <li><strong>Category:</strong> Search by genre or category (e.g., Comedy, Action, Drama). Example: <code>/category/Comedy</code></li>
+                <li><strong>Year:</strong> Filter results to show movies or shows released on or after a specified year. Example: <code>/year/2010</code></li>
+            </ul>
+        <p>If you have any questions or feedback, visit our <a href="/about">About</a> page.</p>
+    </section>
+
+</body>
+</html>

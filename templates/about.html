@@ -1,0 +1,46 @@
+<!-- about.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+            Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Search</a>
+                </li>
+                <li>
+                    <a href="/about" id="selected">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <div class="main">
+    <h2>About Us</h2>
+    <section class="light">
+        <h3>StreamSearch lets you browse many streaming services at once with ease.</h3>
+        <p> 
+            The services included in this application are Hulu, Disney+, Netflix, and Amazon Prime.
+            The data is not necessarily up to date and solely represents a proof of concept.<br>
+            <strong>This website was coded by Eva, Maria, Asa, and John for Team F.</strong>
+        </p>
+    </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!-- filter_results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results - StreamSearch</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  </script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+
+        <nav class="topbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/filter">Search</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+    <h2> Search Results:</h2>
+    <p><strong>Click on the title of a movie or show to view its main page.</strong></p>
+    {% if results %}
+        <ul class="result">
+        {% for movie in results %}
+            <li>
+                <section class="result">
+                <form action="/search">
+                    <input type="hidden" id="result_titles" name="title_choice" value="{{movie[1]}}">
+                    <p><button>{{ movie[1] }}</button> <span id="media_type_and_release_date">{{ movie[0] }}, {{ movie[3] }}</span></p>
+                    <p id="description">{{ movie[5] }}</p>
+                    <p id="category"><strong>Category:</strong> {{ movie[4] }} </p>
+                    <p id="streaming_service_availability"><strong>Availible on:</strong> {{ movie[6] }} </p>
+                    
+                </form>
+                </section>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movies found in this genre.</p>
+    {% endif %}
+    <p><a href="/filter" id="search_again">Search Again </a></p>
+</body>
+</html>
+
+

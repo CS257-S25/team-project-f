@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% if media %}
+            StreamSearch - Result: {{ media[1] }}
+        {% else %}
+            StreamSearch - No Results Found
+        {% endif %}
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <section id="heading">
+        <a href="/">
+            <h1 class="title">
+                Stream<span class="blue">Search</span>
+            </h1>
+        </a>
+        <nav class="topbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/filter">Search</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    {% if media %}
+        <section>
+            <h2 class="movie_title">{{ media[1] }}</h2>
+            <section class="light">
+                <table class="movie_table">
+                    <tbody>
+                        <tr><th>MEDIA TYPE</th><td>{{ media[0] }}</td></tr>
+                        <tr><th>YEAR</th><td>{{ media[3] }}</td></tr>
+                        <tr><th>CATEGORY</th><td>{{ media[4] }}</td></tr>
+                        <tr><th>CAST</th><td>{{ media[2] }}</td></tr>
+                        <tr><th>DESCRIPTION</th><td>{{ media[5] }}</td></tr>
+                        <tr><th>AVAILABLE ON</th><td>{{ media[6] }}</td></tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+    {% else %}
+        <section>
+            <h2 class="movie_title">No results found</h2>
+            <p>We couldn't find any media matching that title. Please try another search.</p>
+        </section>
+    {% endif %}
+    <p><a href="/filter" id="search_again">Search Again </a></p>
+    
+</body>
+</html>
